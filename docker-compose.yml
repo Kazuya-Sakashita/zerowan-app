@@ -26,6 +26,12 @@ services:
     ports:
       - "9000:9000"
       - "9001:9001"
+  mailcatcher:
+    image: schickling/mailcatcher
+    container_name: mailcatcher
+    ports:
+      - '1080:1080'
+      - '1025:1025'
 volumes:
   db:
   minio:
