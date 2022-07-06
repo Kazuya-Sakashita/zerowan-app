@@ -5,22 +5,33 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    @user = User.new
+  end
 
   # POST /resource
   def create
+    @user = User.new(sign_up_params)
+    render :new and return if params[:back] || !@user.save
+    redirect_to @user
     super
-        resource.build_profile
-        resource.profile.user_id = resource.id
-        resource.profile.name = resource.username
-        resource.profile.address = resource.useraddress
-        resource.profile.phoneNumber = resource.userphoneNumber
-        resource.profile.birthday = resource.userbirthday
-        resource.profile.breedingExperience = resource.userbreedingExperience
-        resource.save
   end
+
+    # 新規追加
+  def confirm
+    @user = User.new(sign_up_params)
+    render :new if @user.invalid?
+  end
+  # 新規追加
+  def complete
+  end
+
+  # アカウント登録後
+  def after_sign_up_path_for(resource)
+    users_sign_up_complete_path(resource)
+  end
+
+
 
   # GET /resource/edit
   # def edit
@@ -67,4 +78,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+    private
+
+    def sign_up_params
+      params.require(:user).permit(:email, :password, :password_confirmation)
+    end
 end

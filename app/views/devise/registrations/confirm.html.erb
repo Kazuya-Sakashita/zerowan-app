@@ -1,0 +1,12 @@
+<div>
+
+  <h2>入力情報の確認</h2>
+    <%= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
+    <p><%= f.label :email %><%= f.email_field :email, value: @user.email, readonly: true %></p>
+    <p><%= f.label :password %><%= f.password_field :password, value: @user.password, readonly: true %></p>
+
+    <%= f.submit "修正する", name: :back %>
+    <%= f.submit "登録する" %>
+
+  <% end %>
+</div>
