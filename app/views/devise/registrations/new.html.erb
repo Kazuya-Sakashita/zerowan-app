@@ -5,7 +5,7 @@
 
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "someone@example.com" %>
   </div>
 
   <div class="field">
@@ -13,13 +13,39 @@
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password, autocomplete: "new-password", placeholder: "password" %>
   </div>
 
   <div class="field">
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password" %>
   </div>
+
+    <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autocomplete: "name", placeholder: "山田太郎" %>
+    </div>
+
+    <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address, autocomplete: "address", placeholder: "東京都新宿区西新宿２丁目８−１" %>
+    </div>
+
+    <div class="field">
+    <%= f.label :phone_number %><br />
+    <%= f.text_field :phone_number, autocomplete: "phone_number", placeholder: "01234567890" %>
+    </div>
+
+    <div class="field">
+    <%= f.label :birthday %><br />
+    <%= f.date_field :birthday, autocomplete: "birthday" %>
+    </div>
+
+    <div class="field">
+    <%= f.label :breeding_experience %><br />
+    <%= f.text_field :breeding_experience, autocomplete: "breeding_experience", placeholder: "犬５年、猫１年など" %>
+    </div>
+
 
   <div class="actions">
     <%= f.submit "確認" %>
