@@ -1,5 +1,5 @@
 <div>
-
+<% binding.pry %>
   <h2>入力情報の確認</h2>
     <%= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
     <p><%= f.label :email %><%= f.email_field :email, value: @user.email, readonly: true %></p>

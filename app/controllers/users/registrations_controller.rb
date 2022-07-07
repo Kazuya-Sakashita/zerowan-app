@@ -5,23 +5,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  def new
-    @user = User.new
-  end
+  # def new
+  #   super
+  # end
 
   # POST /resource
   def create
     @user = User.new(sign_up_params)
-    render :new and return if params[:back] || !@user.save
-    redirect_to @user
+    render :new and return if params[:back]
     super
   end
 
     # 新規追加
   def confirm
     @user = User.new(sign_up_params)
-    render :new if @user.invalid?
+    if @user.valid?
+      render :action => 'confirm'
+    else
+     render :action => 'new'
+    end
   end
+  
   # 新規追加
   def complete
   end
@@ -79,9 +83,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 
-    private
-
-    def sign_up_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
-    end
 end

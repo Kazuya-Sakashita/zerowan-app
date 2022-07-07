@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
-    post 'users/sign_up/confirm', to: 'devise/registrations#confirm'
-    get 'users/sign_up/complete', to: 'devise/registrations#complete'
+    post 'users/sign_up/confirm', to: 'users/registrations#confirm'
+    get 'users/sign_up/complete', to: 'users/registrations#complete'
   end
 end
