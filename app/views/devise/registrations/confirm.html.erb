@@ -9,7 +9,7 @@
       <p><%= profile_fields.label :address, "ご住所" %><%= profile_fields.text_field :address, value: @user.profile.address, readonly: true %></p>
       <p><%= profile_fields.label :phoneNumber, "電話番号" %><%= profile_fields.text_field :phoneNumber, value: @user.profile.phoneNumber, readonly: true %></p>
       <p><%= profile_fields.label :birthday, "生年月日" %><%= profile_fields.text_field :birthday, value: @user.profile.birthday, readonly: true %></p>
-      <p><%= profile_fields.label :breedingExperience %><%= profile_fields.text_field :breedingExperience, value: @user.profile.breedingExperience, readonly: true %></p>
+      <p><%= profile_fields.label :breedingExperience, "飼育経験年数" %><%= profile_fields.text_field :breedingExperience, value: @user.profile.breedingExperience, readonly: true %></p>
     <% end %>
 
     <%= f.submit "修正する", name: :back %>

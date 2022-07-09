@@ -30,10 +30,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  # アカウント登録後
-  def after_sign_up_path_for(resource)
-    root_path
+    # 新規追加
+  def complete
   end
+
+
+  # アカウント登録後
+  # def after_sign_up_path_for(resource)
+  #   users_sign_up_complete_path(resource)
+  # end
 
 
 

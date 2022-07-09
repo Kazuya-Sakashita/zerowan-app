@@ -8,8 +8,12 @@ class ApplicationController < ActionController::Base
       ])
   end
 
-  def after_sign_in_path_for(resource)
-    root_path # ログイン後に遷移するpathを設定
+  def after_sign_in_path_for(resource) 
+    if current_user.sign_in_count.zero?
+      users_sign_up_complete_path(resource)
+    else
+      root_path
+    end
   end
 
   def after_sign_out_path_for(resource)
