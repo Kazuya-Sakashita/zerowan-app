@@ -1,15 +1,15 @@
 <h2>Sign up</h2>
 
-<%= form_with model: @user, url: users_sign_up_confirm_path(@user),local: true do |f| %>
+<%= form_with model: @user, url: user_registration_path, local: true do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label "メールアドレス" %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "someone@example.com" %>
   </div>
 
   <div class="field">
-    <%= f.label :password %>
+    <%= f.label "パスワード" %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
@@ -17,38 +17,43 @@
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label "確認用パスワード" %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password" %>
   </div>
 
-    <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autocomplete: "name", placeholder: "山田太郎" %>
-    </div>
+    <%= f.fields_for @profile do |profile_fields| %>
+      <div class="field">
+      <%= profile_fields.label :name, "氏名" %><br />
+      <%= profile_fields.text_field :name, autocomplete: "name", placeholder: "山田太郎" %>
+      </div>
 
-    <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address, autocomplete: "address", placeholder: "東京都新宿区西新宿２丁目８−１" %>
-    </div>
+      <div class="field">
+      <%= profile_fields.label :address, "ご住所" %><br />
+      <%= profile_fields.text_field :address, autocomplete: "address", placeholder: "東京都新宿区西新宿２丁目８−１" %>
+      </div>
 
-    <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.text_field :phone_number, autocomplete: "phone_number", placeholder: "01234567890" %>
-    </div>
+      <div class="field">
+      <%= profile_fields.label :phoneNumber, "電話番号" %><br />
+      <%= profile_fields.text_field :phoneNumber, autocomplete: "phone_number", placeholder: "01234567890" %>
+      </div>
 
-    <div class="field">
-    <%= f.label :birthday %><br />
-    <%= f.date_field :birthday, autocomplete: "birthday" %>
-    </div>
+      <div class="field">
+      <%= profile_fields.label :birthday, "生年月日" %><br />
+      <%= profile_fields.date_field :birthday, autocomplete: "birthday" %>
+      </div>
 
-    <div class="field">
-    <%= f.label :breeding_experience %><br />
-    <%= f.text_field :breeding_experience, autocomplete: "breeding_experience", placeholder: "犬５年、猫１年など" %>
-    </div>
+      <div class="field">
+      <%= profile_fields.label :breeding_experience,"飼主経験" %><br />
+      <%= profile_fields.text_field :breedingExperience, autocomplete: "breeding_experience", placeholder: "犬５年、猫１年など" %>
+      </div>
+    
+    <% end %>
 
 
   <div class="actions">
-    <%= f.submit "確認" %>
+    <%# <%= f.submit "確認" %>
+    <%= f.submit "仮保存" %>
+
   </div>
 <% end %>
 

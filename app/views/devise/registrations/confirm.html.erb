@@ -1,9 +1,16 @@
 <div>
-<% binding.pry %>
   <h2>入力情報の確認</h2>
     <%= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
     <p><%= f.label :email %><%= f.email_field :email, value: @user.email, readonly: true %></p>
     <p><%= f.label :password %><%= f.password_field :password, value: @user.password, readonly: true %></p>
+
+     <%= f.fields_for :profile, @profile do |profile_fields| %>
+      <p><%= profile_fields.label :name %><%= profile_fields.text_field :name, value: @user.profile.name, readonly: true %></p>
+      <p><%= profile_fields.label :address %><%= profile_fields.text_field :address, value: @user.profile.address, readonly: true %></p>
+      <p><%= profile_fields.label :phoneNumber %><%= profile_fields.text_field :phoneNumber, value: @user.profile.phoneNumber, readonly: true %></p>
+      <p><%= profile_fields.label :birthday %><%= profile_fields.text_field :birthday, value: @user.profile.birthday, readonly: true %></p>
+      <p><%= profile_fields.label :breeding_experience %><%= profile_fields.text_field :breeding_experience, value: @user.profile.breeding_experience, readonly: true %></p>
+    <% end %>
 
     <%= f.submit "修正する", name: :back %>
     <%= f.submit "登録する" %>
