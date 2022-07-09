@@ -8,8 +8,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
   def new
     @user = User.new
-    @profile = @user.build_profile
-    super
+    @user.build_profile
+    
   end
 
   # POST /resource

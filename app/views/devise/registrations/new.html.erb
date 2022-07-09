@@ -1,6 +1,6 @@
 <h2>Sign up</h2>
 
-<%= form_with model: @user, url: user_registration_path, local: true do |f| %>
+<%= form_with model: @user, url: users_sign_up_confirm_path, local: true do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
@@ -21,7 +21,7 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "password" %>
   </div>
 
-    <%= f.fields_for @profile do |profile_fields| %>
+    <%= f.fields_for :profile do |profile_fields| %>
       <div class="field">
       <%= profile_fields.label :name, "氏名" %><br />
       <%= profile_fields.text_field :name, autocomplete: "name", placeholder: "山田太郎" %>
@@ -51,8 +51,7 @@
 
 
   <div class="actions">
-    <%# <%= f.submit "確認" %>
-    <%= f.submit "仮保存" %>
+    <%= f.submit "登録内容確認" %>
 
   </div>
 <% end %>
