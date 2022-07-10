@@ -10,6 +10,7 @@
   </head>
 
   <body>
+      <header>
         <nav>
           <% if user_signed_in? %>
             <strong><%= link_to current_user.email, '#' %></strong>
@@ -19,8 +20,8 @@
             <%= link_to 'サインアップ', new_user_registration_path %>
             <%= link_to 'ログイン', new_user_session_path %>
           <% end %>
-      </nav>
-    </header>
+        </nav>
+      </header>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
