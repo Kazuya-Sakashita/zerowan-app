@@ -10,5 +10,5 @@ Rails.application.routes.draw do
     get 'users/sign_up/complete', to: 'users/registrations#complete'
   end
 
-  resources :users, only:[:show]
+  resources :users, only:[:show, :edit, :update]
 end

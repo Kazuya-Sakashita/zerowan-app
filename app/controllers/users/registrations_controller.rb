@@ -88,4 +88,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 
+  protected
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
+
+  def account_update_params
+    params.permit(:name, :email,profile_attributes: [:name,:address, :phoneNumber, :birthday, :breedingExperience, :user_id ])
+  end
 end
