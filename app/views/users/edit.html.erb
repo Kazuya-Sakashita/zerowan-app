@@ -4,41 +4,45 @@
  </div>
   <div class="form-signup rounded ">
     <%= form_with(model: @user, local: true) do |f| %>
-   
+
           <%= f.fields_for :profile do |profile_fields| %>
             <div class="form-label">
-            <%= profile_fields.label :name, "氏名" %>
-            <%= profile_fields.text_field :name, autocomplete: "name", placeholder: "山田太郎",class:"form-control" %>
+            <%= profile_fields.label :name, '氏名' %>
+            <%= profile_fields.text_field :name, autocomplete: 'name', placeholder: '山田太郎', class: 'form-control' %>
             </div>
 
             <div class="form-label">
-            <%= profile_fields.label :address, "ご住所" %>
-            <%= profile_fields.text_field :address, autocomplete: "address", placeholder: "東京都新宿区西新宿２丁目８−１",class:"form-control" %>
+            <%= profile_fields.label :address, 'ご住所' %>
+            <%= profile_fields.text_field :address, autocomplete: 'address', placeholder: '東京都新宿区西新宿２丁目８−１',
+                                                    class: 'form-control' %>
             </div>
 
             <div class="form-label">
-            <%= profile_fields.label :phoneNumber, "電話番号" %>
-            <%= profile_fields.text_field :phoneNumber, autocomplete: "phone_number", placeholder: "01234567890",class:"form-control" %>
+            <%= profile_fields.label :phoneNumber, '電話番号' %>
+            <%= profile_fields.text_field :phoneNumber, autocomplete: 'phone_number', placeholder: '01234567890',
+                                                        class: 'form-control' %>
             </div>
 
             <div class="form-label">
-            <%= profile_fields.label :birthday, "生年月日" %>
-            <%= profile_fields.date_field :birthday, autocomplete: "birthday",class:"form-control" %>
+            <%= profile_fields.label :birthday, '生年月日' %>
+            <%= profile_fields.date_field :birthday, autocomplete: 'birthday', class: 'form-control' %>
             </div>
 
             <div class="form-label">
-            <%= profile_fields.label :breeding_experience,"飼主経験" %>
-            <%= profile_fields.text_field :breedingExperience, autocomplete: "breeding_experience", placeholder: "犬５年、猫１年など" ,class:"form-control"%>
+            <%= profile_fields.label :breeding_experience, '飼主経験' %>
+            <%= profile_fields.text_field :breedingExperience, autocomplete: 'breeding_experience',
+                                                               placeholder: '犬５年、猫１年など', class: 'form-control' %>
             </div>
-          
+
           <% end %>
-
-
         <div class="actions">
-          <%= f.submit "プロフィール内容変更", class: "btn btn-lg comfirm-btn btn-block" %>
-
+          <%= f.submit 'プロフィール内容変更', class: 'btn btn-lg comfirm-btn btn-block' %>
         </div>
       <% end %>
-
   </div>
+  <div class="form-signup-title mt-5">
+ <h3>アカウント情報</h3>
+ </div>
+ <div>
+
 </div>
