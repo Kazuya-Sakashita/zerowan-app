@@ -1,25 +1,30 @@
-<header>
-  <nav class="navbar navbar-expand navbar-light">
-    <%= link_to 'サンプル', root_path, class: 'navbar-brand' %>
-    <div id="Navber">
-      <ul class="navbar-nav">
-        <% if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to '編集', edit_user_registration_path, class: 'nav-link' %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: 'nav-link' %>
-          </li>
-      <% else %>
-          <li class="nav-item active">
-            <%= link_to '新規登録', new_user_registration_path, class: 'nav-link' %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to 'ログイン', new_user_session_path, class: 'nav-link' %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  </nav>
+      <header>
+        <nav class="navbar navbar-expand navbar-light ">
+        <div class="container-fluid nab-color ">
+            <p>ZeroWanApp</p>
+        <ul class="nav navbar-nav navbar-right">
 
-</header>
+          <li class="nav-item active">
+            <%= link_to 'トップ', root_path %>
+          </li>
+          <li class="nav-item active">
+            <%= link_to 'このサイトについて', root_path %>
+          </li>
+          <% if user_signed_in? %>
+            <li class="nav-item active">
+            <%= link_to 'プロフィール変更', edit_user_path(current_user) %>
+          </li>
+            <li class="nav-item active">
+            <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete } %>
+            </li>
+          <% else %>
+          <li class="nav-item active">
+            <%= link_to '会員登録', new_user_registration_path %>
+            </li>
+            <li class="nav-item active">
+            <%= link_to 'ログイン', new_user_session_path %>
+            </li>
+          <% end %>
+          </div>
+        </nav>
+      </header>
