@@ -9,38 +9,34 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     @user = User.new
     @user.build_profile
-    
   end
 
   # POST /resource
   def create
     @user = User.new(sign_up_params)
     render :new and return if params[:back]
+
     super
   end
 
-    # 新規追加
+  # 新規追加
   def confirm
     @user = User.new(sign_up_params)
     # @profile = @user.build_profile(@user.profile)
     if @user.valid?
-      render :action => 'confirm'
+      render action: 'confirm'
     else
-     render :action => 'new'
+      render action: 'new'
     end
   end
 
-    # 新規追加
-  def complete
-  end
-
+  # 新規追加
+  def complete; end
 
   # アカウント登録後
   # def after_sign_up_path_for(resource)
   #   users_sign_up_complete_path(resource)
   # end
-
-
 
   # GET /resource/edit
   # def edit
@@ -87,5 +83,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-
 end
