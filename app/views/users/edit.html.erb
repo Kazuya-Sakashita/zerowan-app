@@ -46,7 +46,7 @@
       <%= form_with url: user_registration_path, method: :put, local: true do |f| %>
         <div class="form-label">
           <%= f.label :email %> <br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: @user.email %>
         </div>
 
         <div class="form-label">
