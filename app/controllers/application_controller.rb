@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
                                           name address phoneNumber birthday breedingExperience user_id
                                         ]
                                       ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [
+                                        profile_attributes: %i[
+                                          name address phoneNumber birthday breedingExperience user_id
+                                        ]
+                                      ])
   end
 
   def after_sign_in_path_for(resource)
@@ -17,4 +22,6 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(_resource)
     root_path # ログアウト後に遷移するpathを設定
   end
+
+  
 end
