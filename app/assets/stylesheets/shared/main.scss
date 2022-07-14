@@ -1,0 +1,68 @@
+body {
+    background-color: #FFFBEE;
+}
+
+// サインアップtitle
+.form-signup-title {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+}
+
+
+// サインアップ全体
+.form-signup {
+    width: 100%;
+    max-width: 700px;
+    padding: 15px;
+    margin: auto;
+    background-color:white;
+}
+
+// 内容確認
+.signup-confirm{
+    width: 100%;
+    max-width: 700px;
+    padding: 15px;
+    margin: auto;
+    background-color:white;
+    input {
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        border: none;
+    }
+}
+
+
+// 新規登録ご挨拶と会員に関する注意書き
+.info-label{
+    width: 100%;
+    max-width: 700px;
+    padding: 15px;
+    margin: auto;
+    background-color:white;
+}
+
+// 登録確認ボタン
+.comfirm-btn {
+    margin-top: 10px;
+    color: #fff;
+    background-color: #F2BA29;
+    border-color: #FFFBEE;
+    width: 670px;
+}
+
+.comfirm-back-btn {
+    margin-top: 5px;
+    color: #fff;
+    background-color: #cfcdc8;
+    border-color: #FFFBEE;
+    width: 670px;
+}
+
+
+.mright-20 {
+    float: left;
+}
