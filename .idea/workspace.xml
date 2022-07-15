@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f5bfc760-4d6c-4a1b-aba3-b652d755d0ec" name="変更" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/shared/_header.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/shared/_header.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,11 +156,31 @@
       <workItem from="1657798735454" duration="1866000" />
       <workItem from="1657827820118" duration="627000" />
       <workItem from="1657836167744" duration="3037000" />
-      <workItem from="1657871393470" duration="4417000" />
+      <workItem from="1657871393470" duration="5274000" />
+      <workItem from="1657891691954" duration="13000" />
     </task>
+    <task id="LOCAL-00001" summary="アプリ名　h1に変更">
+      <created>1657881014473</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1657881014473</updated>
+    </task>
+    <task id="LOCAL-00002" summary="アプリ名　h1に変更">
+      <created>1657881108148</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1657881108148</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="アプリ名　h1に変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="アプリ名　h1に変更" />
   </component>
 </project>
