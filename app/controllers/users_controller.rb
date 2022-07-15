@@ -20,6 +20,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :passwod, :password_confirmation,
-                                 profile_attributes: %i[name address phoneNumber birthday breedingExperience user_id])
+                                 profile_attributes: %i[name address phone_number birthday breeding_experience user_id])
   end
 end

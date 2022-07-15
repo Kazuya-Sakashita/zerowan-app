@@ -93,6 +93,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def account_update_params
     params.permit(:name, :email,
-                  profile_attributes: %i[name address phoneNumber birthday breedingExperience user_id])
+                  profile_attributes: %i[name address phone_number birthday breeding_experience user_id])
   end
 end

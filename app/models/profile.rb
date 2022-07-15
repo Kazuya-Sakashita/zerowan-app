@@ -4,8 +4,8 @@ class Profile < ApplicationRecord
   with_options presence: true do
     validates :name
     validates :address
-    validates :phoneNumber
+    validates :phone_number
     validates :birthday
-    validates :breedingExperience
+    validates :breeding_experience
   end
 end
