@@ -73,3 +73,13 @@ body {
   font-size: small;
   color: darkred;
 }
+
+.left-column {
+  float: left;
+  width: 30%; /* 要素の幅を50%に定義 */
+}
+
+.right-column {
+  float: right;
+  width: 70%; /* 要素の幅を50%に定義 */
+}

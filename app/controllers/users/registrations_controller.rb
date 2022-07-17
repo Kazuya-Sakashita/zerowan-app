@@ -22,7 +22,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # 新規追加
   def confirm
     @user = User.new(sign_up_params)
-    # @profile = @user.build_profile(@user.profile)
     if @user.valid?
       render action: 'confirm'
     else
