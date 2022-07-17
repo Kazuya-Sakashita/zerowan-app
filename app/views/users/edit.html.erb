@@ -2,81 +2,86 @@
   <div class="form-signup-title mt-5">
     <h3>プロフィール</h3>
   </div>
-  <div class="form-signup rounded ">
-    <%= form_with(model: @user, local: true) do |f| %>
-
-      <%= f.fields_for :profile do |profile_fields| %>
-        <div class="form-label">
-          <%= profile_fields.label :name, '氏名' %>
-          <%= profile_fields.text_field :name, autocomplete: 'name', class: 'form-control' %>
-        </div>
-
-        <div class="form-label">
-          <%= profile_fields.label :address, 'ご住所' %>
-          <%= profile_fields.text_field :address, autocomplete: 'address', class: 'form-control' %>
-        </div>
-
-        <div class="form-label">
-          <%= profile_fields.label :phone_number, '電話番号' %>
-          <%= profile_fields.text_field :phone_number, autocomplete: 'phone_number', class: 'form-control' %>
-        </div>
-
-        <div class="form-label">
-          <%= profile_fields.label :birthday, '生年月日' %>
-          <%= profile_fields.date_field :birthday, autocomplete: 'birthday', class: 'form-control' %>
-        </div>
-
-        <div class="form-label">
-          <%= profile_fields.label :breeding_experience, '飼主経験' %>
-          <%= profile_fields.text_field :breeding_experience, autocomplete: 'breeding_experience', class: 'form-control' %>
-        </div>
-
-      <% end %>
-      <div class="actions">
-        <%= f.submit 'プロフィール内容変更', class: 'btn btn-lg comfirm-btn btn-block' %>
-      </div>
-    <% end %>
-  </div>
-  <div class="form-signup-title mt-5">
-    <h3>アカウント情報</h3>
-  </div>
   <div>
     <div class="form-signup rounded ">
-      <%= form_with model: @user, url: user_registration_path, method: :put, local: true do |f| %>
-        <div class="form-label">
-          <%= f.label :email %> <br/>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: @user.email %>
-        </div>
+      <%= form_with(model: @user, local: true) do |f| %>
 
-        <div class="form-label">
-          <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
-          <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control', placeholder: 'password' %>
-        </div>
-
-        <div class="mt-4">
-          <p class="mb-0">
-            <span class="change-pw-info">パスワード変更（変更時のみ入力してください)</span>
-          </p>
+        <%= f.fields_for :profile do |profile_fields| %>
           <div class="form-label">
-            <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
-            <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'password' %>
-            <% if @minimum_password_length %>
-              <br/>
-              <em><%= @minimum_password_length %> characters minimum</em>
-            <% end %>
+            <%= profile_fields.label :name, '氏名' %>
+            <%= profile_fields.text_field :name, autocomplete: 'name', class: 'form-control' %>
           </div>
 
           <div class="form-label">
-            <%= f.label :password_confirmation %><br/>
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'password' %>
+            <%= profile_fields.label :address, 'ご住所' %>
+            <%= profile_fields.text_field :address, autocomplete: 'address', class: 'form-control' %>
           </div>
-        </div>
 
+          <div class="form-label">
+            <%= profile_fields.label :phone_number, '電話番号' %>
+            <%= profile_fields.text_field :phone_number, autocomplete: 'phone_number', class: 'form-control' %>
+          </div>
 
+          <div class="form-label">
+            <%= profile_fields.label :birthday, '生年月日' %>
+            <%= profile_fields.date_field :birthday, autocomplete: 'birthday', class: 'form-control' %>
+          </div>
+
+          <div class="form-label">
+            <%= profile_fields.label :breeding_experience, '飼主経験' %>
+            <%= profile_fields.text_field :breeding_experience, autocomplete: 'breeding_experience', class: 'form-control' %>
+          </div>
+
+        <% end %>
         <div class="actions">
-          <%= f.submit 'アカウント情報更新', class: 'btn btn-lg comfirm-btn btn-block' %>
+          <%= f.submit 'プロフィール内容変更', class: 'btn btn-lg comfirm-btn btn-block' %>
         </div>
       <% end %>
+    </div>
+  </div>
+  <div class="container">
+    <div class="form-signup-title mt-5">
+      <h3>アカウント情報</h3>
+    </div>
+
+    <div>
+      <div class="form-signup rounded ">
+        <%= form_with model: @user, url: user_registration_path, method: :put, local: true do |f| %>
+          <div class="form-label">
+            <%= f.label :email %> <br/>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: @user.email %>
+          </div>
+
+          <div class="form-label">
+            <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
+            <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control', placeholder: 'password' %>
+          </div>
+
+          <div class="mt-4">
+            <p class="mb-0">
+              <span class="change-pw-info">パスワード変更（変更時のみ入力してください)</span>
+            </p>
+            <div class="form-label">
+              <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
+              <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'password' %>
+              <% if @minimum_password_length %>
+                <br/>
+                <em><%= @minimum_password_length %> characters minimum</em>
+              <% end %>
+            </div>
+
+            <div class="form-label">
+              <%= f.label :password_confirmation %><br/>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'password' %>
+            </div>
+          </div>
+
+
+          <div class="actions">
+            <%= f.submit 'アカウント情報更新', class: 'btn btn-lg comfirm-btn btn-block' %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
