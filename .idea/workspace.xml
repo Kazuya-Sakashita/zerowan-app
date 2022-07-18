@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f5bfc760-4d6c-4a1b-aba3-b652d755d0ec" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/app/views/layouts/shared/_flash.html.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/devise/registrations/confirm.html_copy2.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/shared/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/shared/main.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/shared/_header.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/shared/_header.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/users/edit.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/users/edit.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/shared/header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/shared/header.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/devise/registrations/confirm.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/devise/registrations/confirm.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/devise/registrations/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/devise/registrations/new.html.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/users/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/users/show.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,12 +38,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/views/devise/registrations" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Ruby" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/views/devise/registrations" />
+    </key>
   </component>
   <component name="RunManager" selected="Rails.Development: zerowan-app">
     <configuration name="Development: zerowan-app" type="RailsRunConfigurationType" factoryName="Rails">
@@ -163,7 +168,8 @@
       <workItem from="1657836167744" duration="3037000" />
       <workItem from="1657871393470" duration="5274000" />
       <workItem from="1657891691954" duration="13000" />
-      <workItem from="1658054482278" duration="20357000" />
+      <workItem from="1658054482278" duration="28900000" />
+      <workItem from="1658179995680" duration="2023000" />
     </task>
     <task id="LOCAL-00001" summary="アプリ名　h1に変更">
       <created>1657881014473</created>

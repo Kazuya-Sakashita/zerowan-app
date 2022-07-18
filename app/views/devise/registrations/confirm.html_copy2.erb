@@ -1,0 +1,47 @@
+<div class="container">
+  <h2>入力情報の確認</h2>
+  <div class="signup-confirm rounded mt-5">
+    <table>
+      <%= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
+        <tr>
+          <td><%= f.label :email %></td>
+          <td class="px-3"><%= f.email_field :email, value: @user.email, readonly: true %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :password %></td>
+          <td class="px-3"><%= f.password_field :password, value: @user.password, readonly: true %></td>
+        </tr>
+        <%= f.fields_for :profile, @profile do |profile_fields| %>
+          <tr>
+            <td><%= profile_fields.label :name %></td>
+            <td class="px-3"><%= profile_fields.text_field :name, value: @user.profile.name, readonly: true %></td>
+          </tr>
+
+          <tr>
+            <td><%= profile_fields.label :address %></td>
+            <td class="px-3"><%= profile_fields.text_field :address, value: @user.profile.address, readonly: true %></td>
+          </tr>
+
+          <tr>
+            <td><%= profile_fields.label :phone_number %></td>
+            <td class="px-3"><%= profile_fields.text_field :phone_number, value: @user.profile.phone_number, readonly: true %></td>
+          </tr>
+
+          <tr>
+            <td><%= profile_fields.label :birthday %></td>
+            <td class="px-3"><%= profile_fields.text_field :birthday, value: @user.profile.birthday, readonly: true %></td>
+          </tr>
+
+          <tr>
+            <td><%= profile_fields.label :breeding_experience %></td>
+            <td class="px-3"><%= profile_fields.text_field :breeding_experience, value: @user.profile.breeding_experience, readonly: true %></td>
+          </tr>
+        <% end %>
+        </table>
+
+        <%= f.submit '登録', class: 'btn btn-lg comfirm-btn btn-block' %>
+        <%= f.submit '修正する', name: :back, class: 'btn btn-lg comfirm-back-btn btn-block mt-1' %>
+
+      <% end %>
+      </div>
+</div>

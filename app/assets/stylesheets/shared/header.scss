@@ -29,6 +29,18 @@ a {
 
 
 //ダッシュボードのLink
+.sidebar-area {
+  background: #FFFFFF;
+  border: black;
+}
+.sidebar-title {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: black;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
