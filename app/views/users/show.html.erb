@@ -1,13 +1,31 @@
 <div class="container">
   <div class="form-signup-title rounded mt-5">
-    <h2>マイページ</h2>
-    <div class="signup-confirm rounded mt-5">
-      <div class="form-label">
-        <%= label :name, 'お名前' %>
-        <%= @user.email %>
-      </div>
 
-      </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <hr class="sidebar-divider my-0">
+
+        <li class="nav-item">
+          ダッシュボード
+        </li>
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+          <%= link_to 'プロフィール', edit_user_path(current_user), class: "nav-link" %>
+        </li>
+
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+          <%= link_to 'メッセージ', '#', class: "nav-link" %>
+        </li>
+      </ul>
     </div>
+    <!-- Sidebar end -->
+  </div>
+  <div class="container-fluid">
+    メイン表示
   </div>
 </div>
