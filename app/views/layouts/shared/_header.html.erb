@@ -1,4 +1,4 @@
-<header>
+<header class="fixed-top">
   <nav class="navbar navbar-expand navbar-light ">
     <div class="container-fluid nab-color ">
       <h1>ZeroWanApp</h1>
@@ -12,7 +12,7 @@
         </li>
         <% if user_signed_in? %>
           <li class="nav-item active">
-            <%= link_to 'プロフィール変更', edit_user_path(current_user), class: "nav-link" %>
+            <%= link_to 'マイページ', user_path(current_user), class: "nav-link" %>
           </li>
           <li class="nav-item active">
             <%= link_to 'ログアウト', destroy_user_session_path, class: "nav-link", data: { turbo_method: :delete } %>

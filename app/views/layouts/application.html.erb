@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Myapp</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', "data-turbo-track": 'reload' %>
-  </head>
+<head>
+  <title>Myapp</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', "data-turbo-track": 'reload' %>
+</head>
 
   <body>
   <%= render 'layouts/shared/header' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+  <div class="mt-5">
+      <%= render 'layouts/shared/flash' %>
+      <%= yield %>
+    </div>
   </body>
 </html>
