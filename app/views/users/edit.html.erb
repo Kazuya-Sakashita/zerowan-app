@@ -52,15 +52,16 @@
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: @user.email %>
           </div>
 
+          <p class="mb-0">
+            <span class="change-pw-info">パスワード変更（変更時のみ入力してください)</span>
+          </p>
           <div class="form-label">
             <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
             <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control', placeholder: '変更の際はパスワードを入力ください' %>
           </div>
 
           <div class="mt-4">
-            <p class="mb-0">
-              <span class="change-pw-info">パスワード変更（変更時のみ入力してください)</span>
-            </p>
+
             <div class="form-label">
               <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
               <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>

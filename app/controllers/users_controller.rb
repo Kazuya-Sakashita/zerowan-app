@@ -19,7 +19,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :passwod, :password_confirmation,
-                                 profile_attributes: %i[name address phone_number birthday breeding_experience user_id])
+    params.require(:user).permit(profile_attributes: %i[name address phone_number birthday breeding_experience user_id])
   end
 end

@@ -44,9 +44,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    if params[:current_password].present?
+      super
+    else
+      flash.now[:alert] = '変更する場合は現在のパスワードを入力してください。'
+      render 'users/edit'
+    end
+  end
 
   # DELETE /resource
   # def destroy
