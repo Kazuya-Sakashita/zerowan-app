@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   before_action :configure_permitted_parameters
-  before_action :set_sign_up, only: [:create, :confirm ]
+  before_action :set_sign_up, only: %i[create confirm]
 
   # GET /resource/sign_up
   def new
@@ -15,6 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     render :new and return if params[:back]
+
     super
   end
 
