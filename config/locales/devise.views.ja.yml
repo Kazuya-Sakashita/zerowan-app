@@ -34,6 +34,23 @@ ja:
             current_password:
               blank: は内容が入力されていません。
               invalid: が違います。
+
+            email:
+              blank: 入力されていません。
+            password:
+              blank: 入力されていません。
+        profile:
+          attributes:
+            name:
+              blank: 入力されていません。
+            address:
+              blank: 入力されていません。
+            phone_number:
+              blank: 入力されていません。
+            birthday:
+              blank: 入力されていません。
+            breeding_experience:
+              blank: 入力されていません。
   devise:
     confirmations:
       confirmed: メールアドレスが確認できました。
