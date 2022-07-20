@@ -4,6 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   before_action :configure_permitted_parameters
+  before_action :set_sign_up, only: [:create, :confirm ]
 
   # GET /resource/sign_up
   def new
@@ -13,15 +14,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    @user = User.new(sign_up_params)
     render :new and return if params[:back]
-
     super
   end
 
   # 新規追加
   def confirm
-    @user = User.new(sign_up_params)
     if @user.valid?
       render action: 'confirm'
     else
@@ -97,5 +95,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def account_update_params
     params.require(:user).permit(:email, :password, :password_confirmation, :current_password)
+  end
+
+  private
+
+  def set_sign_up
+    @user = User.new(sign_up_params)
   end
 end
