@@ -4,6 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   before_action :configure_permitted_parameters
+  before_action :set_sign_up, only: %i[create confirm]
 
   # GET /resource/sign_up
   def new
@@ -13,7 +14,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    @user = User.new(sign_up_params)
     render :new and return if params[:back]
 
     super
@@ -21,8 +21,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # 新規追加
   def confirm
-    @user = User.new(sign_up_params)
-    # @profile = @user.build_profile(@user.profile)
     if @user.valid?
       render action: 'confirm'
     else
@@ -39,14 +37,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    @user = User.find(params[:id])
+    super
+  end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    if params[:user][:current_password].present?
+      super
+    else
+      flash.now[:alert] = '変更する場合は現在のパスワードを入力してください。'
+      render 'users/edit'
+    end
+  end
 
   # DELETE /resource
   # def destroy
@@ -83,4 +87,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  protected
+
+  # def update_resource(resource, params)
+  #   resource.update_without_password(params)
+  # end
+
+  def account_update_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :current_password)
+  end
+
+  private
+
+  def set_sign_up
+    @user = User.new(sign_up_params)
+  end
 end

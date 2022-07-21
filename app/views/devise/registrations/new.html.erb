@@ -38,7 +38,7 @@
                                                      class: 'form-control' %>
       </div>
 
-  <h3 class="mt-5">ご利用者情報</h1>
+  <h3 class="mt-5">ご利用者情報</h3>
         <%= f.fields_for :profile do |profile_fields| %>
           <div class="form-label">
           <%= profile_fields.label :name %>
@@ -52,8 +52,8 @@
           </div>
 
           <div class="form-label">
-          <%= profile_fields.label :phoneNumber %>
-          <%= profile_fields.text_field :phoneNumber, autocomplete: 'phone_number', placeholder: '01234567890',
+          <%= profile_fields.label :phone_number %>
+          <%= profile_fields.text_field :phone_number, autocomplete: 'phone_number', placeholder: '01234567890',
                                                       class: 'form-control' %>
           </div>
 
@@ -64,7 +64,7 @@
 
           <div class="form-label">
           <%= profile_fields.label :breeding_experience %>
-          <%= profile_fields.text_field :breedingExperience, autocomplete: 'breeding_experience',
+          <%= profile_fields.text_field :breeding_experience, autocomplete: 'breeding_experience',
                                                              placeholder: '犬５年、猫１年など', class: 'form-control' %>
           </div>
 

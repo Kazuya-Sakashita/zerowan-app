@@ -3,6 +3,6 @@ ja:
   attributes:
     name: お名前
     address: ご住所
-    phoneNumber: お電話番号
+    phone_number: お電話番号
     birthday: 生年月日
     breeding_experience: 飼主経験

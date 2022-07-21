@@ -1,8 +1,28 @@
 <div class="container">
-  <div class="form-signup-title rounded mt-5">
-    <h2>マイページ</h2>
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-3 sidebar-area border border-secondary">
+      <ul class="navbar-nav ">
+        <hr class="sidebar-divider">
+        <li class="nav-item sidebar-title ">
+          ダッシュボード
+        </li>
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+          <%= link_to 'プロフィール', edit_user_path(current_user), class: "nav-link" %>
+        </li>
 
-
-
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+          <%= link_to 'メッセージ', '#', class: "nav-link" %>
+        </li>
+        <hr class="sidebar-divider">
+      </ul>
+    </div>
+    <!-- Sidebar end -->
+    <div class="col-9">
+      メイン表示
+    </div>
   </div>
+
 </div>
