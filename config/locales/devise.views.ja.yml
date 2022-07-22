@@ -37,8 +37,11 @@ ja:
 
             email:
               blank: 入力されていません。
+              taken: 重複しています。
+
             password:
               blank: 入力されていません。
+              too_short: 文字数が足りていません。
         profile:
           attributes:
             name:
