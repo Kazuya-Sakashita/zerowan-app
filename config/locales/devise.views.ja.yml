@@ -50,6 +50,7 @@ ja:
               blank: 入力されていません。
             phone_number:
               blank: 入力されていません。
+              invalid: が無効です。
             birthday:
               blank: 入力されていません。
             breeding_experience:
