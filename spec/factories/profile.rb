@@ -5,6 +5,5 @@ FactoryBot.define do
     phone_number { Faker::PhoneNumber.subscriber_number(length: 11) }
     birthday { Faker::Date.between(from: '1930-01-01', to: '2016-12-31') }
     breeding_experience { '犬2年' }
-    user_id {''}
   end
 end
