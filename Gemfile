@@ -66,6 +66,7 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
+  gem 'capybara'
 end
 
 group :development do
@@ -90,3 +91,4 @@ end
 gem 'devise'
 gem 'devise-i18n'
 gem 'dotenv-rails'
+gem 'rails-controller-testing'

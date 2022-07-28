@@ -21,28 +21,28 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       }
     }
   end
-  # before do
-  #   #userとprofileのparamsを作成
-  #   @profile_params = {
-  #     profiles_attributes: {
-  #       "0": attributes_for(:profile)
-  #     }
-  #   }
-  #   @params_nested = {
-  #     user: attributes_for(:user).merge( @profile_params )
-  #   }
-  # end
+
+  before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+  end
 
   it '各パラメーターに正しく値が設定された場合、確認画面に遷移すること' do
-    post :confirm, prams: params
+    post :confirm, params: params
       expect(response).to be_successful
   end
 
+  it '各パラメーターに値が正しく設定されなかった場合、登録画面を再描画し、バリデーションエラーが表示されること' do
+    params[:user][:email] = nil
+    post :confirm, params: params
+    expect(response).to render_template "devise/registrations/new"
 
-  it '各パラメーターに値が正しく設定されなかった場合、登録画面を再描画し、バリデーションエラーが表示されること'
+    # バリデーションエラーが表示されること
+  end
 
-  it '登録画面へのアクセスが成功すること'
-
+  it '登録画面へのアクセスが成功すること' do
+  get :new
+  expect(response).to render_template "devise/registrations/new"
+  end
 end
 
 
