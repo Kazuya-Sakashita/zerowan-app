@@ -67,6 +67,7 @@ group :development, :test do
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
   gem 'capybara'
+  gem 'database_rewinder'
 end
 
 group :development do
