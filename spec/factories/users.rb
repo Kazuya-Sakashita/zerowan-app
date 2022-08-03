@@ -5,6 +5,5 @@ FactoryBot.define do
     password { password }
     password_confirmation { password }
     profile { FactoryBot.build :profile }
-    confirmed_at { Date.today }
   end
 end

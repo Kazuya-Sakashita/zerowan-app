@@ -103,6 +103,24 @@ RSpec.feature '会員登録', type: :feature do
     expect(page).to have_current_path('/users/sign_in')
 
   end
+
+  scenario 'params にユーザーの confirmation_token が含まれていない場合、エラー画面が描画されること' do
+    fill_in 'メールアドレス', with: 'kz0508+88@gmail.com'
+    fill_in 'パスワード', with: 'password'
+    fill_in 'パスワード（確認用）', with: 'password'
+    fill_in 'お名前', with: 'KAZUYA'
+    fill_in 'ご住所', with: '大阪市'
+    fill_in 'お電話番号', with: '00000000000'
+    fill_in '生年月日', with: '2022-06-26'
+    fill_in '飼主経験', with: '猫1年'
+    click_button '登録内容確認'
+    click_button '登録'
+    user = User.last
+    token = user.confirmation_token
+    visit user_confirmation_path(confirmation_token: nil)
+    expect(page).to have_content 'エラーが発生したため ユーザー は保存されませんでした。'
+  end
+
   scenario '「修正する」ボタンを押下で登録画面に戻れること' do
 
     fill_in 'メールアドレス', with: 'kz0508+88@gmail.com'
@@ -114,8 +132,8 @@ RSpec.feature '会員登録', type: :feature do
     fill_in '生年月日', with: '2022-06-26'
     fill_in '飼主経験', with: '猫1年'
     click_button '登録内容確認'
-    click_button '修正'
-    expect(page).to have_current_path('/users')
+    click_button '登録'
+
   end
 end
 

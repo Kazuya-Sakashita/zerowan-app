@@ -42,6 +42,8 @@ ja:
             password:
               blank: 入力されていません。
               too_short: 文字数が足りていません。
+            confirmation_token:
+              blank: 入力されていません。
         profile:
           attributes:
             name:
@@ -169,5 +171,7 @@ ja:
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+
+
 
 
