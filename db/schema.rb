@@ -10,9 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_03_215414) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_03_220856) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "pet_areas", force: :cascade do |t|
+    t.bigint "pet_id"
+    t.integer "area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_pet_areas_on_pet_id"
+  end
+
+  create_table "pet_characters", force: :cascade do |t|
+    t.bigint "pet_id"
+    t.integer "character_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_pet_characters_on_pet_id"
+  end
+
+  create_table "pet_images", force: :cascade do |t|
+    t.bigint "pet_id"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_pet_images_on_pet_id"
+  end
 
   create_table "pets", force: :cascade do |t|
     t.integer "category"
