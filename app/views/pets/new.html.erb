@@ -20,8 +20,7 @@
       </div>
       <div>
         <%= f.label :gender, '性別' %>
-        <%= f.text_field :gender, autofocus: true, autocomplete: 'gender',
-                         class: 'form-control' %>
+        <%= f.select :gender, [['オス',01], ['メス',02], ['不明',03]], include_blank: "選択して下さい" %>
       </div>
       <div>
         <%= f.label :age, '年齢' %>
@@ -40,13 +39,13 @@
       </div>
       <div>
         <%= f.label :castration, '去勢有無' %>
-        <%= f.text_field :introduction, autofocus: true, autocomplete: 'castration',
-                         class: 'form-control' %>
+        <%= f.select :castration, [['有',01], ['無',02], ['不明',03]], include_blank: "選択して下さい" %>
+
       </div>
       <div>
         <%= f.label :vaccination, 'ワクチン有無' %>
-        <%= f.text_field :vaccination, autofocus: true, autocomplete: 'vaccination',
-                         class: 'form-control' %>
+        <%= f.select :vaccination, [['有',01], ['無',02], ['不明',03]], include_blank: "選択して下さい" %>
+
       </div>
       <div class="actions">
         <%= f.submit '登録', class: 'btn btn-lg comfirm-btn btn-block' %>

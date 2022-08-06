@@ -27,7 +27,6 @@ class PetsController < ApplicationController
 
   def create
     @pet = current_user.pets.create(pet_params)
-    binding.pry
     if @pet.save!
       redirect_to @pet
     else
