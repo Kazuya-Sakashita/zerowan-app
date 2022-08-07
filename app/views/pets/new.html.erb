@@ -20,7 +20,7 @@
       </div>
       <div>
         <%= f.label :gender, '性別' %>
-        <%= f.select :gender, [['オス',01], ['メス',02], ['不明',03]], include_blank: "選択して下さい" %>
+        <%= f.select :gender, [['オス',1], ['メス',2], ['不明',3]], include_blank: "選択して下さい" %>
       </div>
       <div>
         <%= f.label :age, '年齢' %>
@@ -39,12 +39,12 @@
       </div>
       <div>
         <%= f.label :castration, '去勢有無' %>
-        <%= f.select :castration, [['有',01], ['無',02], ['不明',03]], include_blank: "選択して下さい" %>
+        <%= f.select :castration, [['有',1], ['無',0]], include_blank: "選択して下さい" %>
 
       </div>
       <div>
         <%= f.label :vaccination, 'ワクチン有無' %>
-        <%= f.select :vaccination, [['有',01], ['無',02], ['不明',03]], include_blank: "選択して下さい" %>
+        <%= f.select :vaccination, [['有',1], ['無',0]], include_blank: "選択して下さい" %>
 
       </div>
       <div class="actions">

@@ -2,6 +2,7 @@ class PetsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @pets = Pet.includes(:user)
   end
 
   def show
@@ -28,7 +29,7 @@ class PetsController < ApplicationController
   def create
     @pet = current_user.pets.create(pet_params)
     if @pet.save!
-      redirect_to @pet
+      redirect_to pets_path
     else
       render new
     end
@@ -36,6 +37,6 @@ class PetsController < ApplicationController
 
   def pet_params
     params.require(:pet).permit(:category, :name, :introduction, :gender, :age, :classification, :castration, :vaccination, :recruitment_status, :user_id,
-                                pet_images_attributes: [:id, :pet_id, :image])
+                                pet_images_attributes: [:pet_id, :image])
   end
 end
