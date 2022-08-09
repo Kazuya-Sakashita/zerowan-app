@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to @user
+      redirect_to edit_user_path, notice: "プロフィール変更しました。"
     else
       render 'edit'
     end
