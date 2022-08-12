@@ -38,15 +38,36 @@ RSpec.describe Users::RegistrationsController, type: :controller do
     expect(response).to render_template "devise/registrations/new"
   end
 
-
   it '各パラメーターに正しく値が設定された場合、ユーザーが正しく作成されること' do
-    expect{ create(:user) }.to change{ User.count }.by(1)
+    expect { create(:user) }.to change { User.count }.by(1)
   end
 
   it 'params にユーザーの confirmation_token が含まれていない場合、エラー画面が描画されること'
+    # post :create, params: params
+    # binding.pry
+    # user = User.last
+    # token = user.confirmation_token
+    # post user_confirmation_path, params: token
+
+    # user_confirmation_path(confirmation_token: nil)
+    # expect(response).to render_template "devise/mailer/confirmation_instructions"
+    #エラー画面が描画の部分の記載がわかりませんでした。再送メールに遷移していることは確認できました。
+
+
   it '各パラメーターに正しく値が設定された場合、home 画面が描画されること'
+
   it '各パラメーターに値が正しく設定されなかった場合、登録画面が描画されること'
+
+
+
   it 'params にユーザーの confirmation_token が正しく含まれていた場合、ログイン画面が描画されること'
+  # user = create(:user)
+  # user = User.last
+  # token = user.confirmation_token
+  # binding.pry
+  # visit user_confirmation_path(confirmation_token: token)
+  # expect(response).to render_template '/users/sign_in'
+
   it 'flash メッセージが正しく表示されていること'
   it 'ユーザーが確認済み状態になっていること'
 end
