@@ -22,45 +22,53 @@ RSpec.describe Users::RegistrationsController, type: :controller do
     @request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
-  it '登録画面へのアクセスが成功すること' do
-    get :new
-    expect(response).to render_template "devise/registrations/new"
+  # it '各パラメーターに正しく値が設定された場合、home 画面が描画されること'
+  #user登録完了後はログイン画面に遷移、画遷移はfeature/users_spec.rbで確認
+
+  describe "ユーザー登録" do
+    context '正常系' do
+      it '登録画面へのアクセスが成功すること' do
+        get :new
+        expect(response).to render_template "devise/registrations/new"
+      end
+
+      it '各パラメーターに正しく値が設定された場合、確認画面に遷移すること' do
+        post :confirm, params: params
+        expect(response).to be_successful
+      end
+
+      it '各パラメーターに正しく値が設定された場合、ユーザーが正しく作成されること' do
+        expect { create(:user) }.to change { User.count }.by(1)
+      end
+
+      # it 'flash メッセージが正しく表示されていること' do
+      #   create(:user)
+      # #   binding.pry
+      #   expect(flash[:notice]).to eq '本人確認用のメールを送信しました。メール内のリンクからアカウントを有効化させてください。'
+      # #   # TODO メール送信された際にルート（home/index)に遷移している、フラッシュメッセージが拾えていない
+      # end
+
+      it '各パラメーターに正しく値が設定された場合、home 画面が描画されること'do
+        create(:user)
+        expect(response).to  render_template "/"
+      end
+
+      # it 'params に back: true が設定されている場合、登録画面が描画されること' do
+      #   params[:back] = ture
+      #   post :confirm, params: params
+      #   expect(response).to render_template "devise/registrations/new"
+      # end
+
+    end
+
+    context '異常系' do
+      it '各パラメーターに値が正しく設定されなかった場合、登録画面を再描示されること' do
+        params[:user][:email] = nil
+        post :confirm, params: params
+        expect(response).to render_template "devise/registrations/new"
+      end
+    end
   end
-
-  it '各パラメーターに正しく値が設定された場合、確認画面に遷移すること' do
-    post :confirm, params: params
-    expect(response).to be_successful
-  end
-
-  it '各パラメーターに値が正しく設定されなかった場合、登録画面を再描示されること' do
-    params[:user][:email] = nil
-    post :confirm, params: params
-    expect(response).to render_template "devise/registrations/new"
-  end
-
-  it '各パラメーターに正しく値が設定された場合、ユーザーが正しく作成されること' do
-    expect { create(:user) }.to change { User.count }.by(1)
-  end
-
-
-
-
-  it '各パラメーターに正しく値が設定された場合、home 画面が描画されること'
-
-  it '各パラメーターに値が正しく設定されなかった場合、登録画面が描画されること'
-
-
-
-  it 'params にユーザーの confirmation_token が正しく含まれていた場合、ログイン画面が描画されること'
-  # user = create(:user)
-  # user = User.last
-  # token = user.confirmation_token
-  # binding.pry
-  # visit user_confirmation_path(confirmation_token: token)
-  # expect(response).to render_template '/users/sign_in'
-
-  it 'flash メッセージが正しく表示されていること'
-  it 'ユーザーが確認済み状態になっていること'
 end
 
 
