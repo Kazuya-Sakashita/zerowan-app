@@ -53,11 +53,12 @@ RSpec.describe Users::RegistrationsController, type: :controller do
         expect(response).to  render_template "/"
       end
 
-      # it 'params に back: true が設定されている場合、登録画面が描画されること' do
-      #   params[:back] = ture
-      #   post :confirm, params: params
-      #   expect(response).to render_template "devise/registrations/new"
-      # end
+      it 'params に back: true が設定されている場合、登録画面が描画されること' do
+        params[:back] = true
+        post :create, params: params
+        expect(response).to render_template "devise/registrations/new"
+
+      end
 
     end
 
