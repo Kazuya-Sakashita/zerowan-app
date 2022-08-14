@@ -39,7 +39,7 @@ RSpec.describe Profile, type: :model do
 
       it 'phone_number 文字列が入っていた場合にバリデーションエラーが発生すること' do
         phone_number = '123456789z'
-        profile = build(:profile, user:, phone_number:)
+        profile = build(:profile, user:, phone_number: phone_number)
         profile.valid?
         expect(profile.errors[:phone_number]).to include('が無効です。')
       end
