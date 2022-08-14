@@ -34,7 +34,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
 
       it '各パラメーターに正しく値が設定された場合、確認画面に遷移すること' do
         post :confirm, params: params
-        expect(response).to be_successful
+        expect(response).to render_template 'devise/registrations/confirm'
       end
 
       it '各パラメーターに正しく値が設定された場合、ユーザーが正しく作成されること' do
