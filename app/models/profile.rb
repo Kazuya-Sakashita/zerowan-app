@@ -9,6 +9,4 @@ class Profile < ApplicationRecord
     validates :birthday
     validates :breeding_experience
   end
-
-
 end

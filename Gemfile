@@ -54,6 +54,8 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'capybara'
+  gem 'database_rewinder'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'erb_lint'
   gem 'factory_bot_rails'
@@ -66,8 +68,6 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
-  gem 'capybara'
-  gem 'database_rewinder'
 end
 
 group :development do
