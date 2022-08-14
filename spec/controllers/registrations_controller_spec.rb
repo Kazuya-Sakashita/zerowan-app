@@ -38,17 +38,18 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       end
 
       it '各パラメーターに正しく値が設定された場合、ユーザーが正しく作成されること' do
-        expect { create(:user) }.to change { User.count }.by(1)
+        expect do
+          post :create, params: params
+        end.to change { User.count }.by(1)
       end
 
       it 'flash メッセージが正しく表示されていること' do
-        create(:user)
         post :create, params: params
         expect(flash[:notice]).to eq '本人確認用のメールを送信しました。メール内のリンクからアカウントを有効化させてください。'
       end
 
       it '各パラメーターに正しく値が設定された場合、home 画面が描画されること' do
-        create(:user)
+        post :confirm, params: params
         expect(response).to render_template '/'
       end
 
