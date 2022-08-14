@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe '会員登録', type: :feature do
+RSpec.feature '会員登録', type: :feature do
   before do
     visit new_user_registration_path
     ActionMailer::Base.deliveries.clear
   end
 
-  it '表示される内容が正しいこと（フォームの内容やボタン、リンク等が正しく表示されていること）' do
+  scenario '表示される内容が正しいこと（フォームの内容やボタン、リンク等が正しく表示されていること）' do
     expect(page).to have_content 'メールアドレス'
     expect(page).to have_content 'パスワード'
     expect(page).to have_content 'パスワード（確認用）'
@@ -27,7 +27,7 @@ RSpec.describe '会員登録', type: :feature do
     expect(page).to have_button '登録内容確認'
   end
 
-  it '正しく値を入力した場合、登録確認画面に遷移すること' do
+  scenario '正しく値を入力した場合、登録確認画面に遷移すること' do
     fill_in 'メールアドレス', with: 'kz0508+88@gmail.com'
     fill_in 'パスワード', with: 'password'
     fill_in 'パスワード（確認用）', with: 'password'
@@ -40,7 +40,7 @@ RSpec.describe '会員登録', type: :feature do
     expect(page).to have_current_path('/users/sign_up/confirm')
   end
 
-  it '値が全て入力されていなかった場合、バリデーションエラーの内容が表示されること' do
+  scenario '値が全て入力されていなかった場合、バリデーションエラーの内容が表示されること' do
     fill_in 'メールアドレス', with: nil
     fill_in 'パスワード', with: nil
     fill_in 'パスワード（確認用）', with: nil
@@ -60,7 +60,7 @@ RSpec.describe '会員登録', type: :feature do
     expect(page).to have_selector 'li', text: '飼主経験 入力されていません。'
   end
 
-  it '表示される内容が正しいこと
+  scenario '表示される内容が正しいこと
             「登録」ボタンを押下でメール送信処理が行われること、
             flash メッセージが正しく表示されていること、
             「登録」ボタンを押下で Home 画面に遷移すること
@@ -102,7 +102,7 @@ RSpec.describe '会員登録', type: :feature do
     expect(page).to have_current_path('/users/sign_in')
   end
 
-  it 'params にユーザーの confirmation_token が含まれていない場合、エラー画面が描画されること' do
+  scenario 'params にユーザーの confirmation_token が含まれていない場合、エラー画面が描画されること' do
     fill_in 'メールアドレス', with: 'kz0508+88@gmail.com'
     fill_in 'パスワード', with: 'password'
     fill_in 'パスワード（確認用）', with: 'password'
@@ -119,7 +119,7 @@ RSpec.describe '会員登録', type: :feature do
     expect(page).to have_content 'エラーが発生したため ユーザー は保存されませんでした。'
   end
 
-  it '「修正する」ボタンを押下で登録画面に戻れること' do
+  scenario '「修正する」ボタンを押下で登録画面に戻れること' do
     fill_in 'メールアドレス', with: 'kz0508+88@gmail.com'
     fill_in 'パスワード', with: 'password'
     fill_in 'パスワード（確認用）', with: 'password'
