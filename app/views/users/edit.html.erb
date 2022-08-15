@@ -47,7 +47,19 @@
     <div>
       <div class="form-signup rounded ">
         <%= form_with model: @user, url: user_registration_path, method: :put, local: true do |f| %>
-          <%= render 'layouts/shared/error_messages', user: f.object %>
+
+          <!--          TODO バリデーションメッセージ表示から-->
+          <% if @user.errors.any? %>
+            <div class="alert">
+              <ul>
+                <% user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <!--          このあたりまで-->
+
           <div class="form-label">
             <%= f.label :email %> <br/>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: @user.email %>
@@ -58,7 +70,7 @@
           </p>
           <div class="form-label">
             <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
-            <%= f.password_field :current_password,required: true, autocomplete: "current-password", class: 'form-control', placeholder: '変更の際はパスワードを入力ください' %>
+            <%= f.password_field :current_password, required: true, autocomplete: "current-password", class: 'form-control', placeholder: '変更の際はパスワードを入力ください' %>
           </div>
 
           <div class="mt-4">

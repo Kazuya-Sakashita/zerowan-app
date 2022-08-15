@@ -58,6 +58,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       clean_up_passwords resource
       set_minimum_password_length
+      binding.pry
       # respond_with resource
       redirect_to edit_user_path(resource), alert: "アカウント情報更新に失敗しました。"
     end
