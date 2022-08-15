@@ -51,16 +51,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource_updated = update_resource(resource, account_update_params)
     yield resource if block_given?
     if resource_updated
-      set_flash_message_for_update(resource, prev_unconfirmed_email)
-      bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
-      # respond_with resource, location: after_update_path_for(resource)
-      redirect_to edit_user_path(resource), notice: "アカウント情報更新しました。"
+        set_flash_message_for_update(resource, prev_unconfirmed_email)
+        bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
+        # respond_with resource, location: after_update_path_for(resource)
+        redirect_to edit_user_path(resource)
     else
       clean_up_passwords resource
       set_minimum_password_length
-      binding.pry
       # respond_with resource
-      redirect_to edit_user_path(resource), alert: "アカウント情報更新に失敗しました。"
+      flash[:alert] = 'アカウント情報更新に失敗しました。'
+      redirect_to edit_user_path(resource)
     end
   end
 
