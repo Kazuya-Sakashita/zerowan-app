@@ -37,8 +37,15 @@ ja:
 
             email:
               blank: 入力されていません。
+              taken: 重複しています。
+
             password:
               blank: 入力されていません。
+              too_short: 文字数が足りていません。
+
+            confirmation_token:
+              blank: 入力されていません。
+              invalid: が違います。
         profile:
           attributes:
             name:
@@ -47,6 +54,7 @@ ja:
               blank: 入力されていません。
             phone_number:
               blank: 入力されていません。
+              invalid: が無効です。
             birthday:
               blank: 入力されていません。
             breeding_experience:
@@ -165,5 +173,7 @@ ja:
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+
+
 
 
