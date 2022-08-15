@@ -42,8 +42,10 @@ ja:
             password:
               blank: 入力されていません。
               too_short: 文字数が足りていません。
+
             confirmation_token:
               blank: 入力されていません。
+              invalid: が違います。
         profile:
           attributes:
             name:

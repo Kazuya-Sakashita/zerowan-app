@@ -11,8 +11,8 @@ RSpec.describe User, type: :model do
 
       it '重複したメールアドレスなら無効な状態であること' do
         email = 'test@example.com'
-        FactoryBot.create(:user, email:email)
-        user = build(:user, email:email)
+        user = create(:user, email: email)
+        user = build(:user, email: email)
         user.valid?
         expect(user.errors[:email]).to include('重複しています。')
       end
@@ -20,7 +20,7 @@ RSpec.describe User, type: :model do
 
     context 'password' do
       it 'パスワードが６文字であれば有効なこと' do
-        user = build(:user, password: 'a' * 6)
+        user = build(:user, password: 'a' * 6, password_confirmation: 'a' * 6)
         expect(user).to be_valid
       end
 
