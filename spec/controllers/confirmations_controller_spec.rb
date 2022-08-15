@@ -4,7 +4,6 @@ RSpec.describe Users::ConfirmationsController, type: :controller do
   before do
     @request.env['devise.mapping'] = Devise.mappings[:user]
 
-    create(:user)
     get :show, params: { confirmation_token: user.confirmation_token }
   end
 

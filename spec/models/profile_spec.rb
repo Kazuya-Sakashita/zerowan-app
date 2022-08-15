@@ -23,14 +23,14 @@ RSpec.describe Profile, type: :model do
         expect(profile.errors[:phone_number]).to include('入力されていません。')
       end
 
-      it 'phone_number ９桁に満たない場合にバリデーションエラーが発生すること' do
+      it 'phone_number 9桁以下の場合にバリデーションエラーが発生すること' do
         phone_number = '0' * 9
         profile = build(:profile, user:, phone_number:)
         profile.valid?
         expect(profile.errors[:phone_number]).to include('が無効です。')
       end
 
-      it 'phone_number １２桁より多い場合にバリデーションエラーが発生すること' do
+      it 'phone_number １２桁以上の場合にバリデーションエラーが発生すること' do
         phone_number = '0' * 12
         profile = build(:profile, user:, phone_number:)
         profile.valid?
