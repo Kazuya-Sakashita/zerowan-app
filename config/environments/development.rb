@@ -37,20 +37,14 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
+
+  # MailCatcherドキュメントより
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
+  config.action_mailer.smtp_settings = { address: "smtp", port: 1025 }
   config.action_mailer.raise_delivery_errors = true
 
-  config.action_mailer.smtp_settings = {
-    port:                 587,
-    address:              'smtp.gmail.com',
-    domain:               'gmail.com',
-    user_name:            ENV['MAILADDRESS'],
-    password:             ENV['MAILPASS'],
-    authentication:       'login',
-    enable_starttls_auto: true
-  }
 
+  # メイラービューをキャッシュする,この機能を使用するときはture設定必要
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.
