@@ -22,9 +22,6 @@ RSpec.describe Users::RegistrationsController, type: :controller do
     @request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
-  # it '各パラメーターに正しく値が設定された場合、home 画面が描画されること'
-  # user登録完了後はログイン画面に遷移、画遷移はfeature/users_spec.rbで確認
-
   describe 'ユーザー登録' do
     context '正常系' do
       it '登録画面へのアクセスが成功すること' do
@@ -67,5 +64,34 @@ RSpec.describe Users::RegistrationsController, type: :controller do
         expect(response).to render_template 'devise/registrations/new'
       end
     end
+  end
+
+  describe 'ユーザー更新' do
+    let(:user) { create(:user) }
+    context '正常系' do
+      before do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
+
+      end
+
+      it '正しく値が設定された場合、Home 画面が描画されること' do
+        user = create(:user)
+        sign_in user
+        user_params = attributes_for(:user, password:'password',password_confirmation: 'password', current_password:user.password )
+        # @user_info = { :password => 'password', :password_confirmation => 'password', :current_password => user.password }
+        patch :update, params: { id: user, user: user_params }
+        expect(response).to redirect_to root_path
+        # TODO ここからスタート
+      end
+
+      '正しく値が設定された場合、flash メッセージが正しく表示されること'
+      '正しく値が設定された場合、ユーザーの情報が更新されていること'
+    end
+
+    context '異常系' do
+      '正しく値が設定されなかった場合、登録情報編集画面が描画されること'
+      '正しく値が設定されなかった場合、flash メッセージが正しく表示されること'
+    end
+
   end
 end

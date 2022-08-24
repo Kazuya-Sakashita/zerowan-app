@@ -8,6 +8,7 @@ require 'factory_bot'
 require 'rspec/rails'
 require 'devise'
 require 'capybara/rspec'
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -75,6 +76,6 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # config.include LoginModule
   config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Devise::Test::IntegrationHelpers, type: :request
-  config.include ControllerMacros, type: :controller
-end
+  config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include Devise::TestHelpers, type: :controller
+ end
