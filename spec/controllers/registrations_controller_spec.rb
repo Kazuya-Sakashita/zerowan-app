@@ -69,20 +69,18 @@ RSpec.describe Users::RegistrationsController, type: :controller do
   describe 'ユーザー更新' do
 
     context '正常系' do
-      let(:user) { create(:user, confirmed_at: Date.today ) }
-
       before do
         @request.env['devise.mapping'] = Devise.mappings[:user]
-        # @user = create(:user)
-        # @user.confirm
-        # sign_in(@user) # deviseのsign_inメソッド利用し、ログイン処理をする
+        @user = create(:user)
+        @user.confirm
       end
 
       it '正しく値が設定された場合、Home 画面が描画されること' do
-        sign_in user
         binding.pry
-        user_params = attributes_for(:user, password:'password',password_confirmation: 'password', current_password:user.password )
-        patch :update, params: { id: user.id, user: user_params }
+        sign_in @user
+        user_params = attributes_for(:user, password:'password',password_confirmation: 'password', current_password:@user.password )
+        patch :update, params: { id: @user, user: user_params }
+
         expect(response).to redirect_to root_path
         # TODO ここからスタート
       end
