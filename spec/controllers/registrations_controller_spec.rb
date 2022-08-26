@@ -76,16 +76,39 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       end
 
       it '正しく値が設定された場合、Home 画面が描画されること' do
-        binding.pry
         sign_in @user
         user_params = attributes_for(:user, password:'password',password_confirmation: 'password', current_password:@user.password )
         patch :update, params: { id: @user, user: user_params }
-
         expect(response).to redirect_to root_path
-        # TODO ここからスタート
       end
 
-      '正しく値が設定された場合、flash メッセージが正しく表示されること'
+      it '正しく値が設定された場合(パスワード)、flash メッセージが正しく表示されること' do
+        sign_in @user
+        user_params = attributes_for(:user, email: @user.email, password:'password',password_confirmation: 'password', current_password:@user.password )
+        patch :update, params: { id: @user, user: user_params }
+        binding.pry
+        expect(flash[:notice]).to eq 'アカウント情報を変更しました。'
+      end
+
+      it '正しく値が設定された場合(パスワード)、ユーザーの情報が更新されていること' do
+        sign_in @user
+        user_params = attributes_for(:user, email: @user.email, password:'password',password_confirmation: 'password', current_password:@user.password )
+        patch :update, params: { id: @user, user: user_params }
+        binding.pry
+        expect(@user.reload.password).to eq 'password'
+      end
+
+      it '正しく値が設定された場合(メールアドレス)、flash メッセージが正しく表示されること' do
+        sign_in @user
+        user_params = attributes_for(:user, email: 'test9999999@test.com', current_password:@user.password )
+        patch :update, params: { id: @user, user: user_params }
+        expect(flash[:notice]).to eq 'アカウント情報を変更しました。変更されたメールアドレスの本人確認のため、本人確認用メールより確認処理をおこなってください。'
+      end
+
+
+
+
+
       '正しく値が設定された場合、ユーザーの情報が更新されていること'
     end
 
