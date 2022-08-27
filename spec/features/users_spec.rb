@@ -94,7 +94,6 @@ RSpec.feature '会員登録', type: :feature do
       expect(page).to have_current_path('/')
     end
 
-
     scenario 'flash メッセージが正しく表示されていること' do
       click_button '登録'
       expect(page).to have_content '本人確認用のメールを送信しました。メール内のリンクからアカウントを有効化させてください。'
@@ -140,4 +139,53 @@ RSpec.feature '会員登録', type: :feature do
       end
     end
   end
+
+  describe 'プロフィール編集画面' do
+    before do
+      @user = create(:user, email:'test123456789@test.com',password:'password', password_confirmation: 'password')
+      @user.confirm
+
+    end
+    describe 'プロフィール' do
+      context '正常系' do
+        scenario '表示される内容が正しいこと（フォームの内容やボタン、リンク等が正しく表示されていること）' do
+          sign_in @user
+          visit(edit_user_path(@user))
+
+          binding.pry
+          expect(page).to have_selector '#user_profile_attributes_name', text: 'test123456789@test.com'
+          # expect(page).to have_current_path('/users/3903/edit')
+          # expect(page).to have_content 'test123456789@test.com'
+          # expect(page).to have_content 'password'
+          # expect(page).to have_content 'KAZUYA'
+          # expect(page).to have_content '大阪市'
+          # expect(page).to have_content '00000000000'
+          # expect(page).to have_content '2022年06月26日'
+          # expect(page).to have_content '猫1年'
+          # expect(page).to have_button 'プロフィール内容変更'
+          expect(page).to have_button 'プロフィール内容変更'
+          expect(page).to have_button 'アカウント情報更新'
+
+        end
+        'プロフィール正しく値を入力した場合、ユーザーのマイページ画面に遷移すること'
+      end
+
+      context '異常系' do
+        'プロフィール正しく値を入力なかった場合、バリデーションエラーの内容が表示されること'
+      end
+    end
+  end
+  describe 'アカウント情報' do
+    context '正常系' do
+      'アカウント情報を正しく入力した場合、Home 画面に遷移すること'
+      'アカウント情報を正しく入力した場合、flash メッセージが正しく表示されること'
+    end
+
+    context '異常系' do
+      'アカウント情報を正しく入力しなかった場合、flash メッセージが正しく表示されること'
+      '現在のパスワードを入力し、email を入力しなかった場合、バリデーションエラーの内容が表示されること'
+      '現在のパスワードを入力し、パスワードと確認用パスワードが異なっていた場合、バリデーションエラーの内容が表示されること'
+    end
+  end
+
 end
