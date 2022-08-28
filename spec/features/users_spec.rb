@@ -177,14 +177,18 @@ RSpec.feature '会員登録', type: :feature do
         scenario 'プロフィール正しく値を入力なかった場合、バリデーションエラーの内容が表示されること' do
           sign_in @user
           visit(edit_user_path(@user))
-          # TODO バリデーション表示がされていないバグあり、修正必要
           fill_in 'お名前', with: nil
-          fill_in 'ご住所', with: '大阪市'
-          fill_in 'お電話番号', with: '00000000000'
-          fill_in '生年月日', with: '2022-06-26'
-          fill_in '飼主経験', with: '猫1年'
+          fill_in 'ご住所', with: nil
+          fill_in 'お電話番号', with: nil
+          fill_in '生年月日', with: nil
+          fill_in '飼主経験', with: nil
           click_button 'プロフィール内容変更'
-          expect(page).to have_current_path edit_user_path(@user)
+          expect(page).to have_content 'お名前 入力されていません。'
+          expect(page).to have_content 'ご住所 入力されていません。'
+          expect(page).to have_content 'お電話番号 入力されていません。'
+          expect(page).to have_content 'お電話番号 が無効です。'
+          expect(page).to have_content '生年月日 入力されていません。'
+          expect(page).to have_content '飼主経験 入力されていません。'
         end
       end
     end

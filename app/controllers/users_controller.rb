@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       flash[:alert] = "更新できませんでした。"
-      redirect_to  action: :edit
+      render :edit
     end
   end
 

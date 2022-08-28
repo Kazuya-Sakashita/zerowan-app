@@ -6,6 +6,17 @@
     <div class="form-signup rounded ">
       <%= form_with(model: @user, local: true) do |f| %>
 
+        <% if @user.profile.errors.any? %>
+          <div class = "alert">
+            <ul>
+              <% @user.profile.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+
         <%= f.fields_for :profile do |profile_fields| %>
           <div class="form-label">
             <%= profile_fields.label :name %>
