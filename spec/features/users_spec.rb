@@ -154,8 +154,7 @@ RSpec.feature '会員登録', type: :feature do
           expect(page).to have_field 'ご住所', with: @user.profile.address
           expect(page).to have_field 'お電話番号', with: @user.profile.phone_number
 
-          # TODO 生年月日の部分の判定ができていない
-          # expect(page).to have_date_field '生年月日', with: @user.profile.birthday
+          expect(page).to have_field '生年月日', with: @user.profile.birthday.strftime("%Y-%m-%d")
           expect(page).to have_field '飼主経験', with: @user.profile.breeding_experience
           expect(page).to have_button 'プロフィール内容変更'
           expect(page).to have_field 'メールアドレス', with: @user.email
