@@ -142,49 +142,114 @@ RSpec.feature '会員登録', type: :feature do
 
   describe 'プロフィール編集画面' do
     before do
-      @user = create(:user, email:'test123456789@test.com',password:'password', password_confirmation: 'password')
+      @user = create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password')
       @user.confirm
-
     end
     describe 'プロフィール' do
       context '正常系' do
         scenario '表示される内容が正しいこと（フォームの内容やボタン、リンク等が正しく表示されていること）' do
           sign_in @user
           visit(edit_user_path(@user))
+          expect(page).to have_field 'お名前', with: @user.profile.name
+          expect(page).to have_field 'ご住所', with: @user.profile.address
+          expect(page).to have_field 'お電話番号', with: @user.profile.phone_number
 
-          binding.pry
-          expect(page).to have_selector '#user_profile_attributes_name', text: 'test123456789@test.com'
-          # expect(page).to have_current_path('/users/3903/edit')
-          # expect(page).to have_content 'test123456789@test.com'
-          # expect(page).to have_content 'password'
-          # expect(page).to have_content 'KAZUYA'
-          # expect(page).to have_content '大阪市'
-          # expect(page).to have_content '00000000000'
-          # expect(page).to have_content '2022年06月26日'
-          # expect(page).to have_content '猫1年'
-          # expect(page).to have_button 'プロフィール内容変更'
+          # TODO 生年月日の部分の判定ができていない
+          # expect(page).to have_date_field '生年月日', with: @user.profile.birthday
+          expect(page).to have_field '飼主経験', with: @user.profile.breeding_experience
           expect(page).to have_button 'プロフィール内容変更'
+          expect(page).to have_field 'メールアドレス', with: @user.email
           expect(page).to have_button 'アカウント情報更新'
-
         end
-        'プロフィール正しく値を入力した場合、ユーザーのマイページ画面に遷移すること'
+        scenario 'プロフィール正しく値を入力した場合、ユーザーのマイページ画面に遷移すること' do
+          sign_in @user
+          visit(edit_user_path(@user))
+          fill_in 'お名前', with: 'KAZUYA'
+          fill_in 'ご住所', with: '大阪市'
+          fill_in 'お電話番号', with: '00000000000'
+          fill_in '生年月日', with: '2022-06-26'
+          fill_in '飼主経験', with: '猫1年'
+          click_button 'プロフィール内容変更'
+          expect(page).to have_current_path user_path(@user)
+        end
       end
 
       context '異常系' do
-        'プロフィール正しく値を入力なかった場合、バリデーションエラーの内容が表示されること'
+        scenario 'プロフィール正しく値を入力なかった場合、バリデーションエラーの内容が表示されること' do
+          sign_in @user
+          visit(edit_user_path(@user))
+          # TODO バリデーション表示がされていないバグあり、修正必要
+          fill_in 'お名前', with: nil
+          fill_in 'ご住所', with: '大阪市'
+          fill_in 'お電話番号', with: '00000000000'
+          fill_in '生年月日', with: '2022-06-26'
+          fill_in '飼主経験', with: '猫1年'
+          click_button 'プロフィール内容変更'
+          expect(page).to have_current_path edit_user_path(@user)
+        end
       end
     end
   end
   describe 'アカウント情報' do
+    before do
+      @user = create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password')
+      @user.confirm
+    end
     context '正常系' do
-      'アカウント情報を正しく入力した場合、Home 画面に遷移すること'
-      'アカウント情報を正しく入力した場合、flash メッセージが正しく表示されること'
+      scenario 'アカウント情報を正しく入力した場合、Home 画面に遷移すること' do
+        sign_in @user
+        visit(edit_user_path(@user))
+        fill_in 'メールアドレス', with: 'test123456789@test.com'
+        fill_in '現在のパスワード', with: 'password'
+        fill_in 'パスワード', with: 'password123'
+        fill_in 'パスワード（確認用）', with: 'password123'
+        click_button 'アカウント情報更新'
+        expect(page).to have_current_path root_path
+      end
+
+      scenario 'アカウント情報を正しく入力した場合、flash メッセージが正しく表示されること' do
+        sign_in @user
+        visit(edit_user_path(@user))
+        fill_in 'メールアドレス', with: 'test123456789@test.com'
+        fill_in '現在のパスワード', with: 'password'
+        fill_in 'パスワード', with: 'password123'
+        fill_in 'パスワード（確認用）', with: 'password123'
+        click_button 'アカウント情報更新'
+        expect(page).to have_content 'アカウント情報を変更しました。'
+      end
     end
 
     context '異常系' do
-      'アカウント情報を正しく入力しなかった場合、flash メッセージが正しく表示されること'
-      '現在のパスワードを入力し、email を入力しなかった場合、バリデーションエラーの内容が表示されること'
-      '現在のパスワードを入力し、パスワードと確認用パスワードが異なっていた場合、バリデーションエラーの内容が表示されること'
+      scenario 'アカウント情報を正しく入力しなかった場合、flash メッセージが正しく表示されること' do
+        sign_in @user
+        visit(edit_user_path(@user))
+        fill_in 'メールアドレス', with: 'test123456789@test.com'
+        fill_in '現在のパスワード', with: nil
+        fill_in 'パスワード', with: nil
+        fill_in 'パスワード（確認用）', with: nil
+        click_button 'アカウント情報更新'
+        expect(page).to have_content '変更する場合は現在のパスワードを入力してください。'
+      end
+      scenario '現在のパスワードを入力し、email を入力しなかった場合、バリデーションエラーの内容が表示されること' do
+        sign_in @user
+        visit(edit_user_path(@user))
+        fill_in 'メールアドレス', with: nil
+        fill_in '現在のパスワード', with: 'password'
+        fill_in 'パスワード', with: 'password123'
+        fill_in 'パスワード（確認用）', with: 'password123'
+        click_button 'アカウント情報更新'
+        expect(page).to have_content 'メールアドレス 入力されていません。'
+      end
+      scenario '現在のパスワードを入力し、パスワードと確認用パスワードが異なっていた場合、バリデーションエラーの内容が表示されること' do
+        sign_in @user
+        visit(edit_user_path(@user))
+        fill_in 'メールアドレス', with: 'test123456789@test.com'
+        fill_in '現在のパスワード', with: '20220828'
+        fill_in 'パスワード', with: 'password123'
+        fill_in 'パスワード（確認用）', with: 'password123'
+        click_button 'アカウント情報更新'
+        expect(page).to have_content '現在のパスワード が違います。'
+      end
     end
   end
 
