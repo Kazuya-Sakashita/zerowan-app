@@ -90,17 +90,11 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       end
 
       it '正しく値が設定された場合(パスワード)、ユーザーの情報が更新されていること' do
-        user_params = attributes_for(:user, email: user.email, password:'password',password_confirmation: 'password', current_password: 'password12345' )
-        # put :update, params: { user: user_params }
-        # user.reload
-        # expect(user.valid_password?("password")).to eq(true)#暗号化しているパスワードが正しいものであるかの確認するメソッドvalid_password? を使用する
-        # expect { subject }.to change { "password" }.from(0).to(1)
-        binding.pry
-        # TODO chenge考えるところから
-        expect{
+        user_params = attributes_for(:user, email: 'test123456789@test.com', password:'password',password_confirmation: 'password', current_password: 'password12345' )
+        expect do
           put :update, params: { user: user_params }
           user.reload
-        }.to change(user, :password).from('password12345').to('password')
+        end.to change{user.valid_password?("password")}
       end
 
       it '正しく値が設定された場合(メールアドレス)、flash メッセージが正しく表示されること' do
