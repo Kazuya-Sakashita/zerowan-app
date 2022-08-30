@@ -43,6 +43,7 @@ RSpec.feature '会員登録', type: :feature do
         expect(page).to have_current_path('/users/sign_up/confirm')
       end
     end
+
     context '異常系' do
       scenario '値が全て入力されていなかった場合、バリデーションエラーの内容が表示されること' do
         fill_in 'メールアドレス', with: nil
@@ -94,7 +95,6 @@ RSpec.feature '会員登録', type: :feature do
       expect(page).to have_current_path('/')
     end
 
-
     scenario 'flash メッセージが正しく表示されていること' do
       click_button '登録'
       expect(page).to have_content '本人確認用のメールを送信しました。メール内のリンクからアカウントを有効化させてください。'
@@ -132,6 +132,7 @@ RSpec.feature '会員登録', type: :feature do
         expect(page).to have_current_path('/users/sign_in')
       end
     end
+
     context '異常系' do
       scenario 'params にユーザーの confirmation_token が含まれていない場合、エラー画面が描画されること' do
         click_button '登録'

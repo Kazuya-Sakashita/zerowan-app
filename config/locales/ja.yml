@@ -6,3 +6,10 @@ ja:
     phone_number: お電話番号
     birthday: 生年月日
     breeding_experience: 飼主経験
+
+
+
+  activerecord:
+    errors:
+      messages:
+        record_invalid: レコード無効

@@ -6,29 +6,40 @@
     <div class="form-signup rounded ">
       <%= form_with(model: @user, local: true) do |f| %>
 
+        <% if @user.profile.errors.any? %>
+          <div class = "alert">
+            <ul>
+              <% @user.profile.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+
         <%= f.fields_for :profile do |profile_fields| %>
           <div class="form-label">
-            <%= profile_fields.label :name, '氏名' %>
+            <%= profile_fields.label :name %>
             <%= profile_fields.text_field :name, autocomplete: 'name', class: 'form-control' %>
           </div>
 
           <div class="form-label">
-            <%= profile_fields.label :address, 'ご住所' %>
+            <%= profile_fields.label :address %>
             <%= profile_fields.text_field :address, autocomplete: 'address', class: 'form-control' %>
           </div>
 
           <div class="form-label">
-            <%= profile_fields.label :phone_number, '電話番号' %>
+            <%= profile_fields.label :phone_number %>
             <%= profile_fields.text_field :phone_number, autocomplete: 'phone_number', class: 'form-control' %>
           </div>
 
           <div class="form-label">
-            <%= profile_fields.label :birthday, '生年月日' %>
+            <%= profile_fields.label :birthday %>
             <%= profile_fields.date_field :birthday, autocomplete: 'birthday', class: 'form-control' %>
           </div>
 
           <div class="form-label">
-            <%= profile_fields.label :breeding_experience, '飼主経験' %>
+            <%= profile_fields.label :breeding_experience %>
             <%= profile_fields.text_field :breeding_experience, autocomplete: 'breeding_experience', class: 'form-control' %>
           </div>
 
