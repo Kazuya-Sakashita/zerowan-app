@@ -93,8 +93,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
         user_params = attributes_for(:user, email: 'test123456789@test.com', password:'password',password_confirmation: 'password', current_password: 'password12345' )
         expect do
           put :update, params: { user: user_params }
-          user.reload
-        end.to change{user.valid_password?("password")}
+        end.to change{user.reload.valid_password?("password")}
       end
 
       it '正しく値が設定された場合(メールアドレス)、flash メッセージが正しく表示されること' do
@@ -106,8 +105,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       it '正しく値が設定された場合(メールアドレス)、ユーザーの情報が更新されていること' do
         user_params = attributes_for(:user, email: 'test9999999@test.com', current_password: user.password )
         put :update, params: { user: user_params }
-        user.reload #reloadしないと@user.confirm通らない
-        user.confirm
+        user.reload.confirm
         expect(user.email).to eq 'test9999999@test.com'
       end
     end
