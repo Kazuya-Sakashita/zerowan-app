@@ -30,10 +30,8 @@ RSpec.describe Devise::SessionsController, type: :controller do
       expect(flash[:notice]).to eq 'ログインしました。'
     end
     it '正しく値が入力された場合、ユーザーがログイン状態であること' do
-      # binding.pry
-      # post :create, params: { user: { email: 'test123456789@test.com', password: 'password' } }
-      # binding.pry
-      # TODO ログイン状態判定　未解決
+      post :create, params: { user: { email: 'test123456789@test.com', password: 'password' } }
+      expect(controller).to be_user_signed_in
     end
   end
 
@@ -57,8 +55,9 @@ RSpec.describe Devise::SessionsController, type: :controller do
       expect(flash[:notice]).to eq 'ログアウトしました。'
     end
 
-    'ユーザーがログイン状態ではないこと'
-    # TODO ログイン状態判定　未解決
+    it 'ユーザーがログイン状態ではないこと' do
+      delete :destroy
+      expect(controller).not_to be_user_signed_in
+    end
   end
-
 end
