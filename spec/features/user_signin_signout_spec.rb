@@ -2,13 +2,12 @@ require 'rails_helper'
 
 RSpec.feature '会員登録', type: :feature do
 
-  let(:user) do
+  let!(:user) do
     create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
   end
 
   describe 'ログイン' do
     before do
-      user.reload
       visit new_user_session_path
     end
 
@@ -43,7 +42,6 @@ RSpec.feature '会員登録', type: :feature do
 
   describe 'ログアウト' do
     before do
-      user.reload
       visit new_user_session_path
       fill_in 'メールアドレス', with: 'test123456789@test.com'
       fill_in 'パスワード', with: 'password'
