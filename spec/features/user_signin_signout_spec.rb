@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature '会員登録', type: :feature do
+RSpec.feature 'ログイン認証', type: :feature do
 
   let!(:user) do
     create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
@@ -45,10 +45,8 @@ RSpec.feature '会員登録', type: :feature do
 
   describe 'ログアウト' do
     before do
-      visit new_user_session_path
-      fill_in 'メールアドレス', with: 'test123456789@test.com'
-      fill_in 'パスワード', with: 'password'
-      click_button 'ログイン'
+      sign_in user
+      visit user_path(user)
     end
 
     scenario 'Home 画面に遷移すること' do
