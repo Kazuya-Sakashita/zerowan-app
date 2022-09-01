@@ -40,7 +40,7 @@ RSpec.feature '会員登録', type: :feature do
         fill_in '生年月日', with: '2022-06-26'
         fill_in '飼主経験', with: '猫1年'
         click_button '登録内容確認'
-        expect(page).to have_current_path('/users/sign_up/confirm')
+        expect(current_path).to eq users_sign_up_confirm_path
       end
     end
 
@@ -80,7 +80,7 @@ RSpec.feature '会員登録', type: :feature do
       click_button '登録内容確認'
     end
     scenario '表示される内容が正しいこと' do
-      expect(page).to have_current_path('/users/sign_up/confirm')
+      expect(current_path).to eq users_sign_up_confirm_path
       expect(page).to have_content 'kz0508+88@gmail.com'
       expect(page).to have_content 'password'
       expect(page).to have_content 'KAZUYA'
@@ -92,7 +92,8 @@ RSpec.feature '会員登録', type: :feature do
 
     scenario '「登録」ボタンを押下で Home 画面に遷移すること' do
       click_button '登録'
-      expect(page).to have_current_path('/')
+      expect(current_path).to eq root_path
+
     end
 
     scenario 'flash メッセージが正しく表示されていること' do
@@ -108,7 +109,8 @@ RSpec.feature '会員登録', type: :feature do
 
     scenario '「修正」ボタンを押下で登録画面に戻れること' do
       click_button '修正'
-      expect(page).to have_current_path('/users')
+      expect(current_path).to eq user_registration_path
+
     end
   end
 
@@ -129,7 +131,7 @@ RSpec.feature '会員登録', type: :feature do
         click_button '登録'
         user = User.last
         visit user_confirmation_path(confirmation_token: user.confirmation_token)
-        expect(page).to have_current_path('/users/sign_in')
+        expect(current_path).to eq new_user_session_path
       end
     end
 
