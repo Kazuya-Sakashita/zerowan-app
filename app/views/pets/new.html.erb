@@ -1,0 +1,54 @@
+<h1>里親募集</h1>
+
+
+
+<div class="form-signup rounded mt-5">
+  <%= form_with model: @pes, url: pets_path, local: true do |f| %>
+
+
+
+    <div class="form-label">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="form-label">
+      <%= f.label :gender %>
+      <%= f.select :gender, [["unknown", "0"], ["male", 01], ["female", 02]], { class: 'form-control' }, include_blank: "選択して下さい" %>
+
+    </div>
+
+    <div class="form-label">
+      <%= f.label :age %>
+      <%= f.number_field :age, autocomplete: "off" %>
+
+    </div>
+
+    <div class="form-label">
+      <%= f.label :classification %>
+      <%= f.select :classification, [["unknown", "0"], [" Chihuahua", 01], ["Dachshund", 02]], { class: 'form-control' } %>
+    </div>
+
+
+    <div class="form-label">
+      <%= f.label :introduction %>
+      <%= f.text_field :introduction, class: 'form-control' %>
+    </div>
+
+    <div class="form-label">
+      <%= f.label :vaccination %>
+      <%= f.select :vaccination, [["unknown", "0"], ["vaccinated", 01], ["unvaccinated", 02]], { class: 'form-control' } %>
+    </div>
+
+    <div class="form-label">
+      <%= f.label :castration %>
+      <%= f.select :castration, [["unknown", "0"], ["neutered", 01], ["unneutered", 02]], { class: 'form-control' } %>
+    </div>
+
+
+    <div class="actions">
+      <%= f.submit '登録内容確認', class: 'btn btn-lg comfirm-btn btn-block' %>
+    </div>
+
+  <% end %>
+</div>
