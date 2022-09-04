@@ -1,24 +1,28 @@
 class PetsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @pets = Pet.all
   end
 
   def new
     @pet = Pet.new
+    @pet.pet_images.build
   end
 
   def create
     @pet = Pet.new(pet_params)
     @pet.user_id = current_user.id
-    if @pet.save!
+    if @pet.save
+      flash[:notice] = "登録完了しました。"
       redirect_to pet_path(@pet)
     else
-      render :new
+      render :new, flash[:alert] = "登録できませんでした。"
     end
-
   end
 
   def show
+    @pets = Pet.find(params[:id])
   end
 
   def edit
@@ -27,5 +31,6 @@ end
 
 private
 def pet_params
-  params.permit(:category, :name, :introduction, :gender, :age, :classificationm, :vaccination, :recruitment_status, :user_id)
+  params.permit(:category, :name, :introduction, :gender, :age, :classification,:castration, :vaccination, :recruitment_status, :user_id,
+                pet_images_attributes: [:id, :pet_id, :image])
 end

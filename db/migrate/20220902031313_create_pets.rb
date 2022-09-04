@@ -4,12 +4,12 @@ class CreatePets < ActiveRecord::Migration[7.0]
       t.integer :category
       t.string :name
       t.text :introduction
-      t.integer :gender
-      t.integer :age
-      t.integer :classification
-      t.integer :castration
-      t.integer :vaccination
-      t.integer :recruitment_status
+      t.integer :gender, null: false, default: 0
+      t.integer :age, null: false, default: 0
+      t.integer :classification, null: false, default: 0
+      t.integer :castration, null: false, default: 0
+      t.integer :vaccination, null: false, default: 0
+      t.integer :recruitment_status, null: false, default: 0
       t.references :user
 
       t.timestamps
