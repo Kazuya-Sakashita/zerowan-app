@@ -3,62 +3,60 @@
 
 
 <div class="form-signup rounded mt-5">
-  <%= form_with model: @pes, url: pets_path, local: true do |f| %>
-
-    <%= f.fields_for :pet_images do |pet_images| %>
-      <%= pet_images.file_field :image, multiple: true, name: "pet_images[image][]" %>
-
-    <% end %>
-
-
+  <%= form_with model: @pet, url: pets_path, local: true do |f| %>
     <div class="form-label">
-      <%= f.label :category %>
-      <%= f.select :category, [["unknown", 0], ["dog", 01], ["cat", 02]], { class: 'form-control' }, include_blank: "選択して下さい" %>
-
+      <%= f.fields_for :pet_images_attributes do |f_img| %>
+        <%= f_img.file_field :photo, multiple: true , name: "pet_images[photo]" %>
+      <% end %>
     </div>
-
-    <div class="form-label">
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control' %>
     </div>
+    <div class="form-signup rounded mt-5">
+      <div class="form-label">
+        <%= f.label :category %>
+        <%= f.select :category, [["unknown", 0], ["dog", 01], ["cat", 02]], { class: 'form-control' }, include_blank: "選択して下さい" %>
 
-    <div class="form-label">
-      <%= f.label :gender %>
-      <%= f.select :gender, [["unknown", 0], ["male", 01], ["female", 02]], { class: 'form-control' }, include_blank: "選択して下さい" %>
+      </div>
 
+      <div class="form-label">
+        <%= f.label :petname %>
+        <%= f.text_field :petname, class: 'form-control' %>
+      </div>
+
+      <div class="form-label">
+        <%= f.label :gender %>
+        <%= f.select :gender, [["unknown", 0], ["male", 01], ["female", 02]], { class: 'form-control' }, include_blank: "選択して下さい" %>
+
+      </div>
+
+      <div class="form-label">
+        <%= f.label :age %>
+        <%= f.number_field :age, autocomplete: "off" %>
+
+      </div>
+
+      <div class="form-label">
+        <%= f.label :classification %>
+        <%= f.select :classification, [["unknown", 0], [" Chihuahua", 01], ["Dachshund", 02]], { class: 'form-control' } %>
+      </div>
+
+
+      <div class="form-label">
+        <%= f.label :introduction %>
+        <%= f.text_field :introduction, class: 'form-control' %>
+      </div>
+
+      <div class="form-label">
+        <%= f.label :vaccination %>
+        <%= f.select :vaccination, [["unknown", 0], ["vaccinated", 01], ["unvaccinated", 02]], { class: 'form-control' } %>
+      </div>
+
+      <div class="form-label">
+        <%= f.label :castration %>
+        <%= f.select :castration, [["unknown", 0], ["neutered", 01], ["unneutered", 02]], { class: 'form-control' } %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit '登録内容確認', class: 'btn btn-lg comfirm-btn btn-block' %>
+      </div>
     </div>
-
-    <div class="form-label">
-      <%= f.label :age %>
-      <%= f.number_field :age, autocomplete: "off" %>
-
-    </div>
-
-    <div class="form-label">
-      <%= f.label :classification %>
-      <%= f.select :classification, [["unknown", 0], [" Chihuahua", 01], ["Dachshund", 02]], { class: 'form-control' } %>
-    </div>
-
-
-    <div class="form-label">
-      <%= f.label :introduction %>
-      <%= f.text_field :introduction, class: 'form-control' %>
-    </div>
-
-    <div class="form-label">
-      <%= f.label :vaccination %>
-      <%= f.select :vaccination, [["unknown", 0], ["vaccinated", 01], ["unvaccinated", 02]], { class: 'form-control' } %>
-    </div>
-
-    <div class="form-label">
-      <%= f.label :castration %>
-      <%= f.select :castration, [["unknown", 0], ["neutered", 01], ["unneutered", 02]], { class: 'form-control' } %>
-    </div>
-
-
-    <div class="actions">
-      <%= f.submit '登録内容確認', class: 'btn btn-lg comfirm-btn btn-block' %>
-    </div>
-
   <% end %>
-</div>

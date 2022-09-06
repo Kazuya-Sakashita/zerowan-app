@@ -2,7 +2,7 @@ class CreatePets < ActiveRecord::Migration[7.0]
   def change
     create_table :pets do |t|
       t.integer :category
-      t.string :name
+      t.string :petname
       t.text :introduction
       t.integer :gender, null: false, default: 0
       t.integer :age, null: false, default: 0

@@ -1,4 +1,5 @@
 class PetImage < ApplicationRecord
+  mount_uploader :photo, PetImagesUploader
   belongs_to :pet
-  accepts_nested_attributes_for :pet, allow_destroy: true
+
 end

@@ -7,12 +7,16 @@ class PetsController < ApplicationController
 
   def new
     @pet = Pet.new
-    @pet.pet_images.build
+    # @pet.pet_images.build
+    @PetImages = @pet.pet_images.new
+
   end
 
   def create
     @pet = Pet.new(pet_params)
-    @pet.user_id = current_user.id
+    # @pet.pet_images.build
+    # @pet.user_id = current_user.id
+
     if @pet.save
       flash[:notice] = "登録完了しました。"
       redirect_to pet_path(@pet)
@@ -30,7 +34,8 @@ class PetsController < ApplicationController
 end
 
 private
+
 def pet_params
-  params.permit(:category, :name, :introduction, :gender, :age, :classification,:castration, :vaccination, :recruitment_status, :user_id,
-                pet_images_attributes: [:id, :pet_id, :image])
+  params.require(:pet).permit(:category, :petname, :introduction, :gender, :age, :classification, :castration, :vaccination, :recruitment_status,
+                              pet_images_attributes: [:id, :photo])
 end

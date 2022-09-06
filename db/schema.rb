@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_03_042250) do
 
   create_table "pets", force: :cascade do |t|
     t.integer "category"
-    t.string "name"
+    t.string "petname"
     t.text "introduction"
     t.integer "gender", default: 0, null: false
     t.integer "age", default: 0, null: false
