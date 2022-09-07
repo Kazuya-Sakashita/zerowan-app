@@ -7,17 +7,14 @@ class PetsController < ApplicationController
 
   def new
     @pet = Pet.new
-    # @pet.pet_images.build
-    @PetImages = @pet.pet_images.new
+    @pet.pet_images.build
 
   end
 
   def create
     @pet = Pet.new(pet_params)
-    # @pet.pet_images.build
-    # @pet.user_id = current_user.id
 
-    if @pet.save
+    if @pet.save!
       flash[:notice] = "登録完了しました。"
       redirect_to pet_path(@pet)
     else
@@ -37,5 +34,5 @@ private
 
 def pet_params
   params.require(:pet).permit(:category, :petname, :introduction, :gender, :age, :classification, :castration, :vaccination, :recruitment_status,
-                              pet_images_attributes: [:id, :photo])
+                              pet_images_attributes: [:id, :photo]).merge(user_id: current_user.id)
 end
