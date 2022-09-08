@@ -5,9 +5,8 @@
 <div class="form-signup rounded mt-5">
   <%= form_with model: @pet, url: pets_path, local: true do |f| %>
     <div class="form-label">
-      <%= f.fields_for :pet_images_attributes do |f_img| %>
-        <%= f_img.file_field :photo, multiple: true , name: "pet_images[photo]" %>
-      <% end %>
+      <%= f.label :photoes %>
+      <%= f.file_field :photoes, multiple: true %>
     </div>
     </div>
     <div class="form-signup rounded mt-5">
