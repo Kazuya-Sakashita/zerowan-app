@@ -13,5 +13,12 @@ class Pet < ApplicationRecord
     validates :castration
     validates :vaccination
   end
+
+  enum :gender, { unknown: 0, male: 1, female: 2 }
+  enum :category, { dog: 0, cat: 1, others: 2 }
+  enum :classification, { Chihuahua: 0, Dachshund: 1, others: 2 }, prefix: true
+  enum :vaccination, { unknown: 0, vaccinated: 1, unvaccinated: 2 }, prefix: true
+  enum :castration, { unknown: 0, neutered: 1, unneutered: 2 }, prefix: true
+
 end
 

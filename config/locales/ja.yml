@@ -13,3 +13,28 @@ ja:
     errors:
       messages:
         record_invalid: レコード無効
+
+
+
+  enums:
+    pet:
+      gender:
+        unknown: 不明
+        male: オス
+        female: メス
+      category:
+        dog: イヌ
+        cat: ネコ
+        others: その他
+      classification:
+        Chihuahua: チワワ
+        Dachshund: ダックス
+        others: その他
+      vaccination:
+        unknown: 不明
+        vaccinated: 接種済
+        unvaccinated: 未接種
+      castration:
+        unknown: 不明
+        neutered: 去勢済
+        unneutered: 未去勢

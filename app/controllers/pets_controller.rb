@@ -11,6 +11,11 @@ class PetsController < ApplicationController
 
   end
 
+  def confirm
+    @pet = PetForm.new(pet_form_params.merge(user_id: current_user.id))
+    render :new if @pet.invalid?
+  end
+
   def create
     @pet = PetForm.new(pet_form_params.merge(user_id: current_user.id))
     #TODO rubymineで余計な引数がみつかりました警告　確認する
