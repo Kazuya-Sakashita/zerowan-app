@@ -6,7 +6,7 @@ class PetForm
   #               :user_id, :pet_images
 
 
-  attr_accessor :photoes
+  attr_accessor :photos
 
   def save!
         return false if invalid?
@@ -23,7 +23,7 @@ class PetForm
           user_id: user_id,
           recruitment_status:0
         )
-        photoes.each do |photo|
+        photos.each do |photo|
             pet.pet_images.build(photo: photo).save!
           end
 

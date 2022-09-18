@@ -5,11 +5,11 @@
   <%= form_with model: @pet, url: pets_path(@pet), local: true do |f| %>
     <!--TODO 画像確認の表示-->
     <% binding.pry %>
-    params[:pet_form][:photes]
-    <%= f.hidden_field :photoes %>
-    <td class="px-3"><%= @pet.photoes %></td>
+    params[:pet_form][:photos]
+    <%= f.hidden_field :photos %>
+    <td class="px-3"><%= @pet.photos %></td>
 
-      <%= image_tag @pet.photoes[1].url %>
+      <%= image_tag @pet.photos[1].url %>
 
     <!--TODO Enumの日本語変換-->
     <table>
