@@ -6,8 +6,7 @@ class PetForm
   #               :user_id, :pet_images
 
 
-
-  attr_accessor :category, :petname, :introduction, :gender, :age, :classification, :castration, :vaccination, :recruitment_status, :photoes, :user_id
+  attr_accessor :photoes
 
   def save!
         return false if invalid?

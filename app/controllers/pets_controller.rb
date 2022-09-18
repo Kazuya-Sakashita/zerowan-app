@@ -6,20 +6,28 @@ class PetsController < ApplicationController
   end
 
   def new
-    @pet = PetForm.new(user_id: current_user.id)
-    #TODO rubymineで不明なキーワード警告　確認する
+    # pet ペット情報を保存　petForm 画像を保存で分ける
+    @pet = Pet.new
+    @pet_imagaes = PetImage.new
 
   end
 
   def confirm
-    @pet = PetForm.new(pet_form_params.merge(user_id: current_user.id))
-    render :new if @pet.invalid?
+    @pet = Pet.new
+
+    if @pet.valid?
+      render action: 'confirm'
+    else
+      flash.now.alert = '入力に誤りがあります。'
+      render action: 'new'
+    end
   end
 
   def create
-    @pet = PetForm.new(pet_form_params.merge(user_id: current_user.id))
-    #TODO rubymineで余計な引数がみつかりました警告　確認する
-
+    @pet = Pet.new(pet_params.merge(user_id: current_user.id))
+    binding.pry
+    @pet_imagaes = PetImage.new(pet_images_params)
+    binding.pry
     if @pet.save!
       flash[:notice] = "登録完了しました。"
       redirect_to pets_path
@@ -39,6 +47,11 @@ end
 
 private
 
-def pet_form_params
-  params.require(:pet_form).permit(:category, :petname, :introduction, :gender, :age, :classification, :castration, :vaccination, :recruitment_status, photoes: [])
+def pet_params
+  params.require(:pet).permit(:category, :petname, :introduction, :gender, :age, :classification, :castration, :vaccination, :recruitment_status)
+
+end
+def pet_images_params
+  params.require(:pet_image).permit(:id, photos:[] )
+
 end

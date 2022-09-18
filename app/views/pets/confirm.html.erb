@@ -4,40 +4,44 @@
 <div class="signup-confirm rounded mt-5">
   <%= form_with model: @pet, url: pets_path(@pet), local: true do |f| %>
     <!--TODO 画像確認の表示-->
-
+    <% binding.pry %>
+    params[:pet_form][:photes]
     <%= f.hidden_field :photoes %>
-    <td class="px-3"><%= params[:pet_form][:photoes] %></td>
+    <td class="px-3"><%= @pet.photoes %></td>
+
+      <%= image_tag @pet.photoes[1].url %>
+
     <!--TODO Enumの日本語変換-->
     <table>
       <tr>
         <td>カテゴリ</td>
         <%= f.hidden_field :category %>
-        <td class="px-3"><%= params[:pet_form][:category] %></td>
+        <td class="px-3"><%= @pet.category %></td>
       </tr>
       <tr>
         <td>ペットのお名前</td>
         <%= f.hidden_field :petname %>
-        <td class="px-3"><%= params[:pet_form][:petname] %></td>
+        <td class="px-3"><%= @pet.petname %></td>
       </tr>
       <tr>
         <td>性別</td>
         <%= f.hidden_field :gender %>
-        <td class="px-3"><%= params[:pet_form][:gender] %></td>
+        <td class="px-3"><%= @pet.gender %></td>
       </tr>
       <tr>
         <td>年齢</td>
         <%= f.hidden_field :age %>
-        <td class="px-3"><%= params[:pet_form][:age] %>才</td>
+        <td class="px-3"><%= @pet.age %>才</td>
       </tr>
       <tr>
         <td>種別</td>
         <%= f.hidden_field :classification %>
-        <td class="px-3"><%= params[:pet_form][:classification] %> </td>
+        <td class="px-3"><%= @pet.classification %> </td>
       </tr>
       <tr>
         <td>紹介文</td>
         <%= f.hidden_field :introduction %>
-        <td class="px-3"><%= params[:pet_form][:introduction] %></td>
+        <td class="px-3"><%= @pet.introduction %></td>
       </tr>
       <tr>
         <td>性格</td>
@@ -46,12 +50,12 @@
       <tr>
         <td>ワクチン有無</td>
         <%= f.hidden_field :vaccination %>
-        <td class="px-3"><%= params[:pet_form][:vaccination] %></td>
+        <td class="px-3"><%= @pet.vaccination %></td>
       </tr>
       <tr>
         <td>去勢</td>
         <%= f.hidden_field :castration %>
-        <td class="px-3"><%= params[:pet_form][:castration] %></td>
+        <td class="px-3"><%= @pet.castration %></td>
       </tr>
       <tr>
         <td>譲渡可能地域</td>

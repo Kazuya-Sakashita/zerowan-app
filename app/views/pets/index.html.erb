@@ -1,2 +1,26 @@
 <h1>Pets#index</h1>
 <p>Find me in app/views/pets/index.html.erb</p>
+<h2>掲載中の里親募集</h2>
+
+<div class="container">
+  <div class="row">
+    <% @pets.each do |pet| %>
+      <div class="col-4">
+        <div class="card my-2">
+          <img src="..." class="card-img-top" alt="...">
+          <strong>Pet photo path:</strong>
+
+          <%#= image_tag pet.pet_images.first.photo %>
+<!--          TODO 画像表示できていない,画像アドレスの受け渡しがうまくできていない-->
+          <div class="card-body">
+            <h5 class="card-title"><%= pet.petname %></h5>
+            <p><%= pet.classification %>/<%= pet.age %>才/<%= pet.gender %></p>
+            <h5 class="card-title">譲渡可能地域</h5>
+            <p class="card-text"><%= pet.introduction %></p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
