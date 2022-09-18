@@ -34,7 +34,8 @@ class PetsController < ApplicationController
       redirect_to pets_path
       #TODO showに遷移させようと思ったがidが渡せなかったので一旦、indexに遷移
     else
-      render :new, flash[:alert] = "登録できませんでした。"
+      flash[:alert] = "登録できませんでした。"
+      render :new
     end
   end
 
