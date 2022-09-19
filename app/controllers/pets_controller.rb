@@ -24,10 +24,11 @@ class PetsController < ApplicationController
   end
 
   def create
-    @pet = Pet.new(pet_params.merge(user_id: current_user.id))
-    @pet_imagaes = PetForm.new(pet_images_params)
-    binding.pry
-    if @pet.save && @pet_imagaes.save!
+    @pet = Pet.new(pet_params.merge(user_id: current_user.id)
+    if @pet.save!
+      @pet.reload.id
+      @pet_imagaes = PetForm.new(pet_images_params.merge(pet_id: @pet.reload.id))
+      @pet_imagaes.save!
       flash[:notice] = "登録完了しました。"
       redirect_to pets_path
       #TODO showに遷移させようと思ったがidが渡せなかったので一旦、indexに遷移
@@ -43,15 +44,15 @@ class PetsController < ApplicationController
 
   def edit
   end
+
+  private
+
+  def pet_params
+    params.require(:pet).permit(:category, :petname, :introduction, :gender, :age, :classification, :castration, :vaccination, :recruitment_status)
+
+  end
+
+  def pet_images_params
+    params.require(:pet_form).permit(:id, { photos: [] })
+  end
 end
-
-private
-
-def pet_params
-  params.require(:pet).permit(:category, :petname, :introduction, :gender, :age, :classification, :castration, :vaccination, :recruitment_status)
-
-end
-def pet_images_params
-  params.require(:pet_form).permit(:id, { photos: [] } )
-end
-
