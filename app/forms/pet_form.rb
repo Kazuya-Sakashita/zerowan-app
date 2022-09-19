@@ -1,33 +1,19 @@
 class PetForm
   include ActiveModel::Model
 
-
-  # attr_accessor :category, :petname, :introduction, :gender, :age, :classification, :castration, :vaccination, :recruitment_status,
-  #               :user_id, :pet_images
-
-
   attr_accessor :photos
 
-  def save!
-        return false if invalid?
-        pet = Pet.new(
-          category: category,
-          petname: petname,
-          introduction: introduction,
-          gender: gender,
-          age: age,
-          classification: classification,
-          castration: castration,
-          vaccination: vaccination,
-          recruitment_status: recruitment_status,
-          user_id: user_id,
-          recruitment_status:0
-        )
-        photos.each do |photo|
-            pet.pet_images.build(photo: photo).save!
-          end
 
-        pet.save! ? true : false
-      end
+  def save!
+    return if invalid?
+    binding.pry
+    #ここでpetに紐づいての登録にしなければならない。
+    # pet.pet_images.buildを使用していたが、フォームを分割したため使えない。
+    # 紐づける方法
+    photos.each do |photo|
+      PetImage.create(photo: photo)
+    end
+    # pet.save! ? true : false
+  end
 
 end

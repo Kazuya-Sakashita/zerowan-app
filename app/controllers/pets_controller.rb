@@ -8,7 +8,7 @@ class PetsController < ApplicationController
   def new
     # pet ペット情報を保存　petForm 画像を保存で分ける
     @pet = Pet.new
-    @pet_imagaes = PetImage.new
+    @pet_imagaes = PetForm.new
 
   end
 
@@ -24,12 +24,10 @@ class PetsController < ApplicationController
   end
 
   def create
-    binding.pry
     @pet = Pet.new(pet_params.merge(user_id: current_user.id))
+    @pet_imagaes = PetForm.new(pet_images_params)
     binding.pry
-    @pet_imagaes = PetImage.new(pet_images_params)
-    binding.pry
-    if @pet.save! && @pet_imagaes.save
+    if @pet.save && @pet_imagaes.save!
       flash[:notice] = "登録完了しました。"
       redirect_to pets_path
       #TODO showに遷移させようと思ったがidが渡せなかったので一旦、indexに遷移
@@ -54,6 +52,6 @@ def pet_params
 
 end
 def pet_images_params
-  params.require(:pet_image).permit(:id, { photos: [].to_s } )
-
+  params.require(:pet_form).permit(:id, { photos: [] } )
 end
+
