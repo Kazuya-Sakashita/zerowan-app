@@ -26,21 +26,16 @@ class PetsController < ApplicationController
   def create
     @pet = Pet.new(pet_params.merge(user_id: current_user.id))
     binding.pry
-    if Pet.transaction do
+    ActiveRecord::Base.transaction do
       @pet.save
       @pet.reload.id
-      PetImage.transaction do
-        @pet_imagaes = PetForm.new(pet_id: @pet.reload.id, images_params: pet_images_params)
-        @pet_imagaes.save!
-      end
+      @pet_imagaes = PetForm.new(pet_images_params)
+      @pet_imagaes.save!
     end
-      flash[:notice] = "登録完了しました。"
-      redirect_to pets_path
-      #TODO showに遷移させようと思ったがidが渡せなかったので一旦、indexに遷移
-    else
-      flash[:alert] = "登録できませんでした。"
-      render :new
-    end
+
+    flash[:notice] = "登録完了しました。"
+    redirect_to pets_path
+    #TODO showに遷移させようと思ったがidが渡せなかったので一旦、indexに遷移
   end
 
   def show
@@ -57,6 +52,6 @@ class PetsController < ApplicationController
   end
 
   def pet_images_params
-    params.require(:pet_form).permit(:id, { photos: [] })
+    params.require(:pet_form).permit(:id, { photos: [] }).merge(pet_id: @pet.id)
   end
 end
