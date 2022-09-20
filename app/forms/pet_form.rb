@@ -8,13 +8,15 @@ class PetForm
   #   super(attributes)
   # end
 
+
   def save!
 
     return if invalid?
 
     photos.each do |image|
       if image.present? #渡ってきたデータの配列最初が''のため、空保存しないため
-        PetImage.create(photo: image, pet_id: pet_id)
+        pet_image = PetImage.new(photo: image, pet_id: pet_id)
+        pet_image.save
       end
     end
 
