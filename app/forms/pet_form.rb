@@ -1,8 +1,7 @@
 class PetForm
   include ActiveModel::Model
 
-  attr_accessor :photo, :pet_id
-  delegate :persisted?, to: :post
+  attr_accessor :photos, :pet_id
 
   # def initialize(attributes = nil, post: PetImage.new)
   #   attributes ||= default_attributes
