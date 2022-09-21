@@ -3,23 +3,18 @@ class PetForm
 
   attr_accessor :photos, :pet_id
 
-  # def initialize(attributes = nil, post: PetImage.new)
-  #   attributes ||= default_attributes
-  #   super(attributes)
-  # end
 
 
   def save!
 
     return if invalid?
-
-    photos.each do |image|
-      if image.present? #渡ってきたデータの配列最初が''のため、空保存しないため
-        pet_image = PetImage.new(photo: image, pet_id: pet_id)
-        pet_image.save
-      end
+    binding.pry
+    @photos = []
+    pet_images.reject(&:blank?)&.each do |image|
+      @photos << PetImage.new(photo: image, pet_id: pet_id)
     end
-
+    puts @photos
+    binding.pry
   end
 
   private
