@@ -3,20 +3,18 @@ class PetForm
 
   attr_accessor :photos, :pet_id
 
-
-
-  def save!
-
-    return if invalid?
-
+  def initialize(pet_id: nil, pet_images: [])
     @photos = []
     pet_images.reject(&:blank?)&.each do |image|
       @photos << PetImage.new(photo: image, pet_id: pet_id)
     end
   end
 
-  private
+  def save!
+    @photos.each(&:save!)
+  end
 
+  private
 
 end
 
