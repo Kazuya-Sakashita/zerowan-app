@@ -4,7 +4,7 @@
 
 <div class="form-signup rounded mt-5">
   <%= form_with model: @pet, url: pets_path(@pet), multipart: true do |f| %>
-    <%= fields_for @pet_imagaes do |img| %>
+    <%= fields_for @pet_images do |img| %>
       <div class="form-label">
         <%= img.label :photos %>
         <%= img.file_field :photos, multiple: true, include_hidden: false, class: 'form-control'  %>

@@ -3,15 +3,17 @@ class PetForm
 
   attr_accessor :photos, :pet_id
 
-  def initialize(pet_id: nil, pet_images: [])
-    @photos = []
-    pet_images.reject(&:blank?)&.each do |image|
-      @photos << PetImage.new(photo: image, pet_id: pet_id)
+  def initialize(attributes = {})
+    photos = attributes[:photos]
+    pet_id = attributes[:pet_id]
+    @pet_image = []
+    photos.reject(&:blank?)&.each do |image|
+      @pet_image << PetImage.new(photo: image, pet_id: pet_id)
     end
   end
 
   def save!
-    @photos.each(&:save!)
+    @pet_image.each(&:save!)
   end
 
   private

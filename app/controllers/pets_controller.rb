@@ -8,7 +8,7 @@ class PetsController < ApplicationController
   def new
     # pet ペット情報を保存　petForm 画像を保存で分ける
     @pet = Pet.new
-    @pet_imagaes = PetForm.new
+    @pet_images = PetForm.new
 
   end
 
@@ -29,8 +29,8 @@ class PetsController < ApplicationController
     ActiveRecord::Base.transaction do
       @pet.save
       @pet.reload.id
-      @pet_imagaes = PetForm.new(pet_images_params)
-      @pet_imagaes.save!
+      @pet_images = PetForm.new(pet_images_params)
+      @pet_images.save!
     end
 
     flash[:notice] = "登録完了しました。"
