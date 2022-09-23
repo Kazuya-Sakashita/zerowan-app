@@ -25,7 +25,7 @@ class PetsController < ApplicationController
 
   def create
     @pet = Pet.new(pet_params.merge(user_id: current_user.id))
-    binding.pry
+
     ActiveRecord::Base.transaction do
       @pet.save
       @pet.reload.id
