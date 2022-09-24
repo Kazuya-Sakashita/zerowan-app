@@ -7,10 +7,7 @@
     <% @pets.each do |pet| %>
       <div class="col-4">
         <div class="card my-2">
-          <img src="..." class="card-img-top" alt="...">
-          <strong>Pet photo path:</strong>
-<!--           pet.pet_images.photo.url -->
-          <!--          TODO 画像表示できていない,画像アドレスの受け渡しがうまくできていない-->
+          <%= image_tag pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
           <div class="card-body">
             <h5 class="card-title"><%= pet.petname %></h5>
             <p><%= pet.classification %>/<%= pet.age %>才/<%= pet.gender %></p>

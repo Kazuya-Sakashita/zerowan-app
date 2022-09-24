@@ -34,7 +34,7 @@ class PetsController < ApplicationController
 
     flash[:notice] = "登録完了しました。"
     redirect_to pet_path @pet
-    #TODO showに遷移させようと思ったがidが渡せなかったので一旦、indexに遷移
+
   end
 
   def show
