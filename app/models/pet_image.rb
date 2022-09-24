@@ -1,6 +1,5 @@
 class PetImage < ApplicationRecord
-  mount_uploaders :photos, PetImageUploader
-  serialize :photos, JSON
+  mount_uploader :photo, PetImageUploader
   belongs_to :pet
 
 end

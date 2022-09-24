@@ -1,26 +1,20 @@
 class PetForm
   include ActiveModel::Model
 
-  attr_accessor :photos, :pet_id
+  attr_accessor :photos
 
-  def initialize(attributes = {})
-    photos = attributes[:photos]
-    pet_id = attributes[:pet_id]
-    @pet_image = []
-
-    if photos.present? #NoMethodError (undefined method `reject' for nil:NilClassのため
-      photos.reject(&:blank?)&.each do |image|
-        @pet_image << PetImage.new(photo: image, pet_id: pet_id)
-      end
+  def initialize(pet_id: nil, pet_images: [])
+    @photos = []
+    pet_images.reject(&:blank?)&.each do |image|
+      @photos << PetImage.new(photo: image, pet_id: pet_id)
     end
   end
 
   def save!
-    @pet_image.each(&:save!)
+
+    @photos.each(&:save!)
   end
 
   private
 
 end
-
-
