@@ -3,11 +3,12 @@
 
 
 <div class="form-signup rounded mt-5">
-  <%= form_with model: @pet, url: pets_path(@pet), local: true, multipart: true do |f| %>
+  <%= form_with model: @pet, url: pets_path, local: true, multipart: true do |f| %>
     <%= fields_for @pet_images do |img| %>
       <div class="form-label">
         <%= img.label :photos %>
-        <%= img.file_field :photos, multiple: true, include_hidden: false, class: 'form-control'  %>
+        <%= img.file_field :photos, multiple: true, include_hidden: false, class: 'form-control' %>
+
       </div>
     <% end %>
     </div>

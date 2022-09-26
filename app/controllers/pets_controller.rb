@@ -12,16 +12,6 @@ class PetsController < ApplicationController
 
   end
 
-  def confirm
-    @pet = Pet.new
-
-    if @pet.valid?
-      render action: 'confirm'
-    else
-      flash.now.alert = '入力に誤りがあります。'
-      render action: 'new'
-    end
-  end
 
   def create
     @pet = current_user.pets.build pet_params
