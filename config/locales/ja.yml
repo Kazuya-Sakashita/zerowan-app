@@ -6,8 +6,15 @@ ja:
     phone_number: お電話番号
     birthday: 生年月日
     breeding_experience: 飼主経験
-
-
+    gender: 性別
+    category: カテゴリ
+    petname: ペットのお名前
+    classification: 種別
+    vaccination: ワクチン接種有無
+    castration: 去勢有無
+    introduction: ペットのご紹介
+    photos: 紹介画像
+    age: 年齢
 
   activerecord:
     errors:
@@ -38,3 +45,4 @@ ja:
         unknown: 不明
         neutered: 去勢済
         unneutered: 未去勢
+

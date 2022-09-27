@@ -13,4 +13,5 @@ RSpec.describe PetImage, type: :model do
     expect(pet_image.errors[:pet_id]).to include('を入力してください')
   end
   # TODO 画像４枚までのバリデーションができていない
+  # '登録画像は最大４枚まで' '画像４枚の場合' '画像５枚の場合'
 end
