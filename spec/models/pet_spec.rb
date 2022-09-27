@@ -44,12 +44,3 @@ RSpec.describe Pet, type: :model do
     end
   end
 end
-
-# validates :petname
-# validates :category
-# validates :introduction
-# validates :gender
-# validates :age
-# validates :classification
-# validates :castration
-# validates :vaccination

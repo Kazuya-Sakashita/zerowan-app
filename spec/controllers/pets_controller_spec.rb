@@ -43,6 +43,8 @@ RSpec.describe PetsController, type: :controller do
         #
         # put :create, params: { pet: pet_params }
         # expect(flash[:notice]).to eq '登録完了しました。'
+        # TODO 登録のpet_imageのフォームオブジェクトを使用した部分はどうするのか？
+
       end
 
 
