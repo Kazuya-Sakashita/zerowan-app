@@ -21,7 +21,7 @@ class PetsController < ApplicationController
       @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images[:photos])
       @pet_imagaes.save!
     end
-    @pet.errors.full_messages
+    
     flash[:notice] = "登録完了しました。"
     redirect_to pet_path @pet
 
