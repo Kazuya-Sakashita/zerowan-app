@@ -4,6 +4,18 @@
 
 <div class="form-signup rounded mt-5">
   <%= form_with model: @pet, url: pets_path, local: true, multipart: true do |f| %>
+    <% if @pet.errors.any? %>
+      <div class = "alert">
+        <ul>
+          <% @pet.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+
     <%= fields_for @pet_images do |img| %>
       <div class="form-label">
         <%= img.label :photos %>
@@ -11,7 +23,7 @@
 
       </div>
     <% end %>
-    </div>
+
     <div class="form-signup rounded mt-5">
       <div class="form-label">
         <%= f.label :category %>
@@ -64,3 +76,4 @@
       </div>
     </div>
   <% end %>
+</div>

@@ -43,9 +43,8 @@ RSpec.feature '里親募集（登録）', type: :feature do
         expect(page).to have_select('去勢有無', options: %w!不明 去勢済 未去勢!)
       end
 
-      scenario '正しく値を入力した場合、登録確認画面に遷移すること' do
+      scenario '正しく値を入力した場合、flash メッセージが正しく表示されていること' do
         attach_file '紹介画像', "#{Rails.root}/spec/fixtures/images/Dachshund3.jpeg"
-        # attach_file 'pet_form[photos][]', File.join(Rails.root, 'spec/fixtures/images/Dachshund3.jpeg')
         select 'イヌ', from: 'カテゴリ'
         fill_in 'ペットのお名前', with: 'Sora'
         select 'オス', from: '性別'
@@ -55,13 +54,28 @@ RSpec.feature '里親募集（登録）', type: :feature do
         select '接種済', from: 'ワクチン接種有無'
         select '未去勢', from: '去勢有無'
         click_button '登録内容確認'
-        binding.pry
-        # expect(page).to have_current_path pet_path(pet)
-
-        #TODO 保存されないため??? newに戻っているようにみえる
+        expect(page).to have_content '登録完了しました。'
 
       end
+      '正しく値を入力した場合、登録確認画面に遷移すること'
+      # expect(current_path).to eq pet_path(pet)
+      # TODO id の渡し方が不明
     end
 
+    context '異常系' do
+      scenario '値が全て入力されていなかった場合、バリデーションエラーの内容が表示されること' do
+        attach_file '紹介画像', nil
+        select 'イヌ', from: nil
+        fill_in 'ペットのお名前', with: nil
+        select 'オス', from: nil
+        fill_in '年齢', with: nil
+        select 'チワワ', from: nil
+        fill_in 'ペットのご紹介', with: nil
+        select '接種済', from: nil
+        select '未去勢', from: nil
+        click_button '登録内容確認'
+        expect(current_path).to eq new_pet_path
+      end
+    end
   end
 end

@@ -12,18 +12,22 @@ class PetsController < ApplicationController
 
   end
 
-
   def create
     @pet = current_user.pets.build pet_params
+    #TODO transaction途中でバリデーション判定できていない。保存できていないのに@pet.reload.idしている
     ActiveRecord::Base.transaction do
-      @pet.save
+      @pet.save!
       @pet.reload.id
       @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images[:photos])
       @pet_imagaes.save!
     end
-
+    @pet.errors.full_messages
     flash[:notice] = "登録完了しました。"
     redirect_to pet_path @pet
+
+  rescue => e
+    flash[:alert] = "登録されませんでした。"
+    render 'new'
 
   end
 
