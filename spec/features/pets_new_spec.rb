@@ -55,24 +55,22 @@ RSpec.feature '里親募集（登録）', type: :feature do
         select '未去勢', from: '去勢有無'
         click_button '登録内容確認'
         expect(page).to have_content '登録完了しました。'
-
+        expect(current_path).to eq pet_path(Pet.last)
+        #Pet.last今保存したPet情報を渡したいが、この方法以外が思いつかない
       end
-      '正しく値を入力した場合、登録確認画面に遷移すること'
-      # expect(current_path).to eq pet_path(pet)
-      # TODO id の渡し方が不明
     end
 
     context '異常系' do
       scenario '値が全て入力されていなかった場合、バリデーションエラーの内容が表示されること' do
         attach_file '紹介画像', nil
-        select 'イヌ', from: nil
-        fill_in 'ペットのお名前', with: nil
-        select 'オス', from: nil
-        fill_in '年齢', with: nil
-        select 'チワワ', from: nil
-        fill_in 'ペットのご紹介', with: nil
-        select '接種済', from: nil
-        select '未去勢', from: nil
+        select 'イヌ', from: 'カテゴリ'
+        fill_in('ペットのお名前', with: nil, fill_options: { clear: :backspace })
+        select 'オス', from: '性別'
+        fill_in '年齢', with: '3'
+        select 'チワワ', from: '種別'
+        fill_in('ペットのご紹介', with: nil, fill_options: { clear: :backspace })
+        select '接種済', from: 'ワクチン接種有無'
+        select '未去勢', from: '去勢有無'
         click_button '登録内容確認'
         expect(current_path).to eq new_pet_path
       end

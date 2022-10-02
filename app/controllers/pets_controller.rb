@@ -17,17 +17,17 @@ class PetsController < ApplicationController
     #TODO transaction途中でバリデーション判定できていない。保存できていないのに@pet.reload.idしている
     ActiveRecord::Base.transaction do
       @pet.save!
-      @pet.reload.id
-      @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images[:photos])
+      @pet_imagaes = PetForm.new(pet_id: @pet.reload.id, pet_images: pet_images[:photos])
       @pet_imagaes.save!
     end
-    
+
     flash[:notice] = "登録完了しました。"
     redirect_to pet_path @pet
 
   rescue => e
     flash[:alert] = "登録されませんでした。"
-    render 'new'
+    render action: :new
+    # redirect_to new_pet_path
 
   end
 

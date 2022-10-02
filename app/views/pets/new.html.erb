@@ -38,14 +38,11 @@
       <div class="form-label">
         <%= f.label :gender %>
         <%= f.select :gender, Pet.genders_i18n.invert, {}, class: 'form-control' %>
-
-        <!--　　　　　TODO セレクトボックスできているが日本語化できていいない-->
       </div>
 
       <div class="form-label">
         <%= f.label :age %>
         <%= f.number_field :age, autocomplete: "off", class: 'form-control' %>
-
       </div>
 
       <div class="form-label">
