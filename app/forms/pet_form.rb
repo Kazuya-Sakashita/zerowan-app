@@ -3,18 +3,17 @@ class PetForm
 
   attr_accessor :photos
 
-  with_options presence: true do
-    validates :photo
-    validates :pet_id
-  end
-
+  validates :photos, presence: true
 
   validate :validates_number_of_files
-  FILE_NUMBER_LIMIT = 4 #枚数制限（最大数）
+  # FILE_NUMBER_LIMIT = 5 #枚数制限（最大数）
 
   def validates_number_of_files
     #@photos.lengthで制限をかける
-    @photos.present? && @photos.length <= FILE_NUMBER_LIMIT
+    binding.pry
+    @photos.present? && @photos.length < 5
+    errors.add(:@photos, '添付枚数は４枚までです。')
+    return false
   end
 
   def initialize(pet_id: nil, pet_images: [])
@@ -25,9 +24,8 @@ class PetForm
   end
 
   def save!
+    binding.pry
+    return false if invalid?
     @photos.each(&:save!)
-  end
-
-  private
-
+    end
 end
