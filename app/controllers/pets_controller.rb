@@ -25,9 +25,11 @@ class PetsController < ApplicationController
     redirect_to pet_path @pet
 
   rescue => e
-    flash[:alert] = "登録されませんでした。"
-    render action: :new
-    # redirect_to new_pet_path
+    # flash[:alert] = "登録されませんでした。"
+    flash[:alert] = @pet.errors.full_messages
+    flash[:alert] = @pet_imagaes.errors.full_messages
+    # render action: :new
+    redirect_to new_pet_path
 
   end
 
