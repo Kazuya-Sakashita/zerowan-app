@@ -56,7 +56,6 @@ RSpec.feature '里親募集（登録）', type: :feature do
         click_button '登録内容確認'
         expect(page).to have_content '登録完了しました。'
         expect(current_path).to eq pet_path(Pet.last)
-        #Pet.last今保存したPet情報を渡したいが、この方法以外が思いつかない
       end
     end
 
@@ -73,6 +72,24 @@ RSpec.feature '里親募集（登録）', type: :feature do
         select '未去勢', from: '去勢有無'
         click_button '登録内容確認'
         expect(current_path).to eq new_pet_path
+        expect(page).to have_content 'ペットのお名前を入力してください'
+        expect(page).to have_content 'ペットのご紹介を入力してください'
+        # selectについては入力なくても基本選択されている状態、入力は確認は'ペットのお名前'、'ペットのご紹介'としている。
+      end
+
+      scenario '画像が添付されていなかった場合、バリデーションエラーの内容が表示されること' do
+        attach_file '紹介画像', nil
+        select 'イヌ', from: 'カテゴリ'
+        fill_in('ペットのお名前', with: 'タロウ', fill_options: { clear: :backspace })
+        select 'オス', from: '性別'
+        fill_in '年齢', with: '3'
+        select 'チワワ', from: '種別'
+        fill_in('ペットのご紹介', with: '優しい', fill_options: { clear: :backspace })
+        select '接種済', from: 'ワクチン接種有無'
+        select '未去勢', from: '去勢有無'
+        click_button '登録内容確認'
+        expect(current_path).to eq new_pet_path
+        expect(page).to have_content '紹介画像添付枚数を確認してください。'
       end
     end
   end
