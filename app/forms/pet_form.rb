@@ -3,13 +3,11 @@ class PetForm
 
   attr_accessor :photos
 
-  validates :photos, presence: true
-
   validate :validates_number_of_files
 
-
   def validates_number_of_files
-    if photos.present? && photos.length > 4
+    binding.pry
+    if 1 > photos.length || photos.length > 4
       errors.add(:photos, '添付枚数は４枚までです。')
     end
   end

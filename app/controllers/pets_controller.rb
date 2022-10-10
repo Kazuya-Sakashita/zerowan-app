@@ -14,7 +14,6 @@ class PetsController < ApplicationController
 
   def create
     @pet = current_user.pets.build pet_params
-    #TODO transaction途中でバリデーション判定できていない。保存できていないのに@pet.reload.idしている
     ActiveRecord::Base.transaction do
       @pet.save!
       @pet_imagaes = PetForm.new(pet_id: @pet.reload.id, pet_images: pet_images[:photos])
@@ -47,6 +46,6 @@ class PetsController < ApplicationController
   end
 
   def pet_images
-    params.require(:pet_form).permit(photos: [])
+    params.dig(:pet_form, :photos) || []
   end
 end
