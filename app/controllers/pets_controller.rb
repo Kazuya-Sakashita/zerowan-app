@@ -29,8 +29,7 @@ class PetsController < ApplicationController
     elsif  @pet_imagaes.errors.full_messages.present?
       flash[:alert] = @pet_imagaes.errors.full_messages
     end
-    # flash[:alert] = @pet_imagaes.errors.full_messages
-    # render action: :new
+
     redirect_to new_pet_path
 
   end
