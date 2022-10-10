@@ -56,13 +56,13 @@ RSpec.feature '会員登録', type: :feature do
         fill_in '飼主経験', with: nil
         click_button '登録内容確認'
         expect(page).to have_selector 'h2', text: '8 件のエラーが発生したため ユーザー は保存されませんでした。'
-        expect(page).to have_selector 'li', text: 'メールアドレス 入力されていません。'
-        expect(page).to have_selector 'li', text: 'パスワード 入力されていません。'
-        expect(page).to have_selector 'li', text: 'ご住所 入力されていません。'
-        expect(page).to have_selector 'li', text: 'お電話番号 入力されていません。'
-        expect(page).to have_selector 'li', text: 'お電話番号 が無効です。'
-        expect(page).to have_selector 'li', text: '生年月日 入力されていません。'
-        expect(page).to have_selector 'li', text: '飼主経験 入力されていません。'
+        expect(page).to have_selector 'li', text: 'メールアドレス入力されていません。'
+        expect(page).to have_selector 'li', text: 'パスワード入力されていません。'
+        expect(page).to have_selector 'li', text: 'ご住所入力されていません。'
+        expect(page).to have_selector 'li', text: 'お電話番号入力されていません。'
+        expect(page).to have_selector 'li', text: 'お電話番号が無効です。'
+        expect(page).to have_selector 'li', text: '生年月日入力されていません。'
+        expect(page).to have_selector 'li', text: '飼主経験入力されていません。'
       end
     end
   end

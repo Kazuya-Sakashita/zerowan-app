@@ -48,12 +48,12 @@ RSpec.feature '会員情報編集', type: :feature do
           fill_in '生年月日', with: nil
           fill_in '飼主経験', with: nil
           click_button 'プロフィール内容変更'
-          expect(page).to have_content 'お名前 入力されていません。'
-          expect(page).to have_content 'ご住所 入力されていません。'
-          expect(page).to have_content 'お電話番号 入力されていません。'
-          expect(page).to have_content 'お電話番号 が無効です。'
-          expect(page).to have_content '生年月日 入力されていません。'
-          expect(page).to have_content '飼主経験 入力されていません。'
+          expect(page).to have_content 'お名前入力されていません。'
+          expect(page).to have_content 'ご住所入力されていません。'
+          expect(page).to have_content 'お電話番号入力されていません。'
+          expect(page).to have_content 'お電話番号が無効です。'
+          expect(page).to have_content '生年月日入力されていません。'
+          expect(page).to have_content '飼主経験入力されていません。'
         end
       end
     end
@@ -101,7 +101,7 @@ RSpec.feature '会員情報編集', type: :feature do
         fill_in 'パスワード', with: 'password123'
         fill_in 'パスワード（確認用）', with: 'password123'
         click_button 'アカウント情報更新'
-        expect(page).to have_content 'メールアドレス 入力されていません。'
+        expect(page).to have_content 'メールアドレス入力されていません。'
       end
       scenario '現在のパスワードを入力し、パスワードと確認用パスワードが異なっていた場合、バリデーションエラーの内容が表示されること' do
         fill_in 'メールアドレス', with: 'test123456789@test.com'
@@ -109,7 +109,7 @@ RSpec.feature '会員情報編集', type: :feature do
         fill_in 'パスワード', with: 'password123'
         fill_in 'パスワード（確認用）', with: 'password123'
         click_button 'アカウント情報更新'
-        expect(page).to have_content '現在のパスワード が違います。'
+        expect(page).to have_content '現在のパスワードが違います。'
       end
     end
   end
