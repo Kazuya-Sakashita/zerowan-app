@@ -22,29 +22,19 @@ RSpec.describe PetsController, type: :controller do
         expect(response).to render_template 'pets/new'
       end
 
-      # it '登録時、各パラメータに正しく値が設定された場合、SHOW画面が描画されること' do
-      #   pet_params = attributes_for(:pet,
-      #                               category: 'dog',
-      #                               petname: 'Riku',
-      #                               introduction: '優しく、賢い',
-      #                               gender: 'male',
-      #                               age: 12,
-      #                               classification: 'Chihuahua',
-      #                               castration: 'neutered',
-      #                               vaccination: 'vaccinated',
-      #                               recruitment_status: 0,
-      #                               user_id: user.reload.id
-      #   )
-      #   put :create, params: { pet: pet_params }
-      #   expect(flash[:notice]).to eq '登録完了しました。'
-        # TODO エラー発生のため後回し
-        # ActionController::ParameterMissing:
-        #   param is missing or the value is empty: pet_form
+      it '登録時、各パラメータに正しく値が設定された場合、SHOW画面が描画されること' do
+        @pet = create(:pet,user_id: user.id)
+        pet_images = Array.new
+        pet_images << fixture_file_upload('spec/fixtures/images/Dachshund3.jpeg', 'image/jpeg')
+        pet_images << fixture_file_upload('spec/fixtures/images/dog2.jpeg', 'image/jpeg')
 
+        @pet_images = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
+        binding.pry
+        @pet_images.save
+        binding.pry
+        expect(response).to redirect_to pet_path @pet
 
       end
-
-
 
       '登録時、各パラメータに正しく値が設定された場合、Petが正しく作成されていること'
       '各パラメータに正しく値が設定された場合、flash画面が正しく表示されていること'
