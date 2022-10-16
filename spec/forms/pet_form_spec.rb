@@ -39,6 +39,7 @@ RSpec.describe PetForm, type: :model do
         @pet_imagaes = PetForm.new
         @pet_imagaes.photos = photos
         @pet_imagaes.valid?
+        expect(@pet_imagaes).not_to be_valid
         expect(@pet_imagaes.errors.full_messages).to include('紹介画像添付枚数を確認してください。')
       end
 
@@ -51,6 +52,7 @@ RSpec.describe PetForm, type: :model do
         @pet_imagaes = PetForm.new
         @pet_imagaes.photos = photos
         @pet_imagaes.valid?
+        expect(@pet_imagaes).not_to be_valid
         expect(@pet_imagaes.errors.full_messages).to include('紹介画像添付枚数を確認してください。')
       end
     end
