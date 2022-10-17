@@ -16,34 +16,14 @@ RSpec.describe PetsController, type: :controller do
           photos: ['dog2.jpeg']
         },
         pet: {
-          category: dog,
+          category: 'dog',
           petname: 'riku',
           age: 12,
-          gender: male,
-          classification: Chihuahua,
+          gender: 'male',
+          classification: 'Chihuahua',
           introduction: 'おとなしく、賢い',
-          castration: neutered,
-          vaccination: vaccinated,
-          recruitment_status: 0,
-          user_id: user.id
-        }
-      }
-    end
-
-    let!(:params_nil) do
-      {
-        pet_form: {
-          photos: [nil]
-        },
-        pet: {
-          category: nil,
-          petname: nil,
-          age: nil,
-          gender: nil,
-          classification: nil,
-          introduction: nil,
-          castration: nil,
-          vaccination: nil,
+          castration: 'neutered',
+          vaccination: 'vaccinated',
           recruitment_status: 0,
           user_id: user.id
         }
@@ -80,20 +60,34 @@ RSpec.describe PetsController, type: :controller do
         end
       end
       context '異常系' do
+        before do
+          #各パラメータをnilにセット
+          params[:pet_form][:photos] = nil
+          params[:pet][:category] = nil
+          params[:pet][:petname] = nil
+          params[:pet][:age] = nil
+          params[:pet][:gender] = nil
+          params[:pet][:classification] = nil
+          params[:pet][:introduction] = nil
+          params[:pet][:castration] = nil
+          params[:pet][:vaccination] = nil
+        end
 
         it '登録時、各パラメータに正しく値が設定されなかった場合、登録画面が描画されること' do
-          post :create, params: params_nil
+          post :create, params: params
           expect(response).to redirect_to new_pet_path
         end
 
         it '各パラメータに正しく値が設定されていなかあった場合、flash画面が正しく表示されていること' do
-          post :create, params: params_nil
+          post :create, params: params
           expect(flash[:alert]).to eq [
                                         "ペットのお名前を入力してください",
                                         "カテゴリを入力してください",
                                         "ペットのご紹介を入力してください",
-                                        "性別を入力してください", "年齢を入力してください",
-                                        "種別を入力してください", "去勢有無を入力してください",
+                                        "性別を入力してください",
+                                        "年齢を入力してください",
+                                        "種別を入力してください",
+                                        "去勢有無を入力してください",
                                         "ワクチン接種有無を入力してください"
                                       ]
         end
@@ -102,8 +96,13 @@ RSpec.describe PetsController, type: :controller do
 
     context 'pet/show' do
       context '正常系' do
-        binding.pry
+        it 'SHOW画面が描画されること' do
+          post :create, params: params
+          get :show, params: { id: Pet.last.id }
+          expect(response).to render_template 'pets/show'
+        end
       end
+
     end
   end
 end
