@@ -24,14 +24,8 @@ class PetsController < ApplicationController
     redirect_to pet_path @pet
 
   rescue => e
-    if  @pet.errors.full_messages.present?
-      flash[:alert] = @pet.errors.full_messages
-    elsif  @pet_imagaes.errors.full_messages.present?
-      flash[:alert] = @pet_imagaes.errors.full_messages
-    end
-
+    flash[:alert] = e.record.errors.full_messages
     redirect_to new_pet_path
-
   end
 
   def show

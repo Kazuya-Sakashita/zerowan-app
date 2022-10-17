@@ -16,14 +16,14 @@ RSpec.describe PetsController, type: :controller do
           photos: ['dog2.jpeg']
         },
         pet: {
-          category: 'dog',
+          category: dog,
           petname: 'riku',
           age: 12,
-          gender: 'male',
-          classification: 'Chihuahua',
+          gender: male,
+          classification: Chihuahua,
           introduction: 'おとなしく、賢い',
-          castration: 'neutered',
-          vaccination: 'vaccinated',
+          castration: neutered,
+          vaccination: vaccinated,
           recruitment_status: 0,
           user_id: user.id
         }
@@ -54,47 +54,56 @@ RSpec.describe PetsController, type: :controller do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       sign_in user
     end
-
-    context '正常系' do
-      it '登録画面が描画されること' do
-        get :new
-        expect(response).to render_template 'pets/new'
-      end
-
-      it '登録時、各パラメータに正しく値が設定された場合、SHOW画面が描画されること' do
-        post :create, params: params
-        expect(response).to redirect_to pet_path(Pet.last.id)
-      end
-
-      it '登録時、各パラメータに正しく値が設定された場合、Petが正しく作成されていること' do
-        expect { post :create, params: params }.to change(Pet, :count).by(1)
-      end
-
-      it '各パラメータに正しく値が設定された場合、flash画面が正しく表示されていること' do
-        post :create, params: params
-        expect(flash[:notice]).to eq '登録完了しました。'
+    context 'pet/new' do
+      context '正常系' do
+        it '登録画面が描画されること' do
+          get :new
+          expect(response).to render_template 'pets/new'
+        end
       end
     end
-    context '異常系' do
 
-      it '登録時、各パラメータに正しく値が設定されなかった場合、登録画面が描画されること' do
-        post :create, params: params_nil
-        expect(response).to redirect_to new_pet_path
-      end
+    context 'pet/create' do
+      context '正常系' do
+        it '登録時、各パラメータに正しく値が設定された場合、SHOW画面が描画されること' do
+          post :create, params: params
+          expect(response).to redirect_to pet_path(Pet.last.id)
+        end
 
-      it '各パラメータに正しく値が設定されていなかあった場合、flash画面が正しく表示されていること' do
-        post :create, params: params_nil
-        expect(flash[:alert]).to eq [
-                                      "ペットのお名前を入力してください",
-                                      "カテゴリを入力してください",
-                                      "ペットのご紹介を入力してください",
-                                      "性別を入力してください", "年齢を入力してください",
-                                      "種別を入力してください", "去勢有無を入力してください",
-                                      "ワクチン接種有無を入力してください"
-                                    ]
+        it '登録時、各パラメータに正しく値が設定された場合、Petが正しく作成されていること' do
+          expect { post :create, params: params }.to change(Pet, :count).by(1)
+        end
+
+        it '各パラメータに正しく値が設定された場合、flash画面が正しく表示されていること' do
+          post :create, params: params
+          expect(flash[:notice]).to eq '登録完了しました。'
+        end
       end
-      # 確認画面追加時に実装　'登録時、params に back: true が設定されている場合、登録画面が描画されること'
+      context '異常系' do
+
+        it '登録時、各パラメータに正しく値が設定されなかった場合、登録画面が描画されること' do
+          post :create, params: params_nil
+          expect(response).to redirect_to new_pet_path
+        end
+
+        it '各パラメータに正しく値が設定されていなかあった場合、flash画面が正しく表示されていること' do
+          post :create, params: params_nil
+          expect(flash[:alert]).to eq [
+                                        "ペットのお名前を入力してください",
+                                        "カテゴリを入力してください",
+                                        "ペットのご紹介を入力してください",
+                                        "性別を入力してください", "年齢を入力してください",
+                                        "種別を入力してください", "去勢有無を入力してください",
+                                        "ワクチン接種有無を入力してください"
+                                      ]
+        end
+      end
     end
 
+    context 'pet/show' do
+      context '正常系' do
+        binding.pry
+      end
+    end
   end
 end

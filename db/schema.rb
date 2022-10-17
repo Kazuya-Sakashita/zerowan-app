@@ -35,6 +35,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_03_042250) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["age"], name: "index_pets_on_age"
+    t.index ["category"], name: "index_pets_on_category"
+    t.index ["classification"], name: "index_pets_on_classification"
+    t.index ["gender"], name: "index_pets_on_gender"
     t.index ["user_id"], name: "index_pets_on_user_id"
   end
 
@@ -71,4 +75,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_03_042250) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "pet_images", "pets"
+  add_foreign_key "pets", "users"
 end
