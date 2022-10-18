@@ -1,6 +1,6 @@
 class Profile < ApplicationRecord
   belongs_to :user
-  has_one :profile_image, dependent: :destroy
+
 
   VALID_PHONE_REGEX = /\A\d{10}$|^\d{11}\z/
 
