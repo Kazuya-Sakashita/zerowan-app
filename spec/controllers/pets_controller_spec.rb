@@ -10,20 +10,20 @@ RSpec.describe PetsController, type: :controller do
     let(:user) do
       create(:user, email: 'test123456789@test.com', password: 'password12345', password_confirmation: 'password12345', &:confirm)
     end
-    let!(:params) do
+    let(:params) do
       {
         pet_form: {
           photos: ['dog2.jpeg']
         },
         pet: {
-          category: 'dog',
-          petname: 'riku',
+          category: :dog,
+          petname: :riku,
           age: 12,
-          gender: 'male',
-          classification: 'Chihuahua',
+          gender: :male,
+          classification: :Chihuahua,
           introduction: 'おとなしく、賢い',
-          castration: 'neutered',
-          vaccination: 'vaccinated',
+          castration: :neutered,
+          vaccination: :vaccinated,
           recruitment_status: 0,
           user_id: user.id
         }
@@ -60,17 +60,24 @@ RSpec.describe PetsController, type: :controller do
         end
       end
       context '異常系' do
-        before do
-          #各パラメータをnilにセット
-          params[:pet_form][:photos] = nil
-          params[:pet][:category] = nil
-          params[:pet][:petname] = nil
-          params[:pet][:age] = nil
-          params[:pet][:gender] = nil
-          params[:pet][:classification] = nil
-          params[:pet][:introduction] = nil
-          params[:pet][:castration] = nil
-          params[:pet][:vaccination] = nil
+        let!(:params) do
+          {
+            pet_form: {
+              photos: []
+            },
+            pet: {
+              category: nil,
+              petname: nil,
+              age: nil,
+              gender: nil,
+              classification: nil,
+              introduction: nil,
+              castration: nil,
+              vaccination: nil,
+              recruitment_status: nil,
+              user_id: nil
+            }
+          }
         end
 
         it '登録時、各パラメータに正しく値が設定されなかった場合、登録画面が描画されること' do
@@ -102,7 +109,6 @@ RSpec.describe PetsController, type: :controller do
           expect(response).to render_template 'pets/show'
         end
       end
-
     end
   end
 end
