@@ -1,0 +1,70 @@
+<div class="container">
+  <h2>登録内容確認</h2>
+</div>
+<div class="signup-confirm rounded mt-5">
+  <%= form_with model: @pet, url: pets_path(@pet), local: true do |f| %>
+    <!--TODO 画像確認の表示-->
+    <% binding.pry %>
+    params[:pet_form][:photos]
+    <%= f.hidden_field :photos %>
+    <td class="px-3"><%= @pet.photos %></td>
+
+      <%= image_tag @pet.photos[1].url %>
+
+    <!--TODO Enumの日本語変換-->
+    <table>
+      <tr>
+        <td>カテゴリ</td>
+        <%= f.hidden_field :category %>
+        <td class="px-3"><%= @pet.category %></td>
+      </tr>
+      <tr>
+        <td>ペットのお名前</td>
+        <%= f.hidden_field :petname %>
+        <td class="px-3"><%= @pet.petname %></td>
+      </tr>
+      <tr>
+        <td>性別</td>
+        <%= f.hidden_field :gender %>
+        <td class="px-3"><%= @pet.gender %></td>
+      </tr>
+      <tr>
+        <td>年齢</td>
+        <%= f.hidden_field :age %>
+        <td class="px-3"><%= @pet.age %>才</td>
+      </tr>
+      <tr>
+        <td>種別</td>
+        <%= f.hidden_field :classification %>
+        <td class="px-3"><%= @pet.classification %> </td>
+      </tr>
+      <tr>
+        <td>紹介文</td>
+        <%= f.hidden_field :introduction %>
+        <td class="px-3"><%= @pet.introduction %></td>
+      </tr>
+      <tr>
+        <td>性格</td>
+        <!--TODO 性格の実装-->
+      </tr>
+      <tr>
+        <td>ワクチン有無</td>
+        <%= f.hidden_field :vaccination %>
+        <td class="px-3"><%= @pet.vaccination %></td>
+      </tr>
+      <tr>
+        <td>去勢</td>
+        <%= f.hidden_field :castration %>
+        <td class="px-3"><%= @pet.castration %></td>
+      </tr>
+      <tr>
+        <td>譲渡可能地域</td>
+        <!--TODO 譲渡可能地域の実装-->
+
+      </tr>
+    </table>
+
+    <!--TODO ボタンの位置-->
+    <%= f.submit '里親募集登録', class: 'btn btn-lg comfirm-btn btn-block' %>
+  <% end %>
+</div>

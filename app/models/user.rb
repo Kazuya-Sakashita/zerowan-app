@@ -5,6 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   has_one :profile, dependent: :destroy
+  has_many :pets
+
+
   accepts_nested_attributes_for :profile, allow_destroy: true
 
   with_options presence: true do

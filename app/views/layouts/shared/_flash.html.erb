@@ -5,6 +5,12 @@
 <% end %>
 <% if flash[:alert] %>
   <div class="alert alert-danger">
-    <%= flash[:alert] %>
+    <% if alert.instance_of?(Array) %>
+      <% alert.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    <% else %>
+      <li><%= alert %></li>
+    <% end %>
   </div>
 <% end %>

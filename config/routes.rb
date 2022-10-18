@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only:[:show, :edit, :update]
+  resources :pets
+  post 'pets/confirm', to: 'pets#confirm'
 end
