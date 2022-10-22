@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
 
   accepts_nested_attributes_for :profile, allow_destroy: true
+  accepts_nested_attributes_for :profile_image, allow_destroy: true
+
 
   with_options presence: true do
     with_options uniqueness: true do

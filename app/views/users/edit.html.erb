@@ -16,6 +16,11 @@
           </div>
         <% end %>
 
+        <%= f.fields_for :profile_image do |profile_image_fields| %>
+          <%= profile_image_fields.label :avatar %>
+          <%= profile_image_fields.file_field :avatar, include_hidden: false, class: 'form-control' %>
+          <%= profile_image_fields.hidden_field :avatar_cache %>
+        <% end %>
 
         <%= f.fields_for :profile do |profile_fields| %>
           <div class="form-label">
