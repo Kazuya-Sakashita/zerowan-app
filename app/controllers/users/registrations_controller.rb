@@ -15,8 +15,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     render :new and return if params[:back]
-
     super
+    #空でavatar登録
+    @profile_image = ProfileImage.create!(avatar: '', user_id: User.last.id)
   end
 
   # 新規追加
