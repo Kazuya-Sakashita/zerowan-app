@@ -1,6 +1,6 @@
 class Profile < ApplicationRecord
   belongs_to :user
-
+  mount_uploader :avatar, AvatarUploader
 
   VALID_PHONE_REGEX = /\A\d{10}$|^\d{11}\z/
 

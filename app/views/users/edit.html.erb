@@ -7,7 +7,7 @@
       <%= form_with(model: @user, local: true) do |f| %>
 
         <% if @user.profile.errors.any? %>
-          <div class = "alert">
+          <div class="alert">
             <ul>
               <% @user.profile.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
@@ -16,18 +16,24 @@
           </div>
         <% end %>
 
-        <%= f.fields_for :profile_image do |profile_image_fields| %>
-          <%= profile_image_fields.label :avatar %>
-          <%= profile_image_fields.file_field :avatar, include_hidden: false, class: 'form-control' %>
-          <%= profile_image_fields.hidden_field :avatar_cache %>
-        <% end %>
 
         <%= f.fields_for :profile do |profile_fields| %>
           <div class="form-label">
+            <%= profile_fields.label :avatar %>
+            <div class="container">
+              <% if @user.profile.avatar? %>
+                <%= image_tag @user.profile.avatar.thumb.url, class: 'd-inline' %>
+              <% else %>
+                <image src="/assets/default.png" class="d-inline" width="120"></image>
+              <% end %>
+              <%= profile_fields.file_field :avatar, include_hidden: false, class: 'form-control　d-inline' %>
+            </div>
+          </div>
+          </div>
+          <div class=" form-label">
             <%= profile_fields.label :name %>
             <%= profile_fields.text_field :name, autocomplete: 'name', class: 'form-control' %>
           </div>
-
           <div class="form-label">
             <%= profile_fields.label :address %>
             <%= profile_fields.text_field :address, autocomplete: 'address', class: 'form-control' %>
@@ -53,52 +59,52 @@
           <%= f.submit 'プロフィール内容変更', class: 'btn btn-lg comfirm-btn btn-block' %>
         </div>
       <% end %>
-    </div>
-  </div>
-  <div class="container">
-    <div class="form-signup-title mt-5">
-      <h3>アカウント情報</h3>
-    </div>
-
-    <div>
-      <div class="form-signup rounded ">
-        <%= form_with model: @user, url: user_registration_path, method: :put, local: true do |f| %>
-          <div class="form-label">
-            <%= f.label :email %> <br/>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: @user.email %>
-          </div>
-
-          <p class="mb-0">
-            <span class="change-pw-info">パスワード変更（変更時のみ入力してください)</span>
-          </p>
-          <div class="form-label">
-            <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
-            <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control', placeholder: '変更の際はパスワードを入力ください' %>
-          </div>
-
-          <div class="mt-4">
-
-            <div class="form-label">
-              <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
-              <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>
-              <% if @minimum_password_length %>
-                <br/>
-                <em><%= @minimum_password_length %> characters minimum</em>
-              <% end %>
-            </div>
-
-            <div class="form-label">
-              <%= f.label :password_confirmation %><br/>
-              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>
-            </div>
-          </div>
-
-
-          <div class="actions">
-            <%= f.submit 'アカウント情報更新', class: 'btn btn-lg comfirm-btn btn-block' %>
-          </div>
-        <% end %>
       </div>
+</div>
+<div class="container">
+  <div class="form-signup-title mt-5">
+    <h3>アカウント情報</h3>
+  </div>
+
+  <div>
+    <div class="form-signup rounded ">
+      <%= form_with model: @user, url: user_registration_path, method: :put, local: true do |f| %>
+        <div class="form-label">
+          <%= f.label :email %> <br/>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: @user.email %>
+        </div>
+
+        <p class="mb-0">
+          <span class="change-pw-info">パスワード変更（変更時のみ入力してください)</span>
+        </p>
+        <div class="form-label">
+          <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
+          <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control', placeholder: '変更の際はパスワードを入力ください' %>
+        </div>
+
+        <div class="mt-4">
+
+          <div class="form-label">
+            <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
+            <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>
+            <% if @minimum_password_length %>
+              <br/>
+              <em><%= @minimum_password_length %> characters minimum</em>
+            <% end %>
+          </div>
+
+          <div class="form-label">
+            <%= f.label :password_confirmation %><br/>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>
+          </div>
+        </div>
+
+
+        <div class="actions">
+          <%= f.submit 'アカウント情報更新', class: 'btn btn-lg comfirm-btn btn-block' %>
+        </div>
+      <% end %>
     </div>
   </div>
+</div>
 </div>

@@ -6,6 +6,7 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.string :phone_number
       t.datetime :birthday
       t.string :breeding_experience
+      t.string :avatar
       t.references :user
 
       t.timestamps
