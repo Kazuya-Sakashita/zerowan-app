@@ -20,6 +20,7 @@ RSpec.feature '会員情報編集', type: :feature do
     describe 'プロフィール' do
       context '正常系' do
         scenario '表示される内容が正しいこと（フォームの内容やボタン、リンク等が正しく表示されていること）' do
+          expect(page).to have_field 'アバター'
           expect(page).to have_field 'お名前', with: user.profile.name
           expect(page).to have_field 'ご住所', with: user.profile.address
           expect(page).to have_field 'お電話番号', with: user.profile.phone_number
@@ -30,6 +31,7 @@ RSpec.feature '会員情報編集', type: :feature do
           expect(page).to have_button 'アカウント情報更新'
         end
         scenario 'プロフィール正しく値を入力した場合、ユーザーのマイページ画面に遷移すること' do
+          attach_file 'アバター', 'spec/fixtures/images/dog2.jpeg'
           fill_in 'お名前', with: 'KAZUYA'
           fill_in 'ご住所', with: '大阪市'
           fill_in 'お電話番号', with: '00000000000'
@@ -42,6 +44,7 @@ RSpec.feature '会員情報編集', type: :feature do
 
       context '異常系' do
         scenario 'プロフィール正しく値を入力なかった場合、バリデーションエラーの内容が表示されること' do
+          attach_file 'アバター', nil
           fill_in 'お名前', with: nil
           fill_in 'ご住所', with: nil
           fill_in 'お電話番号', with: nil
