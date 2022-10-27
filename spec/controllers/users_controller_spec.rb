@@ -30,8 +30,7 @@ RSpec.describe UsersController, type: :controller do
                                                   breeding_experience:'犬猫３年',
                                                   user_id: @user.id)
         put :update, params: { id: @user, user: { profile_attributes: profile_params } }
-        # TODO 画像が更新されていることを評価する　この部分分からない
-        #  expect(@user.reload.profile.avatar).to eq 'dog2.jpeg'
+        expect(@user.reload.profile.avatar.url).to include("dog2.jpeg")
         expect(@user.reload.profile.name).to eq 'riku'
         expect(@user.reload.profile.address).to eq '大阪市'
         expect(@user.reload.profile.phone_number).to eq '01234567810'
