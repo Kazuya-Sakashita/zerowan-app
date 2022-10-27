@@ -47,7 +47,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
 
       it '各パラメーターに正しく値が設定された場合、home 画面が描画されること' do
         post :confirm, params: params
-        expect(response).to render_template '/'
+        expect(response).to render_template 'devise/registrations/confirm'
       end
 
       it 'params に back: true が設定されている場合、登録画面が描画されること' do
