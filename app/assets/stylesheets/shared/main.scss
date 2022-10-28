@@ -64,9 +64,17 @@ body {
   width: 100%;
 }
 
-
 .mright-20 {
   float: left;
+}
+// トップに戻るボタン
+.return-root-btn {
+  padding: 6px 50px;
+  margin-top: 10px;
+  color: #fff;
+  background-color: #F2BA29;
+  border-color: #FFFBEE;
+  width: auto;
 }
 
 //アカウント情報更新　コメント
