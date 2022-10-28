@@ -24,7 +24,7 @@
               <% if @user.profile.avatar? %>
                 <%= image_tag @user.profile.avatar.thumb.url, class: 'd-inline' %>
               <% else %>
-                <image src="/assets/default.png" class="d-inline" width="120"></image>
+                <image src="/assets/default.png" class="d-inline" width="120"/>
               <% end %>
               <%= profile_fields.file_field :avatar, include_hidden: false, class: 'form-control　d-inline' %>
               <%= profile_fields.hidden_field :avatar_cache %>
