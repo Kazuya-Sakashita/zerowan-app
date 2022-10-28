@@ -5,12 +5,12 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [
                                         profile_attributes: %i[
-                                          name address phone_number birthday breeding_experience user_id
+                                          name address phone_number birthday breeding_experience user_id avatar avatar_cache
                                         ]
                                       ])
     devise_parameter_sanitizer.permit(:account_update, keys: [
                                         profile_attributes: %i[
-                                          name address phone_number birthday breeding_experience user_id
+                                          name address phone_number birthday breeding_experience user_id avatar avatar_cache
                                         ]
                                       ])
   end

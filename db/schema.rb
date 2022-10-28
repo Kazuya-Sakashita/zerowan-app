@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_03_042250) do
     t.string "phone_number"
     t.datetime "birthday"
     t.string "breeding_experience"
+    t.string "avatar"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

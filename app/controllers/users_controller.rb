@@ -6,6 +6,10 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
+    if @user.profile.avatar.present?
+      params[:user][:profile_attributes][:avatar_cache] = @user.profile.avatar
+    end
+
     if @user.update(user_params)
       redirect_to @user
     else
@@ -17,7 +21,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(profile_attributes: %i[name address phone_number birthday breeding_experience user_id])
+    params.require(:user).permit(profile_attributes: %i[id name address phone_number birthday breeding_experience avatar avatar_cache])
   end
 
   def find_user

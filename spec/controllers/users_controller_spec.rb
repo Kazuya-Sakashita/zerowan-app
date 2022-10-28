@@ -22,13 +22,15 @@ RSpec.describe UsersController, type: :controller do
       end
 
       it '正しく値が設定された場合ユーザーの情報が更新されていること' do
-        profile_params = attributes_for(:profile, name: 'riku',
+        profile_params = attributes_for(:profile, avatar: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/fixtures/images/dog2.jpeg')),
+                                                  name: 'riku',
                                                   address:'大阪市',
                                                   phone_number:'01234567810',
                                                   birthday:'2010-02-11',
                                                   breeding_experience:'犬猫３年',
                                                   user_id: @user.id)
         put :update, params: { id: @user, user: { profile_attributes: profile_params } }
+        expect(@user.reload.profile.avatar.url).to include("dog2.jpeg")
         expect(@user.reload.profile.name).to eq 'riku'
         expect(@user.reload.profile.address).to eq '大阪市'
         expect(@user.reload.profile.phone_number).to eq '01234567810'

@@ -4,7 +4,7 @@
 <div class="signup-confirm rounded mt-5">
   <%= form_with model: @pet, url: pets_path(@pet), local: true do |f| %>
     <!--TODO 画像確認の表示-->
-    <% binding.pry %>
+ 
     params[:pet_form][:photos]
     <%= f.hidden_field :photos %>
     <td class="px-3"><%= @pet.photos %></td>

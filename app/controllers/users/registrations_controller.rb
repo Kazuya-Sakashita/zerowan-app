@@ -15,7 +15,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     render :new and return if params[:back]
-
     super
   end
 
