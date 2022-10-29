@@ -90,9 +90,9 @@ RSpec.feature '会員登録', type: :feature do
       expect(page).to have_content '猫1年'
     end
 
-    scenario '「登録」ボタンを押下で Home 画面に遷移すること' do
+    scenario '「登録」ボタンを押下で 登録完了画面に遷移すること' do
       click_button '登録'
-      expect(current_path).to eq root_path
+      expect(current_path).to eq users_sign_up_complete_path
 
     end
 
@@ -127,11 +127,11 @@ RSpec.feature '会員登録', type: :feature do
       click_button '登録内容確認'
     end
     context '正常系' do
-      scenario 'メールに含まれる確認トークンで本人確認 URL にアクセスすると登録完了画面に遷移すること' do
+      scenario 'メールに含まれる確認トークンで本人確認 URL にアクセスするとログイン画面に遷移すること' do
         click_button '登録'
         user = User.last
         visit user_confirmation_path(confirmation_token: user.confirmation_token)
-        expect(current_path).to eq users_sign_up_complete_path
+        expect(current_path).to eq user_session_path
       end
     end
 
