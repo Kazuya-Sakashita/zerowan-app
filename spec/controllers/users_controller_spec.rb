@@ -4,6 +4,7 @@ RSpec.describe UsersController, type: :controller do
   before do
     @request.env['devise.mapping'] = Devise.mappings[:user]
     @user = create(:user)
+    @user1 = create(:user)
   end
 
   describe 'ユーザー編集' do
@@ -50,6 +51,19 @@ RSpec.describe UsersController, type: :controller do
       it 'マイページが描画されていること' do
         get :show, params: { id: @user.id }
         expect(response).to render_template 'users/show'
+      end
+
+      it '自分の投稿のみ表示（他ユーザーのペットは一覧に含まれないこと）' do
+        5.times do
+          @user_pets = create(:pet, user_id:@user.id)
+        end
+
+        3.times do
+          @user1_pets = create(:pet, user_id:@user1.id)
+        end
+
+        get :show, params: { id: @user.id }
+        expect(@user.pets.length).to eq 5
       end
     end
   end
