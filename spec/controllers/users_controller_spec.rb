@@ -4,7 +4,6 @@ RSpec.describe UsersController, type: :controller do
   before do
     @request.env['devise.mapping'] = Devise.mappings[:user]
     @user = create(:user)
-    @user1 = create(:user)
   end
 
   describe 'ユーザー編集' do
