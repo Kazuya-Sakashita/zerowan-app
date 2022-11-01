@@ -1,4 +1,28 @@
 <div class="container">
-    <h1>Home#index</h1>
-    <p>Find me in app/views/home/index.html.erb</p>
+  <!-- 投稿pet一覧 -->
+  <div class="col-9">
+    <div>
+      <h2>掲載中の里親募集</h2>
+      <div class="row">
+        <% @pets.each do |pet| %>
+          <div class="col-4">
+
+            <div class="card my-2">
+              <% if pet.pet_images.present? %>
+                <%= image_tag pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= pet.petname %></h5>
+                <p><%= pet.classification %>/<%= pet.age %>才/<%= pet.gender %></p>
+                <h5 class="card-title">譲渡可能地域</h5>
+                <p class="card-text"><%= pet.introduction %></p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-- 投稿pet一覧 　end-->
 </div>
