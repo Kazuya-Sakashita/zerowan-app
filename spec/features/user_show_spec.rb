@@ -14,8 +14,8 @@ RSpec.feature 'マイページ表示', type: :feature do
         end
 
         scenario '他ユーザーの投稿が含まれないこと' do
-          @user1 = create(:user, email: 'test@test.com', password: 'password', password_confirmation: 'password', &:confirm)
-          create(:pet, petname: 'test20221101', user: @user1)
+          user1 = create(:user, email: 'test@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+          create(:pet, petname: 'test20221101', user: user1)
           expect(page).not_to have_content 'test20221101'
         end
       end
