@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :find_user, only: %i[show edit update]
+  before_action :set_user, only: %i[show edit update]
 
   def show
     @user_pets = @user.pets
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(profile_attributes: %i[id name address phone_number birthday breeding_experience avatar avatar_cache])
   end
 
-  def find_user
-    @user = User.find(params[:id])
+  def set_user
+    @user = current_user
   end
 end

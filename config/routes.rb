@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root 'home#index'
+  get 'users/profile/edit', to: 'users#edit'
+
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     confirmations: 'users/confirmations'
@@ -11,7 +13,9 @@ Rails.application.routes.draw do
     get 'users/sign_up/complete', to: 'users/registrations#complete'
   end
 
-  resources :users, only:[:show, :edit, :update]
+  resource :users, only:[:show, :edit, :update]
+
+
   resources :pets
   post 'pets/confirm', to: 'pets#confirm'
 end
