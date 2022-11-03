@@ -22,7 +22,7 @@ RSpec.describe Devise::SessionsController, type: :controller do
     end
 
     it '正しく値が入力された場合、ユーザーのマイページ画面が描画されること' do
-      expect(response).to redirect_to user_path(user)
+      expect(response).to redirect_to users_path
     end
 
     it '正しく値が入力された場合、flash メッセージが正しく表示されること' do

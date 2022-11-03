@@ -81,7 +81,6 @@ RSpec.feature '会員情報編集', type: :feature do
         click_button 'アカウント情報更新'
       end
       scenario 'アカウント情報を正しく入力した場合、Home 画面に遷移すること' do
-        binding.pry
         expect(page).to have_current_path root_path
       end
       scenario 'アカウント情報を正しく入力した場合、flash メッセージが正しく表示されること' do
