@@ -4,7 +4,8 @@
   </div>
   <div>
     <div class="form-signup rounded ">
-      <%= form_with(model: @user, local: true) do |f| %>
+      <%= form_with model: @user, url: users_path, method: :put, local: true do |f| %>
+
 
         <% if @user.profile.errors.any? %>
           <div class="alert">
@@ -60,52 +61,52 @@
           <%= f.submit 'プロフィール内容変更', class: 'btn btn-lg comfirm-btn btn-block' %>
         </div>
       <% end %>
-      </div>
-</div>
-<div class="container">
-  <div class="form-signup-title mt-5">
-    <h3>アカウント情報</h3>
-  </div>
-
-  <div>
-    <div class="form-signup rounded ">
-      <%= form_with model: @user, url: user_registration_path, method: :put, local: true do |f| %>
-        <div class="form-label">
-          <%= f.label :email %> <br/>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: @user.email %>
-        </div>
-
-        <p class="mb-0">
-          <span class="change-pw-info">パスワード変更（変更時のみ入力してください)</span>
-        </p>
-        <div class="form-label">
-          <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
-          <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control', placeholder: '変更の際はパスワードを入力ください' %>
-        </div>
-
-        <div class="mt-4">
-
-          <div class="form-label">
-            <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
-            <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>
-            <% if @minimum_password_length %>
-              <br/>
-              <em><%= @minimum_password_length %> characters minimum</em>
-            <% end %>
-          </div>
-
-          <div class="form-label">
-            <%= f.label :password_confirmation %><br/>
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>
-          </div>
-        </div>
-
-
-        <div class="actions">
-          <%= f.submit 'アカウント情報更新', class: 'btn btn-lg comfirm-btn btn-block' %>
-        </div>
-      <% end %>
     </div>
   </div>
-</div>
+  <div class="container">
+    <div class="form-signup-title mt-5">
+      <h3>アカウント情報</h3>
+    </div>
+
+    <div>
+      <div class="form-signup rounded ">
+        <%= form_with model: @user, url: user_registration_path, method: :put, local: true do |f| %>
+          <div class="form-label">
+            <%= f.label :email %> <br/>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', value: @user.email %>
+          </div>
+
+          <p class="mb-0">
+            <span class="change-pw-info">パスワード変更（変更時のみ入力してください)</span>
+          </p>
+          <div class="form-label">
+            <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
+            <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control', placeholder: '変更の際はパスワードを入力ください' %>
+          </div>
+
+          <div class="mt-4">
+
+            <div class="form-label">
+              <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
+              <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>
+              <% if @minimum_password_length %>
+                <br/>
+                <em><%= @minimum_password_length %> characters minimum</em>
+              <% end %>
+            </div>
+
+            <div class="form-label">
+              <%= f.label :password_confirmation %><br/>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>
+            </div>
+          </div>
+
+
+          <div class="actions">
+            <%= f.submit 'アカウント情報更新', class: 'btn btn-lg comfirm-btn btn-block' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
