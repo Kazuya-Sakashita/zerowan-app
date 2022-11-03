@@ -3,10 +3,14 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   before do
     @request.env['devise.mapping'] = Devise.mappings[:user]
-    @user = create(:user)
+    @user = create(:user, &:confirm)
+    sign_in @user
   end
 
   describe 'ユーザー編集' do
+    # before do
+    #   sign_in @user
+    # end
     context '正常系' do
       it '登録情報編集画面が描画されていること' do
         get :edit, params: { id: @user.id }
@@ -16,7 +20,7 @@ RSpec.describe UsersController, type: :controller do
       it '正しく値が設定された場合ユーザーのマイページ画面が描画されること' do
         profile_params = attributes_for(:profile)
         put :update, params: { id: @user, user: { profile_attributes: profile_params } }
-        expect(response).to redirect_to user_path
+        expect(response).to redirect_to users_path
       end
 
       it '正しく値が設定された場合ユーザーの情報が更新されていること' do
@@ -46,9 +50,12 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'マイページ表示' do
+    # before do
+    #   sign_in @user
+    # end
     context '正常' do
       it 'マイページが描画されていること' do
-        get :show, params: { id: @user.id }
+        get :show
         expect(response).to render_template 'users/show'
       end
     end

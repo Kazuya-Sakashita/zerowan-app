@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user, only: %i[show edit update]
 
   def show
@@ -14,7 +15,7 @@ class UsersController < ApplicationController
 
     if @user.update(user_params)
       flash[:notice] = "更新しました。"
-      redirect_to edit_users_path
+      redirect_to users_path
     else
       flash[:alert] = "更新できませんでした。"
       render :edit
