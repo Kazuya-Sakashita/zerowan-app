@@ -1,2 +1,56 @@
-<h1>Pets#show</h1>
-<p>Find me in app/views/pets/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <!-- ペット画像表示 -->
+    <div class="col-6">
+      <% @pet_imagaes.each do |image| %>
+        <%= image_tag image.photo.to_s, class: 'card-img-top pet-img-small' %>
+      <% end %>
+    </div>
+    <!-- ペット画像表示　end  -->
+    <div class="col-6">
+      <!-- ペット詳細情報表示 -->
+      <%= link_to 'ペット情報を編集する', edit_pet_path(@pet), class: 'btn btn-lg return-pet-edit-btn btn-block ' %>
+      <div class="table-responsive-sm">
+        <table class="table bg-white table-bordered">
+          <tr>
+            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2">名前</td>
+            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.petname %></td>
+          </tr>
+          <tr>
+            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2">性別</td>
+            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.gender_i18n %></td>
+          </tr>
+          <tr>
+            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2">年齢</td>
+            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.age %>才</td>
+          </tr>
+          <tr>
+            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2">種別</td>
+            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.classification_i18n %></td>
+          </tr>
+          <tr>
+            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2">性格</td>
+            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.petname %></td>
+          </tr>
+          <tr>
+            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2">種別</td>
+            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.introduction %></td>
+          </tr>
+          <tr>
+            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2">ワクチン有無</td>
+            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.vaccination_i18n %></td>
+          </tr>
+          <tr>
+            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2">去勢有無</td>
+            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.castration_i18n %></td>
+          </tr>
+          <tr>
+            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2">譲渡可能地域</td>
+            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4">未実装</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- ペット詳細情報表示 end -->
+  </div>
+</div>
