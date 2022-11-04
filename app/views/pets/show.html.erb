@@ -6,10 +6,12 @@
         <%= image_tag image.photo.to_s, class: 'card-img-top pet-img-small' %>
       <% end %>
     </div>
-    <!-- ペット画像表示　end  -->
     <div class="col-6">
       <!-- ペット詳細情報表示 -->
-      <%= link_to 'ペット情報を編集する', edit_pet_path(@pet), class: 'btn btn-lg return-pet-edit-btn btn-block ' %>
+
+      <% if user_signed_in? && @pet.user_id == current_user.id %>
+        <%= link_to 'ペット情報を編集する', edit_pet_path(@pet), class: 'btn btn-lg return-pet-edit-btn btn-block ' %>
+      <% end %>
       <div class="table-responsive-sm">
         <table class="table bg-white table-bordered">
           <tr>
