@@ -1,10 +1,12 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <!-- ペット画像表示 -->
     <div class="col-6">
-      <% @pet_imagaes.each do |image| %>
-        <%= image_tag image.photo.to_s, class: 'card-img-top pet-img-small' %>
-      <% end %>
+      <div class="row">
+        <% @pet_imagaes.each do |image| %>
+          <%= image_tag image.photo.to_s, class: "col-6" %>
+        <% end %>
+      </div>
     </div>
     <div class="col-6">
       <!-- ペット詳細情報表示 -->
