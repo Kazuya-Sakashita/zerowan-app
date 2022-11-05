@@ -36,6 +36,10 @@ class PetsController < ApplicationController
     @pet = Pet.find(params[:id])
   end
 
+  def update
+
+  end
+
   private
 
   def pet_params
