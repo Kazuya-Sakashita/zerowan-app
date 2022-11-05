@@ -1,5 +1,6 @@
 class PetsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
+
   def index
     @pets = Pet.all
   end
@@ -38,13 +39,21 @@ class PetsController < ApplicationController
 
   def update
     @pet = Pet.find(params[:id])
-    if @pet.update(pet_params)
-      flash[:notice] = "更新しました。"
-      redirect_to @pet
-    else
-      flash[:alert] = "更新できませんでした。"
-      render 'pets/edit'
+
+    ActiveRecord::Base.transaction do
+      @pet.update(pet_params)
+      binding.pry
+      @pet.pet_images.destroy_all
+      @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: @pet.pet_images)
+      @pet_imagaes.save!
     end
+
+    flash[:notice] = "登録完了しました。"
+    redirect_to pet_path @pet
+
+  rescue => e
+    flash[:alert] = e.record.errors.full_messages
+    redirect_to edit_pet_path
   end
 
   private
@@ -54,6 +63,10 @@ class PetsController < ApplicationController
   end
 
   def pet_images
+    params.dig(:pet_form, :photos) || []
+  end
+
+  def update_pet_images
     params.dig(:pet_form, :photos) || []
   end
 end
