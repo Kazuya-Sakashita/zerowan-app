@@ -32,7 +32,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/edit
   def edit
-    @user = User.find(params[:id])
+    @user = current_user
     super
   end
 

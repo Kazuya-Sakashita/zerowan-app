@@ -5,7 +5,7 @@ RSpec.feature 'マイページ表示', type: :feature do
       @user = create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
       create(:pet, petname: 'taro20221101', user: @user)
       sign_in @user
-      visit user_path(@user)
+      visit users_path
     end
 
     describe 'ペット一覧表示' do
