@@ -37,7 +37,14 @@ class PetsController < ApplicationController
   end
 
   def update
-
+    @pet = Pet.find(params[:id])
+    if @pet.update(pet_params)
+      flash[:notice] = "更新しました。"
+      redirect_to @pet
+    else
+      flash[:alert] = "更新できませんでした。"
+      render 'pets/edit'
+    end
   end
 
   private
