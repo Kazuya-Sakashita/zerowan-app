@@ -22,7 +22,7 @@ RSpec.feature 'ログイン認証', type: :feature do
         fill_in 'メールアドレス', with: 'test123456789@test.com'
         fill_in 'パスワード', with: 'password'
         click_button 'ログイン'
-        expect(current_path).to eq user_path(user)
+        expect(current_path).to eq users_path
       end
 
       scenario 'flash メッセージが正しく表示されること' do
@@ -46,7 +46,7 @@ RSpec.feature 'ログイン認証', type: :feature do
   describe 'ログアウト' do
     before do
       sign_in user
-      visit user_path(user)
+      visit users_path
     end
 
     scenario 'Home 画面に遷移すること' do
