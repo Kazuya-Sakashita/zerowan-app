@@ -35,6 +35,7 @@ class PetsController < ApplicationController
 
   def edit
     @pet = Pet.find(params[:id])
+    @pet_images = PetForm.new
   end
 
   def update
@@ -42,7 +43,6 @@ class PetsController < ApplicationController
 
     ActiveRecord::Base.transaction do
       @pet.update(pet_params)
-      binding.pry
       @pet.pet_images.destroy_all
       @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
       @pet_imagaes.save!

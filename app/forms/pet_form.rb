@@ -5,14 +5,13 @@ class PetForm
 
   validate :validates_number_of_files
 
-  # def validates_number_of_files
-  #   if 1 > photos.length || photos.length > 4
-  #     errors.add(:photos, '添付枚数を確認してください。')
-  #   end
-  # end
+  def validates_number_of_files
+    if 1 > photos.length || photos.length > 4
+      errors.add(:photos, '添付枚数を確認してください。')
+    end
+  end
 
   def initialize(pet_id: nil, pet_images: [])
-    binding.pry
     @photos = []
     pet_images.reject(&:blank?)&.each do |image|
       @photos << PetImage.new(photo: image, pet_id: pet_id)
@@ -22,9 +21,8 @@ class PetForm
   def save!
     # save!,期待値を保存できない場合に例外を発生させる
     # 登録内容に不備がある場合はActiveRecord::RecordInvalid、invalidの場合発生させる
-
-    # TODO 一旦コメントアウト
-    # raise ActiveRecord::RecordInvalid.new(self) if invalid?
+    
+    raise ActiveRecord::RecordInvalid.new(self) if invalid?
     @photos.each(&:save!)
   end
 end
