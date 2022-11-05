@@ -44,7 +44,7 @@ class PetsController < ApplicationController
       @pet.update(pet_params)
       binding.pry
       @pet.pet_images.destroy_all
-      @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: @pet.pet_images)
+      @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
       @pet_imagaes.save!
     end
 
