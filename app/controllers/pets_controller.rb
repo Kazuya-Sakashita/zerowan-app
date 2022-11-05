@@ -1,6 +1,5 @@
 class PetsController < ApplicationController
-  before_action :authenticate_user!
-
+  before_action :authenticate_user!, except: [:show, :index]
   def index
     @pets = Pet.all
   end
@@ -29,7 +28,8 @@ class PetsController < ApplicationController
   end
 
   def show
-    @pets = Pet.find(params[:id])
+    @pet = Pet.find(params[:id])
+    @pet_imagaes = @pet.pet_images
   end
 
   def edit
