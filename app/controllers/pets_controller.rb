@@ -43,9 +43,12 @@ class PetsController < ApplicationController
 
     ActiveRecord::Base.transaction do
       @pet.update(pet_params)
-      @pet.pet_images.destroy_all
-      @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
-      @pet_imagaes.save!
+      if params[:pet_form]
+        present?
+        @pet.pet_images.destroy_all
+        @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
+        @pet_imagaes.save!
+      end
     end
 
     flash[:notice] = "登録完了しました。"
