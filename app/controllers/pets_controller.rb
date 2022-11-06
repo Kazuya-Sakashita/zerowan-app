@@ -42,7 +42,7 @@ class PetsController < ApplicationController
     @pet = Pet.find(params[:id])
 
     ActiveRecord::Base.transaction do
-      @pet.update(pet_params)
+      @pet.update!(pet_params)
       if params[:pet_form]
         present?
         @pet.pet_images.destroy_all
