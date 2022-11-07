@@ -1,17 +1,15 @@
 <h3>ペット情報を編集する</h3>
-
-<div class="form-signup rounded mt-5 mb-2">
-
+<div>
   <%= form_with model: @pet, url: pet_path, local: true, multipart: true do |f| %>
-    <%= fields_for @pet_images do |img| %>
-      <div class="image_input-label text-center">
-        <%= img.label :photos, '画像選択', class: 'image_input_btn' %>
-        <%= img.file_field :photos, multiple: true, include_hidden: false, class: 'image_form' %>
-        <span>４枚まで登録可能</span>
-      </div>
-    <% end %>
+    <div class="form-signup rounded mt-5 mb-2">
+      <%= fields_for @pet_images do |img| %>
+        <div class="image_input-label text-center">
+          <%= img.label :photos, '画像選択', class: 'image_input_btn' %>
+          <%= img.file_field :photos, multiple: true, include_hidden: false, class: 'image_form' %>
+          <span>４枚まで登録可能</span>
+        </div>
+      <% end %>
     </div>
-
     <div class="form-signup rounded mt-5">
       <div class="form-label">
         <%= f.label :category %>
@@ -49,15 +47,14 @@
         <%= f.select :vaccination, Pet.vaccinations_i18n.invert, {}, class: 'form-control' %>
 
       </div>
-
       <div class="form-label">
         <%= f.label :castration %>
         <%= f.select :castration, Pet.castrations_i18n.invert, {}, class: 'form-control' %>
-
       </div>
 
       <div class="actions">
         <%= f.submit 'ペット情報変更', class: 'btn btn-lg comfirm-btn btn-block' %>
       </div>
-      <% end %>
+  <% end %>
   </div>
+</div>

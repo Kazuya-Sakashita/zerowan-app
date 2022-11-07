@@ -45,7 +45,6 @@ RSpec.feature 'ペット詳細情報', type: :feature do
         fill_in 'ペットのご紹介', with: '内弁慶'
         select '接種済', from: 'ワクチン接種有無'
         select '未去勢', from: '去勢有無'
-        binding.pry
         click_button 'ペット情報変更'
         expect(page).to have_current_path pet_path(Pet.last.id)
       end
