@@ -1,0 +1,2 @@
+class Arium < ApplicationRecord
+end
