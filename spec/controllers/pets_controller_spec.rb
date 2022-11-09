@@ -17,14 +17,14 @@ RSpec.describe PetsController, type: :controller do
         },
         pet: {
           category: :dog,
-          petname: :riku,
+          petname: 'riku',
           age: 12,
           gender: :male,
           classification: :Chihuahua,
           introduction: 'おとなしく、賢い',
           castration: :neutered,
           vaccination: :vaccinated,
-          recruitment_status: 0,
+          recruitment_status: :recruiting,
           user_id: user.id
         }
       }
@@ -113,19 +113,19 @@ RSpec.describe PetsController, type: :controller do
     context 'pet/update' do
       before do
         @pet = create(:pet, user_id: user.reload.id)
-        pet_params = attributes_for(:pet,
+        @pet_params = attributes_for(:pet,
                                     category: :dog,
-                                    petname: :SORA,
+                                    petname: 'SORA',
                                     age: 5,
                                     gender: :male,
                                     classification: :Chihuahua,
                                     introduction: 'やんちゃ、内弁慶',
                                     castration: :neutered,
                                     vaccination: :vaccinated,
-                                    recruitment_status: 0,
+                                    recruitment_status: :recruiting,
                                     user_id: user.id
         )
-        put :update, params: { id: @pet.id, pet: pet_params }
+        put :update, params: { id: @pet.id, pet: @pet_params }
       end
       context '正常系' do
         it '修正時時、各パラメータに正しく値が設定された場合、SHOW画面が描画されること' do
@@ -134,14 +134,16 @@ RSpec.describe PetsController, type: :controller do
         end
 
         it '修正時、各パラメータに正しく値が設定された場合、Petが正しく修正されていること' do
-          expect(@pet.reload.category).to eq 'dog'
-          expect(@pet.reload.petname).to eq 'SORA'
-          expect(@pet.reload.age).to eq 5
-          expect(@pet.reload.gender).to eq 'male'
-          expect(@pet.reload.classification).to eq 'Chihuahua'
-          expect(@pet.reload.introduction).to eq 'やんちゃ、内弁慶'
-          expect(@pet.reload.castration).to eq 'neutered'
-          expect(@pet.reload.vaccination).to eq  'vaccinated'
+          binding.pry
+          expect(@pet.reload.category).to eq @pet_params[:category]
+          expect(@pet.reload.petname).to eq @pet_params[:petname]
+          expect(@pet.reload.age).to eq @pet_params[:age]
+          expect(@pet.reload.gender).to eq I18n.t{@pet_params[:gender]}
+          expect(@pet.reload.classification).to eq @pet_params[:classification]
+          expect(@pet.reload.introduction).to eq @pet_params[:introduction]
+          expect(@pet.reload.castration).to eq @pet_params[:castration]
+          expect(@pet.reload.vaccination).to eq  @pet_params[:vaccination]
+          expect(@pet.reload.recruitment_status).to eq  @pet_params[:recruitment_status]
         end
 
         it '各パラメータに正しく値が設定された場合、flash画面が正しく表示されていること' do

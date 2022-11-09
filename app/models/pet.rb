@@ -19,5 +19,6 @@ class Pet < ApplicationRecord
   enum classification: [:Chihuahua, :Dachshund, :others], _prefix: true
   enum vaccination: [:unknown, :vaccinated, :unvaccinated] , _prefix: true
   enum castration: [:unknown, :neutered, :unneutered ],  _prefix: true
+  enum recruitment_status: [:recruiting, :during_negotiations, :end_of_recruitment ]
 
 end
