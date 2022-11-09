@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'ペット詳細情報', type: :feature do
   before do
     @user = create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
-    create(:pet,
+    @pet = create(:pet,
            category: :dog,
            petname: 'taro20221101',
            age: 12,
@@ -24,14 +24,14 @@ RSpec.feature 'ペット詳細情報', type: :feature do
   describe 'ペット情報編集画面' do
     context '画面表示' do
       scenario '表示される内容が正しいこと（リンク等が正しく表示されていること）' do
-        expect(page).to have_field 'カテゴリ', with: 'dog'
-        expect(page).to have_field 'ペットのお名前', with: 'taro20221101'
-        expect(page).to have_field '年齢', with: 12
-        expect(page).to have_field '性別', with: 'male'
-        expect(page).to have_field '種別', with: 'Chihuahua'
-        expect(page).to have_field 'ペットのご紹介', with: 'おとなしく、賢い'
-        expect(page).to have_field 'ワクチン接種有無', with: 'vaccinated'
-        expect(page).to have_field '去勢有無', with: 'neutered'
+        expect(page).to have_field 'カテゴリ', with: @pet.category
+        expect(page).to have_field 'ペットのお名前', with: @pet.petname
+        expect(page).to have_field '年齢', with: @pet.age
+        expect(page).to have_field '性別', with: @pet.gender
+        expect(page).to have_field '種別', with: @pet.classification
+        expect(page).to have_field 'ペットのご紹介', with: @pet.introduction
+        expect(page).to have_field 'ワクチン接種有無', with: @pet.vaccination
+        expect(page).to have_field '去勢有無', with: @pet.castration
       end
     end
     context '正常系' do

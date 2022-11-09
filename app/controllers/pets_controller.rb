@@ -43,8 +43,7 @@ class PetsController < ApplicationController
 
     ActiveRecord::Base.transaction do
       @pet.update!(pet_params)
-      if params[:pet_form]
-        present?
+      if pet_images.present?
         @pet.pet_images.destroy_all
         @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
         @pet_imagaes.save!
@@ -66,10 +65,6 @@ class PetsController < ApplicationController
   end
 
   def pet_images
-    params.dig(:pet_form, :photos) || []
-  end
-
-  def update_pet_images
     params.dig(:pet_form, :photos) || []
   end
 end
