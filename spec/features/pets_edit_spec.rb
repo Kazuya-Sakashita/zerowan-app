@@ -54,9 +54,6 @@ RSpec.feature 'ペット詳細情報', type: :feature do
 
       scenario 'ペット情報を正しく値を入力した場合、flash メッセージが正しく表示されていること' do
         expect(page).to have_content '登録完了しました。'
-        expect(page).to have_content 'SORA'
-        expect(page).to have_content  '3'
-        expect(page).to have_content '内弁慶'
       end
 
     end
