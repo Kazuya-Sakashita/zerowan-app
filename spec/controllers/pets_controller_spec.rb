@@ -134,16 +134,15 @@ RSpec.describe PetsController, type: :controller do
         end
 
         it '修正時、各パラメータに正しく値が設定された場合、Petが正しく修正されていること' do
-          binding.pry
-          expect(@pet.reload.category).to eq @pet_params[:category]
+          expect(@pet.reload.category.to_sym).to eq @pet_params[:category]
           expect(@pet.reload.petname).to eq @pet_params[:petname]
           expect(@pet.reload.age).to eq @pet_params[:age]
-          expect(@pet.reload.gender).to eq I18n.t{@pet_params[:gender]}
-          expect(@pet.reload.classification).to eq @pet_params[:classification]
+          expect(@pet.reload.gender.to_sym).to eq @pet_params[:gender]
+          expect(@pet.reload.classification.to_sym).to eq @pet_params[:classification]
           expect(@pet.reload.introduction).to eq @pet_params[:introduction]
-          expect(@pet.reload.castration).to eq @pet_params[:castration]
-          expect(@pet.reload.vaccination).to eq  @pet_params[:vaccination]
-          expect(@pet.reload.recruitment_status).to eq  @pet_params[:recruitment_status]
+          expect(@pet.reload.castration.to_sym).to eq @pet_params[:castration]
+          expect(@pet.reload.vaccination.to_sym).to eq  @pet_params[:vaccination]
+          expect(@pet.reload.recruitment_status.to_sym).to eq  @pet_params[:recruitment_status]
         end
 
         it '各パラメータに正しく値が設定された場合、flash画面が正しく表示されていること' do
