@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_03_042250) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_08_215535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "areas", force: :cascade do |t|
+    t.string "place_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pet_areas", force: :cascade do |t|
+    t.bigint "pet_id"
+    t.integer "area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_pet_areas_on_pet_id"
+  end
 
   create_table "pet_images", force: :cascade do |t|
     t.string "photo"
@@ -76,6 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_03_042250) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "pet_areas", "pets"
   add_foreign_key "pet_images", "pets"
   add_foreign_key "pets", "users"
 end

@@ -56,6 +56,19 @@
 
       </div>
 
+      <div class="form-label">
+        <%= fields_for @pet_areas do |p| %>
+          <div class="field">
+            <%= p.label :pet_area %><br/>
+            <%= p.collection_check_boxes(:areas, Area.all, :id, :place_name, include_hidden: false) do |area| %>
+              <!--          f.collection_check_boxes(メソッド名, コレクション名, オプション={}, checked_value={}, ブロック引数)-->
+              <%= area.label { area.check_box + area.text } %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+
       <div class="actions">
         <%= f.submit '登録内容確認', class: 'btn btn-lg comfirm-btn btn-block' %>
       </div>

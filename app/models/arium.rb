@@ -1,2 +1,0 @@
-class Arium < ApplicationRecord
-end
