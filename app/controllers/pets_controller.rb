@@ -34,6 +34,7 @@ class PetsController < ApplicationController
   def show
     @pet = Pet.find(params[:id])
     @pet_imagaes = @pet.pet_images
+    @pet_areas = @pet.pet_areas
   end
 
   def edit
