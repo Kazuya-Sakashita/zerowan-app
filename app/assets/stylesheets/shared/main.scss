@@ -67,6 +67,7 @@ body {
 .mright-20 {
   float: left;
 }
+
 // トップに戻るボタン
 .return-root-btn {
   padding: 6px 50px;
@@ -106,9 +107,27 @@ body {
 //ペット詳細テーブル
 
 
-
 //ペット詳細画像
 .pet-img-small {
   width: 200px;
   height: auto;
+}
+
+//pet画像投稿ボタン
+.image_input_btn {
+  display: block;
+  background-color: #F2BA29;
+  width: 180px;
+  height: 50px;
+  margin:  auto;
+  border-radius: 5px;
+  padding-top: 2px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  line-height:50px;
+}
+
+.image_form {
+  display: none;
 }

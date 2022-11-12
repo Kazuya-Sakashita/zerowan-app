@@ -1,5 +1,6 @@
 class PetsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
+
   def index
     @pets = Pet.all
   end
@@ -33,6 +34,28 @@ class PetsController < ApplicationController
   end
 
   def edit
+    @pet = Pet.find(params[:id])
+    @pet_images = PetForm.new
+  end
+
+  def update
+    @pet = Pet.find(params[:id])
+
+    ActiveRecord::Base.transaction do
+      @pet.update!(pet_params)
+      if pet_images.present?
+        @pet.pet_images.destroy_all
+        @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
+        @pet_imagaes.save!
+      end
+    end
+
+    flash[:notice] = "登録完了しました。"
+    redirect_to pet_path @pet
+
+  rescue => e
+    flash[:alert] = e.record.errors.full_messages
+    redirect_to edit_pet_path
   end
 
   private
