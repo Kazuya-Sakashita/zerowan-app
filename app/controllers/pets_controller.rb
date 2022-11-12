@@ -9,7 +9,7 @@ class PetsController < ApplicationController
     # pet ペット情報を保存　petForm 画像を保存で分ける
     @pet = Pet.new
     @pet_images = PetForm.new
-
+    @pet_areas =  AreaForm.new
   end
 
   def create
@@ -17,7 +17,10 @@ class PetsController < ApplicationController
     ActiveRecord::Base.transaction do
       @pet.save!
       @pet_imagaes = PetForm.new(pet_id: @pet.reload.id, pet_images: pet_images)
+      @pet_areas =  AreaForm.new(pet_id: @pet.reload.id, pet_areas: pet_areas)
       @pet_imagaes.save!
+      @pet_areas.save!
+
     end
 
     flash[:notice] = "登録完了しました。"
@@ -66,5 +69,9 @@ class PetsController < ApplicationController
 
   def pet_images
     params.dig(:pet_form, :photos) || []
+  end
+
+  def pet_areas
+    params.dig(:area_form, :areas) || []
   end
 end
