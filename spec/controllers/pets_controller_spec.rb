@@ -26,6 +26,9 @@ RSpec.describe PetsController, type: :controller do
           vaccination: :vaccinated,
           recruitment_status: :recruiting,
           user_id: user.id
+        },
+        area_form: {
+          areas: ['14']
         }
       }
     end
