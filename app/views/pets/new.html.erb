@@ -61,7 +61,6 @@
           <div class="field">
             <%= p.label :pet_area %><br/>
             <%= p.collection_check_boxes(:areas, Area.all, :id, :place_name, include_hidden: false) do |area| %>
-              <!--          f.collection_check_boxes(メソッド名, コレクション名, オプション={}, checked_value={}, ブロック引数)-->
               <%= area.label { area.check_box + area.text } %>
             <% end %>
           </div>
