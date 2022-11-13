@@ -13,7 +13,7 @@ class PetsController < ApplicationController
   end
 
   def create
-    @pet = current_user.pets.build pet_params
+    @pet = current_user.pets.build(pet_params)
     ActiveRecord::Base.transaction do
       @pet.save!
       @pet_imagaes = PetForm.new(pet_id: @pet.reload.id, pet_images: pet_images)
