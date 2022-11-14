@@ -16,6 +16,7 @@ ja:
     introduction: ペットのご紹介
     photos: 紹介画像
     age: 年齢
+    areas: 譲渡範囲
 
   activerecord:
     errors:

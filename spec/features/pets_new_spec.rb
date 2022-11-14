@@ -22,6 +22,7 @@ RSpec.feature '里親募集（登録）', type: :feature do
         expect(page).to have_content 'ペットのご紹介'
         expect(page).to have_content 'ワクチン接種有無'
         expect(page).to have_content '去勢有無'
+        expect(page).to have_content '譲渡範囲'
 
         expect(page).to have_field 'pet_form[photos][]'
         expect(page).to have_field 'pet[category]'
@@ -53,6 +54,11 @@ RSpec.feature '里親募集（登録）', type: :feature do
         fill_in 'ペットのご紹介', with: 'おとなしく、賢い'
         select '接種済', from: 'ワクチン接種有無'
         select '未去勢', from: '去勢有無'
+
+        binding.pry
+        # TODO チェックボックスが押せていない！
+        # find('大阪', visible: false).check
+        # find('area_form_areas_27', visible: false).click
         click_button '登録内容確認'
         expect(page).to have_content '登録完了しました。'
         expect(current_path).to eq pet_path(Pet.last)
