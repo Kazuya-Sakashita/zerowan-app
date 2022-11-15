@@ -57,15 +57,16 @@
       </div>
 
       <div class="form-label">
-        <%= fields_for @pet_areas do |p| %>
+      <%= fields_for @pet_areas do |p| %>
           <div class="field">
-            <%= p.label :pet_area %><br/>
+            <%= p.label :areas %><br/>
             <%= p.collection_check_boxes(:areas, Area.all, :id, :place_name, include_hidden: false) do |area| %>
               <%= area.label { area.check_box + area.text } %>
             <% end %>
           </div>
-        <% end %>
+      <% end %>
       </div>
+
 
 
       <div class="actions">
