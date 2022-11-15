@@ -40,6 +40,7 @@ class PetsController < ApplicationController
   def edit
     @pet = Pet.find(params[:id])
     @pet_images = PetForm.new
+    @pet_areas =  AreaForm.new
   end
 
   def update
@@ -51,6 +52,11 @@ class PetsController < ApplicationController
         @pet.pet_images.destroy_all
         @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
         @pet_imagaes.save!
+      end
+      if pet_areas.present?
+        @pet.pet_areas.destroy_all
+        @pet_areas = AreaForm.new(pet_id: @pet.id, pet_areas: pet_areas)
+        @pet_areas.save!
       end
     end
 
