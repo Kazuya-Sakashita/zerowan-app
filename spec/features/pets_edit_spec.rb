@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'ペット詳細情報', type: :feature do
   before do
     @user = create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+    @area = create(:area, place_name: '大阪')
     @pet = create(:pet,
            category: :dog,
            petname: 'taro20221101',
@@ -14,6 +15,7 @@ RSpec.feature 'ペット詳細情報', type: :feature do
            vaccination: :vaccinated,
            recruitment_status: 0,
            user: @user)
+    @pet_area = create(:pet_area, pet_id: @pet.reload.id, area_id: @area.reload.id)
 
     sign_in @user
     visit users_path
@@ -36,6 +38,9 @@ RSpec.feature 'ペット詳細情報', type: :feature do
     end
     context '正常系' do
       before do
+        @area_tokyo = create(:area, place_name: '東京')
+        @pet_area_tokyo = create(:pet_area, pet_id: @pet.reload.id, area_id: @area_tokyo.reload.id)
+        visit edit_pet_path(@pet)
         attach_file '画像選択', "#{Rails.root}/spec/fixtures/images/Dachshund3.jpeg"
         select 'イヌ', from: 'カテゴリ'
         fill_in 'ペットのお名前', with: 'SORA'
@@ -45,6 +50,7 @@ RSpec.feature 'ペット詳細情報', type: :feature do
         fill_in 'ペットのご紹介', with: '内弁慶'
         select '接種済', from: 'ワクチン接種有無'
         select '未去勢', from: '去勢有無'
+        check '東京'
         click_button 'ペット情報変更'
       end
 
@@ -68,6 +74,7 @@ RSpec.feature 'ペット詳細情報', type: :feature do
         fill_in 'ペットのご紹介', with: nil
         select '接種済', from: 'ワクチン接種有無'
         select '未去勢', from: '去勢有無'
+        uncheck '大阪'
         click_button 'ペット情報変更'
       end
       scenario 'ペット情報を正しく値を入力しなかったた場合、ペット情報編集画面に遷移すること' do
