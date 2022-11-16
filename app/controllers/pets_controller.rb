@@ -41,6 +41,7 @@ class PetsController < ApplicationController
     @pet = Pet.find(params[:id])
     @pet_images = PetForm.new
     @pet_areas =  AreaForm.new
+    @pet_set_areas = @pet.pet_areas.pluck(:area_id)
   end
 
   def update
