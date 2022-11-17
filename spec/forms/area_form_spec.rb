@@ -1,4 +1,5 @@
 require 'rails_helper'
+include PetAreasValidSupport
 
 RSpec.describe AreaForm, type: :model do
 
@@ -13,9 +14,7 @@ RSpec.describe AreaForm, type: :model do
           areas << pet_area = build(:pet_area, pet_id: pet.id)
         end
 
-        @pet_areas = AreaForm.new
-        @pet_areas.areas = areas
-        @pet_areas.valid?
+        transfer_areas(areas)
         expect(@pet_areas).to be_valid
       end
 
@@ -25,9 +24,7 @@ RSpec.describe AreaForm, type: :model do
           areas << pet_area = build(:pet_area, pet_id: pet.id)
         end
 
-        @pet_areas = AreaForm.new
-        @pet_areas.areas = areas
-        @pet_areas.valid?
+        transfer_areas(areas)
         expect(@pet_areas).to be_valid
       end
     end
@@ -36,9 +33,7 @@ RSpec.describe AreaForm, type: :model do
       it '譲渡範囲が0箇所であれば無効であること' do
         areas = []
 
-        @pet_areas = AreaForm.new
-        @pet_areas.areas = areas
-        @pet_areas.valid?
+        transfer_areas(areas)
         expect(@pet_areas).not_to be_valid
         expect(@pet_areas.errors.full_messages).to include('譲渡範囲入力を確認してください。')
       end
@@ -49,9 +44,7 @@ RSpec.describe AreaForm, type: :model do
           areas << pet_area = build(:pet_area, pet_id: pet.id)
         end
 
-        @pet_areas = AreaForm.new
-        @pet_areas.areas = areas
-        @pet_areas.valid?
+        transfer_areas(areas)
         expect(@pet_areas).not_to be_valid
         expect(@pet_areas.errors.full_messages).to include('譲渡範囲入力を確認してください。')
       end
