@@ -2,7 +2,7 @@ class Pet < ApplicationRecord
 
   has_many :pet_images, dependent: :destroy
   has_many :pet_areas, dependent: :destroy
-  has_many :areas, :through => :pet_areas
+  has_many :areas, through: :pet_areas
   belongs_to :user
 
   with_options presence: true do
