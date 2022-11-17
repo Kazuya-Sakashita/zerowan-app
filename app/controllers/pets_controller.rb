@@ -16,9 +16,9 @@ class PetsController < ApplicationController
     @pet = current_user.pets.build(pet_params)
     ActiveRecord::Base.transaction do
       @pet.save!
-      @pet_imagaes = PetForm.new(pet_id: @pet.reload.id, pet_images: pet_images)
+      @pet_images = PetForm.new(pet_id: @pet.reload.id, pet_images: pet_images)
       @pet_areas =  AreaForm.new(pet_id: @pet.reload.id, pet_areas: pet_areas)
-      @pet_imagaes.save!
+      @pet_images.save!
       @pet_areas.save!
 
     end
@@ -33,7 +33,7 @@ class PetsController < ApplicationController
 
   def show
     @pet = Pet.find(params[:id])
-    @pet_imagaes = @pet.pet_images
+    @pet_images = @pet.pet_images
     @pet_areas = @pet.pet_areas
   end
 
@@ -51,8 +51,8 @@ class PetsController < ApplicationController
       @pet.update!(pet_params)
       if pet_images.present?
         @pet.pet_images.destroy_all
-        @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
-        @pet_imagaes.save!
+        @pet_images = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
+        @pet_images.save!
       end
       if pet_areas.present?
         @pet.pet_areas.destroy_all

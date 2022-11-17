@@ -3,7 +3,7 @@
     <!-- ペット画像表示 -->
     <div class="col-6">
       <div class="row">
-        <% @pet_imagaes.each do |image| %>
+        <% @pet_images.each do |image| %>
           <%= image_tag image.photo.to_s, class: "col-6" %>
         <% end %>
       </div>
