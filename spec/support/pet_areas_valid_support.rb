@@ -1,5 +1,6 @@
 module PetAreasValidSupport
-  def transfer_areas(areas)
+  def transfer_areas(available_area)
+    areas = build_list(:pet_area, available_area , pet_id: pet.id)
     @pet_areas = AreaForm.new
     @pet_areas.areas = areas
     @pet_areas.valid?
