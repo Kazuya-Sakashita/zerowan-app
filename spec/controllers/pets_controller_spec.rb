@@ -10,6 +10,11 @@ RSpec.describe PetsController, type: :controller do
     let(:user) do
       create(:user, email: 'test123456789@test.com', password: 'password12345', password_confirmation: 'password12345', &:confirm)
     end
+
+    let(:area) do
+      create(:area, place_name: '大阪')
+    end
+
     let(:params) do
       {
         pet_form: {
@@ -26,6 +31,9 @@ RSpec.describe PetsController, type: :controller do
           vaccination: :vaccinated,
           recruitment_status: :recruiting,
           user_id: user.id
+        },
+        area_form: {
+          areas: [ area.id ]
         }
       }
     end
@@ -75,6 +83,9 @@ RSpec.describe PetsController, type: :controller do
               vaccination: nil,
               recruitment_status: nil,
               user_id: nil
+            },
+            area_form: {
+              areas: [ nil ]
             }
           }
         end

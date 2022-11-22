@@ -10,6 +10,10 @@ RSpec.feature '里親募集（登録）', type: :feature do
     visit new_pet_path
   end
 
+  let!(:area) do
+    create(:area, place_name: '大阪')
+  end
+
   describe '里親募集登録' do
     context '正常系' do
       scenario '表示される内容が正しいこと（フォームの内容やボタン、リンク等が正しく表示されていること）' do
@@ -22,6 +26,7 @@ RSpec.feature '里親募集（登録）', type: :feature do
         expect(page).to have_content 'ペットのご紹介'
         expect(page).to have_content 'ワクチン接種有無'
         expect(page).to have_content '去勢有無'
+        expect(page).to have_content '譲渡範囲'
 
         expect(page).to have_field 'pet_form[photos][]'
         expect(page).to have_field 'pet[category]'
@@ -44,6 +49,7 @@ RSpec.feature '里親募集（登録）', type: :feature do
       end
 
       scenario '正しく値を入力した場合、flash メッセージが正しく表示されていること' do
+        visit new_pet_path
         attach_file '紹介画像', "#{Rails.root}/spec/fixtures/images/Dachshund3.jpeg"
         select 'イヌ', from: 'カテゴリ'
         fill_in 'ペットのお名前', with: 'Sora'
@@ -53,6 +59,7 @@ RSpec.feature '里親募集（登録）', type: :feature do
         fill_in 'ペットのご紹介', with: 'おとなしく、賢い'
         select '接種済', from: 'ワクチン接種有無'
         select '未去勢', from: '去勢有無'
+        check '大阪'
         click_button '登録内容確認'
         expect(page).to have_content '登録完了しました。'
         expect(current_path).to eq pet_path(Pet.last)

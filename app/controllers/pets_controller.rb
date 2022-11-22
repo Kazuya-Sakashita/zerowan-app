@@ -9,15 +9,18 @@ class PetsController < ApplicationController
     # pet ペット情報を保存　petForm 画像を保存で分ける
     @pet = Pet.new
     @pet_images = PetForm.new
-
+    @pet_areas =  AreaForm.new
   end
 
   def create
-    @pet = current_user.pets.build pet_params
+    @pet = current_user.pets.build(pet_params)
     ActiveRecord::Base.transaction do
       @pet.save!
-      @pet_imagaes = PetForm.new(pet_id: @pet.reload.id, pet_images: pet_images)
-      @pet_imagaes.save!
+      @pet_images = PetForm.new(pet_id: @pet.reload.id, pet_images: pet_images)
+      @pet_areas =  AreaForm.new(pet_id: @pet.reload.id, pet_areas: pet_areas)
+      @pet_images.save!
+      @pet_areas.save!
+
     end
 
     flash[:notice] = "登録完了しました。"
@@ -30,12 +33,15 @@ class PetsController < ApplicationController
 
   def show
     @pet = Pet.find(params[:id])
-    @pet_imagaes = @pet.pet_images
+    @pet_images = @pet.pet_images
+    @pet_areas = @pet.pet_areas
   end
 
   def edit
     @pet = Pet.find(params[:id])
     @pet_images = PetForm.new
+    @pet_areas =  AreaForm.new
+    @pet_set_areas = @pet.pet_areas.pluck(:area_id)
   end
 
   def update
@@ -45,8 +51,13 @@ class PetsController < ApplicationController
       @pet.update!(pet_params)
       if pet_images.present?
         @pet.pet_images.destroy_all
-        @pet_imagaes = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
-        @pet_imagaes.save!
+        @pet_images = PetForm.new(pet_id: @pet.id, pet_images: pet_images)
+        @pet_images.save!
+      end
+      if pet_areas.present?
+        @pet.pet_areas.destroy_all
+        @pet_areas = AreaForm.new(pet_id: @pet.id, pet_areas: pet_areas)
+        @pet_areas.save!
       end
     end
 
@@ -66,5 +77,9 @@ class PetsController < ApplicationController
 
   def pet_images
     params.dig(:pet_form, :photos) || []
+  end
+
+  def pet_areas
+    params.dig(:area_form, :areas) || []
   end
 end

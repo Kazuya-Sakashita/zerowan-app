@@ -13,10 +13,10 @@ RSpec.describe PetForm, type: :model do
           photos << pet_image = build(:pet_image, pet_id: pet.id)
         end
 
-        @pet_imagaes = PetForm.new
-        @pet_imagaes.photos = photos
-        @pet_imagaes.valid?
-        expect(@pet_imagaes).to be_valid
+        @pet_images= PetForm.new
+        @pet_images.photos = photos
+        @pet_images.valid?
+        expect(@pet_images).to be_valid
       end
 
       it '画像枚数が4枚であれば有効であること' do
@@ -25,10 +25,10 @@ RSpec.describe PetForm, type: :model do
           photos << pet_image = build(:pet_image, pet_id: pet.id)
         end
 
-        @pet_imagaes = PetForm.new
-        @pet_imagaes.photos = photos
-        @pet_imagaes.valid?
-        expect(@pet_imagaes).to be_valid
+        @pet_images = PetForm.new
+        @pet_images.photos = photos
+        @pet_images.valid?
+        expect(@pet_images).to be_valid
       end
     end
 
@@ -36,11 +36,11 @@ RSpec.describe PetForm, type: :model do
       it '画像枚数が0枚であれば無効であること' do
         photos = []
 
-        @pet_imagaes = PetForm.new
-        @pet_imagaes.photos = photos
-        @pet_imagaes.valid?
-        expect(@pet_imagaes).not_to be_valid
-        expect(@pet_imagaes.errors.full_messages).to include('紹介画像添付枚数を確認してください。')
+        @pet_images= PetForm.new
+        @pet_images.photos = photos
+        @pet_images.valid?
+        expect(@pet_images).not_to be_valid
+        expect(@pet_images.errors.full_messages).to include('紹介画像添付枚数を確認してください。')
       end
 
       it '画像枚数が5枚であれば無効であること' do
@@ -49,11 +49,11 @@ RSpec.describe PetForm, type: :model do
           photos << pet_image = build(:pet_image, pet_id: pet.id)
         end
 
-        @pet_imagaes = PetForm.new
-        @pet_imagaes.photos = photos
-        @pet_imagaes.valid?
-        expect(@pet_imagaes).not_to be_valid
-        expect(@pet_imagaes.errors.full_messages).to include('紹介画像添付枚数を確認してください。')
+        @pet_images= PetForm.new
+        @pet_images.photos = photos
+        @pet_images.valid?
+        expect(@pet_images).not_to be_valid
+        expect(@pet_images.errors.full_messages).to include('紹介画像添付枚数を確認してください。')
       end
     end
   end
