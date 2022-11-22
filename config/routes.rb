@@ -17,4 +17,10 @@ Rails.application.routes.draw do
 
   resources :pets
   post 'pets/confirm', to: 'pets#confirm'
+
+  resources :home ,only:[:index] do
+    collection do
+      match 'search' => 'home#search', via: [:get, :post], as: :search
+    end
+  end
 end

@@ -1,7 +1,20 @@
 <div class="container">
   <!-- 投稿pet一覧 -->
   <div class="col-9">
-    <div>
+    <%= search_form_for @q, url: search_home_index_path do |f| %>
+      <div class="col-3">
+      <%= f.label :category %>
+        <%= f.select :category_eq,
+                     Pet.categories_i18n.invert.map{|key, value| [key, Pet.categories[value]]},
+                     { include_blank: t('全て') },
+                     { class: 'form-control mr-1' } %>
+      </div>
+
+      <br>
+      <%= f.submit '検索する', class: 'btn btn-lg comfirm-btn btn-block'  %>
+    <% end %>
+
+    <div class = 'mt-5'>
       <h2>掲載中の里親募集</h2>
       <div class="row">
         <% @pets.each do |pet| %>
