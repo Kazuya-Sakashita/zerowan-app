@@ -9,6 +9,21 @@
                      { include_blank: t('全て') },
                      { class: 'form-control mr-1' } %>
       </div>
+      <div class="col-3">
+        <%= f.label :gender %>
+        <%= f.select :gender_eq,
+                     Pet.genders_i18n.invert.map{|key, value| [key, Pet.genders[value]]},
+                     { include_blank: t('全て') },
+                     { class: 'form-control mr-1' } %>
+      </div>
+
+      <div class="col-3">
+        <%= f.label :classification %>
+        <%= f.select :classification_eq,
+                     Pet.classifications_i18n.invert.map{|key, value| [key, Pet.classifications[value]]},
+                     { include_blank: t('全て') },
+                     { class: 'form-control mr-1' } %>
+      </div>
 
       <br>
       <%= f.submit '検索する', class: 'btn btn-lg comfirm-btn btn-block'  %>
@@ -26,7 +41,7 @@
               <% end %>
               <div class="card-body">
                 <h5 class="card-title"><%= pet.petname %></h5>
-                <p><%= pet.classification %>/<%= pet.age %>才/<%= pet.gender %></p>
+                <p><%= pet.classification_i18n %>/<%= pet.age %>才/<%= pet.gender_i18n %></p>
                 <h5 class="card-title">譲渡可能地域</h5>
                 <% pet.pet_areas.each do |a| %>
                   <%= a.area.place_name %>
