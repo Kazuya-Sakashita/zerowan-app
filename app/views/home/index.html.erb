@@ -21,7 +21,7 @@
 
           <div class="col-xs-12 col-md-2">
             <%= f.label :age %>
-            <%= f.text_field :age_lt, class:'form-select form-select-lg' %>才まで
+            <%= f.number_field :age_lt, class:'form-control' %>才まで
           </div>
 <!--          TODO 年齢のテキストフィールドが空白、デフォルトを全てなどにしたい-->
 
@@ -33,6 +33,19 @@
                          { class: 'form-select form-select-lg' } %>
           </div>
         </div>
+
+        <div class="form-label">
+            <div class="field">
+<!--              TODO　ラベルの修正が必要、どうすれば良いか調べる-->
+              <%= f.label :pet_areas_area_id_eq_any %><br/>
+              <%= f.collection_check_boxes(:pet_areas_area_id_eq_any,  Area.all, :id, :place_name, include_hidden: false) do |area| %>
+                <%= area.label(class: "btn form-check-label") { area.check_box(class: "form-check-input") + area.text } %>
+              <% end %>
+            </div>
+        </div>
+
+
+
       </div>
       <br>
       <%= f.submit '検索する', class: 'btn btn-lg comfirm-btn btn-block' %>
