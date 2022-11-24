@@ -37,8 +37,8 @@
         <div class="form-label">
             <div class="field">
 <!--              TODO　ラベルの修正が必要、どうすれば良いか調べる-->
-              <%= f.label :pet_areas_area_id_eq_any %><br/>
-              <%= f.collection_check_boxes(:pet_areas_area_id_eq_any,  Area.all, :id, :place_name, include_hidden: false) do |area| %>
+              <%= f.label :pet_areas_area_id_in %><br/>
+              <%= f.collection_check_boxes(:pet_areas_area_id_in,  Area.all, :id, :place_name, include_hidden: false) do |area| %>
                 <%= area.label(class: "btn form-check-label") { area.check_box(class: "form-check-input") + area.text } %>
               <% end %>
             </div>
