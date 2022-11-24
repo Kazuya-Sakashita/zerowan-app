@@ -34,27 +34,104 @@ RSpec.feature 'ホーム画面', type: :feature do
     before do
       create(:area, place_name: '東京')
     end
+    context '組合せ検索' do
+      scenario '正しく値を入力した場合、検索結果があること' do
+        visit root_path
+        select 'イヌ', from: 'q_category_eq'
+        select 'オス', from: 'q_gender_eq'
+        fill_in 'q_age_lteq', with: '12'
+        select 'チワワ', from: 'q_classification_eq'
+        check '大阪'
+        click_button '検索する'
+        expect(page).to have_content 'taro20221101'
+      end
 
-    scenario '正しく値を入力した場合、検索ができること' do
-      visit root_path
-      select 'イヌ', from: 'q_category_eq'
-      select 'オス', from: 'q_gender_eq'
-      fill_in 'q_age_lteq', with: '12'
-      select 'チワワ', from: 'q_classification_eq'
-      check '大阪'
-      click_button '検索する'
-      expect(page).to have_content 'taro20221101'
+      scenario '正しく値を入力しなかったた場合、検索結果がないこと' do
+        visit root_path
+        select 'ネコ', from: 'q_category_eq'
+        select 'メス', from: 'q_gender_eq'
+        fill_in 'q_age_lteq', with: '11'
+        select 'ダックス', from: 'q_classification_eq'
+        check '東京'
+        click_button '検索する'
+        expect(page).not_to have_content 'taro20221101'
+      end
     end
 
-    scenario '正しく値を入力しなかったた場合、検索ができないこと' do
-      visit root_path
-      select 'ネコ', from: 'q_category_eq'
-      select 'メス', from: 'q_gender_eq'
-      fill_in 'q_age_lteq', with: '13'
-      select 'ダックス', from: 'q_classification_eq'
-      check '東京'
-      click_button '検索する'
-      expect(page).not_to have_content 'taro20221101'
+    context '個々検索' do
+      context 'カテゴリ' do
+        scenario 'カテゴリでの登録がある場合、検索結果があること' do
+          visit root_path
+          select 'イヌ', from: 'q_category_eq'
+          click_button '検索する'
+          expect(page).to have_content 'taro20221101'
+        end
+        scenario 'カテゴリでの登録がない場合、検索結果がないこと' do
+          visit root_path
+          select 'ネコ', from: 'q_category_eq'
+          click_button '検索する'
+          expect(page).not_to have_content 'taro20221101'
+        end
+      end
+
+      context '性別' do
+        scenario '性別での登録がある場合、検索結果があること' do
+          visit root_path
+          select 'オス', from: 'q_gender_eq'
+          click_button '検索する'
+          expect(page).to have_content 'taro20221101'
+        end
+        scenario '性別での登録がない場合、検索結果がないこと' do
+          visit root_path
+          select 'メス', from: 'q_gender_eq'
+          click_button '検索する'
+          expect(page).not_to have_content 'taro20221101'
+        end
+      end
+      context '年齢' do
+        scenario '年齢の登録範囲内（より若い）の場合、検索結果があること' do
+          visit root_path
+          fill_in 'q_age_lteq', with: '12'
+          click_button '検索する'
+          expect(page).to have_content 'taro20221101'
+        end
+        scenario '年齢の登録範囲内（より若い）でない場合、検索結果がないこと' do
+          visit root_path
+          fill_in 'q_age_lteq', with: '11'
+          click_button '検索する'
+          expect(page).not_to have_content 'taro20221101'
+        end
+      end
+      context '種別' do
+        scenario '種別での登録がある場合、検索結果があること' do
+          visit root_path
+          select 'チワワ', from: 'q_classification_eq'
+          click_button '検索する'
+          expect(page).to have_content 'taro20221101'
+        end
+        scenario '種別での登録がない場合、検索結果がないこと' do
+          visit root_path
+          select 'ダックス', from: 'q_classification_eq'
+          click_button '検索する'
+          expect(page).not_to have_content 'taro20221101'
+        end
+      end
+
+      context '譲渡可能地域' do
+        scenario '譲渡可能地域での登録がある場合、検索結果があること' do
+          visit root_path
+          check '大阪'
+          click_button '検索する'
+          expect(page).to have_content 'taro20221101'
+        end
+        scenario '譲渡可能地域での登録がない場合、検索結果がないこと' do
+          visit root_path
+          check '東京'
+          click_button '検索する'
+          expect(page).not_to have_content 'taro20221101'
+        end
+      end
+
     end
   end
 end
