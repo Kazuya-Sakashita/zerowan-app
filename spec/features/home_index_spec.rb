@@ -123,13 +123,15 @@ RSpec.feature 'ホーム画面', type: :feature do
 
       context '複数譲渡可能地域登録検索' do
         before do
-          # TODO この部分ですが、もっと綺麗な書き方があると思うが、今はこれで。
-          @area = create(:area, place_name: '和歌山')
-          @pet_area = create(:pet_area, pet_id: @pet.id, area_id: @area.reload.id)
-          @area = create(:area, place_name: '兵庫')
-          @pet_area = create(:pet_area, pet_id: @pet.id, area_id: @area.reload.id)
-          @area = create(:area, place_name: '奈良')
-          @pet_area = create(:pet_area, pet_id: @pet.id, area_id: @area.reload.id)
+          create(:area, place_name: '和歌山') do |area|
+            create(:pet_area, pet_id: @pet.id, area_id: area.id)
+          end
+          create(:area, place_name: '兵庫') do |area|
+            create(:pet_area, pet_id: @pet.id, area_id: area.id)
+          end
+          create(:area, place_name: '奈良') do |area|
+            create(:pet_area, pet_id: @pet.id, area_id: area.id)
+          end
         end
         scenario '複数の譲渡可能地域が登録されている且つ複数の譲渡可能地域を指定した場合、検索結果があること' do
           visit root_path
