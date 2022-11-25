@@ -15,7 +15,7 @@ RSpec.feature 'ホーム画面', type: :feature do
                   vaccination: :vaccinated,
                   recruitment_status: 0,
                   user: @user)
-    @pet_area = create(:pet_area, pet_id: @pet.reload.id, area_id: @area.reload.id)
+    @pet_area = create(:pet_area, pet_id: @pet.id, area_id: @area.id)
   end
 
   describe 'ペット一覧表示' do
