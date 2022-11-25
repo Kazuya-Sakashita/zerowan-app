@@ -21,7 +21,7 @@
 
           <div class="col-xs-12 col-md-2">
             <%= f.label :age %>
-            <%= f.number_field :age_lteq, class:'form-control' %>才まで
+            <%= f.number_field :age_lteq, {in: 1..30, class:'form-control'} %>才まで
           </div>
 <!--          TODO 年齢のテキストフィールドが空白、デフォルトを全てなどにしたい-->
 
