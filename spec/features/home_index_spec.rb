@@ -45,17 +45,6 @@ RSpec.feature 'ホーム画面', type: :feature do
         click_button '検索する'
         expect(page).to have_content 'taro20221101'
       end
-
-      scenario '正しく値を入力しなかったた場合、検索結果がないこと' do
-        visit root_path
-        select 'ネコ', from: 'q_category_eq'
-        select 'メス', from: 'q_gender_eq'
-        fill_in 'q_age_lteq', with: '11'
-        select 'ダックス', from: 'q_classification_eq'
-        check '東京'
-        click_button '検索する'
-        expect(page).not_to have_content 'taro20221101'
-      end
     end
 
     context '個々検索' do
@@ -132,6 +121,26 @@ RSpec.feature 'ホーム画面', type: :feature do
         end
       end
 
+      context '複数譲渡可能地域登録検索' do
+        before do
+          # TODO この部分ですが、もっと綺麗な書き方があると思うが、今はこれで。
+          @area = create(:area, place_name: '和歌山')
+          @pet_area = create(:pet_area, pet_id: @pet.id, area_id: @area.reload.id)
+          @area = create(:area, place_name: '兵庫')
+          @pet_area = create(:pet_area, pet_id: @pet.id, area_id: @area.reload.id)
+          @area = create(:area, place_name: '奈良')
+          @pet_area = create(:pet_area, pet_id: @pet.id, area_id: @area.reload.id)
+        end
+        scenario '複数の譲渡可能地域が登録されている且つ複数の譲渡可能地域を指定した場合、検索結果があること' do
+          visit root_path
+          check '大阪'
+          check '和歌山'
+          check '兵庫'
+          check '奈良'
+          click_button '検索する'
+          expect(page).to have_content 'taro20221101'
+        end
+      end
     end
   end
 end
