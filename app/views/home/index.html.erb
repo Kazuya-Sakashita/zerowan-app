@@ -1,7 +1,55 @@
 <div class="container">
   <!-- 投稿pet一覧 -->
-  <div class="col-9">
-    <div>
+  <div class="">
+    <%= search_form_for @q, url: search_home_index_path do |f| %>
+      <div class="container-fluid ">
+        <div class="row">
+          <div class="col-xs-12 col-md-2">
+            <%= f.label :category %>
+            <%= f.select :category_eq,
+                         Pet.categories_i18n.invert.map { |key, value| [key, Pet.categories[value]] },
+                         { include_blank: '全て' },
+                         { class: 'form-select form-select-lg' } %>
+          </div>
+          <div class="col-xs-12 col-md-2">
+            <%= f.label :gender %>
+            <%= f.select :gender_eq,
+                         Pet.genders_i18n.invert.map { |key, value| [key, Pet.genders[value]] },
+                         { include_blank: '全て' },
+                         { class: 'form-select form-select-lg' } %>
+          </div>
+
+          <div class="col-xs-12 col-md-2">
+            <%= f.label :age %>
+            <%= f.number_field :age_lteq, {in: 1..30, class:'form-control'} %>才まで
+          </div>
+
+          <div class="col-xs-12 col-md-2">
+            <%= f.label :classification %>
+            <%= f.select :classification_eq,
+                         Pet.classifications_i18n.invert.map { |key, value| [key, Pet.classifications[value]] },
+                         { include_blank: '全て' },
+                         { class: 'form-select form-select-lg' } %>
+          </div>
+        </div>
+
+        <div class="form-label">
+            <div class="field">
+              <%= f.label :pet_areas_area_id_in, "譲渡可能地域" %><br/>
+              <%= f.collection_check_boxes(:pet_areas_area_id_in,  Area.all, :id, :place_name, include_hidden: false) do |area| %>
+                <%= area.label(class: "btn form-check-label") { area.check_box(class: "form-check-input") + area.text } %>
+              <% end %>
+            </div>
+        </div>
+
+
+
+      </div>
+      <br>
+      <%= f.submit '検索する', class: 'btn btn-lg comfirm-btn btn-block' %>
+    <% end %>
+
+    <div class='mt-5'>
       <h2>掲載中の里親募集</h2>
       <div class="row">
         <% @pets.each do |pet| %>
@@ -13,7 +61,7 @@
               <% end %>
               <div class="card-body">
                 <h5 class="card-title"><%= pet.petname %></h5>
-                <p><%= pet.classification %>/<%= pet.age %>才/<%= pet.gender %></p>
+                <p><%= pet.classification_i18n %>/<%= pet.age %>才/<%= pet.gender_i18n %></p>
                 <h5 class="card-title">譲渡可能地域</h5>
                 <% pet.pet_areas.each do |a| %>
                   <%= a.area.place_name %>

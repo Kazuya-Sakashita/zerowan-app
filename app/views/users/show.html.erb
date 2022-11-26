@@ -15,7 +15,7 @@
                 <% end %>
                 <div class="card-body">
                   <h5 class="card-title"><%= pet.petname %></h5>
-                  <p><%= pet.classification %>/<%= pet.age %>才/<%= pet.gender %></p>
+                  <p><%= pet.classification_i18n %>/<%= pet.age %>才/<%= pet.gender_i18n %></p>
                   <h5 class="card-title">譲渡可能地域</h5>
                   <% pet.pet_areas.each do |a| %>
                     <%= a.area.place_name %>
