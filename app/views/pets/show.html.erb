@@ -56,5 +56,16 @@
       </div>
     </div>
     <!-- ペット詳細情報表示 end -->
+    お気に入り部分このあたり
+    <% if user_signed_in? && current_user != @pet.user %>
+      <% if current_user.favorite_find(@pet.id) %>
+
+        # パスの記述を変更
+        <%= link_to 'favorite', pet_favorites_path(@pet.id), data: { turbo_method: :delete } %>
+      <% else %>
+        # パスの記述を変更
+        <%= link_to 'favorite', pet_favorites_path(@pet.id), data: { turbo_method: :post } %>
+      <% end %>
+    <% end %>
   </div>
 </div>

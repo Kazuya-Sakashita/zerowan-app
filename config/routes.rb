@@ -15,8 +15,11 @@ Rails.application.routes.draw do
   end
 
 
-  resources :pets
-  post 'pets/confirm', to: 'pets#confirm'
+  resources :pets do
+    resources :favorites, only: [:create, :destroy]
+  end
+  # post 'pets/confirm', to: 'pets#confirm'
+
 
   resources :home ,only:[:index] do
     collection do
