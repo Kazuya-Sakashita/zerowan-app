@@ -1,16 +1,15 @@
 class FavoritesController < ApplicationController
   def create
-    Favorite.create(user_id: current_user.id, pet_id: params[:id])
+    @pet = Pet.find(params[:pet_id])
+    Favorite.create(user_id: current_user.id, pet_id: @pet.id)
     redirect_to pet_path(@pet.id)
   end
 
   def destroy
-    favorite = Favorite.find_by(user_id: current_user.id, pet_id: params[:id])
+    binding.pry
+    @pet = Pet.find(params[:pet_id])
+    favorite = Favorite.find_by(user_id: current_user.id, pet_id: @pet.id)
     favorite.destroy
-
-    # TODO これは必要か不明、一旦記載しておく　「Rails 7.0 + Ruby 3.1でゼロからアプリを作ってみたときにハマったところあれこれ」
-    respond_to do |format|
-      format.html { redirect_to pet_path(@pet.id), status: :see_other }
-    end
+    redirect_to pet_path(@pet.id), status: :see_other
   end
 end
