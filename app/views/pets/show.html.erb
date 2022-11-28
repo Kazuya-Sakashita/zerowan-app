@@ -10,63 +10,68 @@
     </div>
     <div class="col-6">
       <!-- ペット詳細情報表示 -->
-
-      <% if user_signed_in? && @pet.user_id == current_user.id %>
-        <%= link_to 'ペット情報を編集する', edit_pet_path(@pet), class: 'btn btn-lg return-pet-edit-btn btn-block ' %>
-      <% end %>
-      <div class="table-responsive-sm">
-        <table class="table bg-white table-bordered">
-          <tr>
-            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">名前</td>
-            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.petname %></td>
-          </tr>
-          <tr>
-            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">性別</td>
-            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.gender_i18n %></td>
-          </tr>
-          <tr>
-            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">年齢</td>
-            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.age %>才</td>
-          </tr>
-          <tr>
-            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">種別</td>
-            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.classification_i18n %></td>
-          </tr>
-          <tr>
-            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">性格</td>
-            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.introduction %></td>
-          </tr>
-          <tr>
-            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">ワクチン有無</td>
-            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.vaccination_i18n %></td>
-          </tr>
-          <tr>
-            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">去勢有無</td>
-            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.castration_i18n %></td>
-          </tr>
-          <tr>
-            <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">譲渡可能地域</td>
-            <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4">
-              <% @pet_areas.each do |a| %>
-                <%= a.area.place_name %>
-              <% end %>
-            </td>
-          </tr>
-        </table>
+      <div>
+        <% if user_signed_in? && @pet.user_id == current_user.id %>
+          <%= link_to 'ペット情報を編集する', edit_pet_path(@pet), class: 'btn btn-lg return-pet-edit-btn btn-block ' %>
+        <% end %>
+        <div class="table-responsive-sm">
+          <table class="table bg-white table-bordered">
+            <tr>
+              <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">名前</td>
+              <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.petname %></td>
+            </tr>
+            <tr>
+              <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">性別</td>
+              <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.gender_i18n %></td>
+            </tr>
+            <tr>
+              <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">年齢</td>
+              <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.age %>才</td>
+            </tr>
+            <tr>
+              <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">種別</td>
+              <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.classification_i18n %></td>
+            </tr>
+            <tr>
+              <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">性格</td>
+              <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.introduction %></td>
+            </tr>
+            <tr>
+              <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">ワクチン有無</td>
+              <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.vaccination_i18n %></td>
+            </tr>
+            <tr>
+              <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">去勢有無</td>
+              <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.castration_i18n %></td>
+            </tr>
+            <tr>
+              <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">譲渡可能地域</td>
+              <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4">
+                <% @pet_areas.each do |a| %>
+                  <%= a.area.place_name %>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
-    </div>
-    <!-- ペット詳細情報表示 end -->
-    お気に入り部分このあたり
-    <% if user_signed_in? && current_user != @pet.user %>
-      <% if current_user.favorite_find(@pet.id) %>
-
-        # パスの記述を変更
-        <%= button_to 'favorite消す', pet_favorite_path(@pet.id), method: :delete %>
-
-  <% else %>
-        # パスの記述を変更
-        <%= button_to "favoriteする", pet_favorites_path(@pet.id), data: { turbo_method: :post } %>
-      <% end %>
+        <% if user_signed_in? && current_user != @pet.user %>
+          <% if current_user.favorite_find(@pet.id) %>
+          <div class='favorite-registration-part-off'>
+            <%= button_to pet_favorite_path(@pet.id), method: :delete, class: 'btn favorite-btn' do %>
+              <span class='star-non'>☆</span> <span class='favorite-text'>気になるリストから削除</span>
+            <% end %>
+          </div>
+          <% else %>
+          <div class='favorite-registration-part-on'>
+          <%= button_to pet_favorites_path(@pet.id), data: { turbo_method: :post }, class: 'btn favorite-btn' do %>
+              <span class='star'>★</span> <span class='favorite-text'>気になるリストに追加</span>
+            <% end %>
+          </div>
     <% end %>
+        <% end %>
+    </div>
+
+    <!-- ペット詳細情報表示 end -->
   </div>
 </div>
