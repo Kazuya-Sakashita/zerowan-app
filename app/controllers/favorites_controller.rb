@@ -6,7 +6,6 @@ class FavoritesController < ApplicationController
   end
 
   def destroy
-    binding.pry
     @pet = Pet.find(params[:pet_id])
     favorite = Favorite.find_by(user_id: current_user.id, pet_id: @pet.id)
     favorite.destroy

@@ -61,14 +61,11 @@
       <% if current_user.favorite_find(@pet.id) %>
 
         # パスの記述を変更
-        <%= link_to 'favorite消す', pet_favorites_path(@pet.id), data: { turbo_method: :delete } %>
-        <%= button_to "favorite消す2", pet_favorites_path(@pet.id), data: { turbo_method: :delete }%>
-        <%= button_to 'favorite消す3', pet_favorites_path(@pet.id), method: :delete %>
+        <%= button_to 'favorite消す', pet_favorite_path(@pet.id), method: :delete %>
 
   <% else %>
         # パスの記述を変更
-        <%= link_to 'favoriteする', pet_favorites_path(@pet.id), data: { turbo_method: :post } %>
-        <%= button_to "favoriteする2", pet_favorites_path(@pet.id), data: { turbo_method: :post } %>
+        <%= button_to "favoriteする", pet_favorites_path(@pet.id), data: { turbo_method: :post } %>
       <% end %>
     <% end %>
   </div>
