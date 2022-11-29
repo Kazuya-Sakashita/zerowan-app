@@ -79,7 +79,6 @@
                       </div>
                     <% end %>
                   <% else %>
-
                     <%= button_to pet_favorites_path(pet.id), data: { turbo_method: :post }, class: 'btn favorite-btn-on' do %>
                       <div class='favorite-registration-part-on'>
                         <span class='star'>★</span> <span class='favorite-text'>気になるリストに追加</span>

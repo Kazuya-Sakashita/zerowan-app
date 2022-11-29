@@ -57,17 +57,17 @@
       </div>
       <% if user_signed_in? && current_user != @pet.user %>
         <% if current_user.favorite_find(@pet.id) %>
-          <div class='favorite-registration-part-off'>
-            <%= button_to pet_favorites_path(@pet.id), method: :delete, class: 'btn favorite-btn' do %>
+          <%= button_to pet_favorites_path(@pet.id), method: :delete, class: 'btn favorite-btn-off' do %>
+            <div class='favorite-registration-part-off'>
               <span class='star-non'>☆</span> <span class='favorite-text'>気になるリストから削除</span>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         <% else %>
-          <div class='favorite-registration-part-on'>
-            <%= button_to pet_favorites_path(@pet.id), data: { turbo_method: :post }, class: 'btn favorite-btn' do %>
+          <%= button_to pet_favorites_path(@pet.id), data: { turbo_method: :post }, class: 'btn btn favorite-btn-on' do %>
+            <div class='favorite-registration-part-on'>
               <span class='star'>★</span> <span class='favorite-text'>気になるリストに追加</span>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>
