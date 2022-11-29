@@ -58,7 +58,7 @@
       <% if user_signed_in? && current_user != @pet.user %>
         <% if current_user.favorite_find(@pet.id) %>
           <div class='favorite-registration-part-off'>
-            <%= button_to pet_favorite_path(@pet.id), method: :delete, class: 'btn favorite-btn' do %>
+            <%= button_to pet_favorites_path(@pet.id), method: :delete, class: 'btn favorite-btn' do %>
               <span class='star-non'>☆</span> <span class='favorite-text'>気になるリストから削除</span>
             <% end %>
           </div>

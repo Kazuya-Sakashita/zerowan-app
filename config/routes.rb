@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
 
   resources :pets do
-    resources :favorites, only: [:create, :destroy]
+    resource :favorites, only: [:create, :destroy]
   end
   # post 'pets/confirm', to: 'pets#confirm'
 

@@ -133,7 +133,7 @@ body {
 }
 
 //favoriteボタン
-.favorite-registration-part-on {
+.favorite-btn-on {
   background-color: #FFFFFF;
   text-align: center;
   border-color: #dee2e6;
@@ -145,7 +145,7 @@ body {
     color: #F2BA29;
   }
 }
-.favorite-registration-part-off {
+.favorite-btn-off {
   background-color: #F2BA29;
   text-align: center;
   border-color: #dee2e6;
@@ -158,3 +158,12 @@ body {
   }
 }
 
+.favorite-btn {
+  background-color: #F2BA29;
+  text-align: center;
+  border-color: #dee2e6;
+  border-width: 1px;
+}
+.button_to {
+  text-align: center;
+}
