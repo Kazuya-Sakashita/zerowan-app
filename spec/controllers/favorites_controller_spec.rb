@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe FavoritesController, type: :controller do
   describe 'お気に入り機能' do
+    let(:headers){ { 'HTTP_REFERER' => referer } }
+    let!(:referer){ "/" }
+
     # お気に入り設定するユーザー登録
     let(:user) do
       create(:user, email: 'test123456789@test.com', password: 'password12345', password_confirmation: 'password12345', &:confirm)
@@ -30,12 +33,15 @@ RSpec.describe FavoritesController, type: :controller do
              recruitment_status: 0,
              user: User.last)
       create(:pet_area, pet_id: Pet.last.id, area_id: Area.last.id)
+
+
     end
 
     it '正しく設定された場合、登録されていること' do
       sign_in user
+      binding.pry
       expect do
-        post :create, params: params
+        post :create,  params: params ,headers: headers
       end.to change { Favorite.count }.by(1)
     end
 
