@@ -33,19 +33,21 @@ RSpec.describe FavoritesController, type: :controller do
              recruitment_status: 0,
              user: User.last)
       create(:pet_area, pet_id: Pet.last.id, area_id: Area.last.id)
-
-
+      sign_in user
+      request.headers.merge! headers
     end
 
     it '正しく設定された場合、登録されていること' do
-      sign_in user
-      request.headers.merge! headers
       expect do
         post :create,  params: params
       end.to change { Favorite.count }.by(1)
     end
 
-    # it '正しく設定された場合、解除されていること' do
-
+    it '正しく設定された場合、解除されていること' do
+      post :create,  params: params
+      expect do
+        delete :destroy,  params: { pet_id: Pet.last.id, user_id: user.id }
+      end.to change { Favorite.count }.by(-1)
+    end
   end
 end
