@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature '里親募集', type: :feature do
   before do
-    @user = create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+    user = create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
     create(:pet,
            category: :dog,
            petname: 'taro20221101',
@@ -13,9 +13,9 @@ RSpec.feature '里親募集', type: :feature do
            castration: :neutered,
            vaccination: :vaccinated,
            recruitment_status: 0,
-           user: @user)
+           user: user)
 
-    sign_in @user
+    sign_in user
     visit root_path
     click_link 'ペット詳細情報を確認'
   end
@@ -43,7 +43,7 @@ RSpec.feature '里親募集', type: :feature do
     end
 
     before do
-      user1 = create(:user, email: 'test20221104@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+      other_user = create(:user, email: 'test20221104@test.com', password: 'password', password_confirmation: 'password', &:confirm)
       create(:pet,
              category: :dog,
              petname: 'test20221104',
@@ -54,13 +54,32 @@ RSpec.feature '里親募集', type: :feature do
              castration: :neutered,
              vaccination: :vaccinated,
              recruitment_status: 0,
-             user: user1)
+             user: other_user)
     end
 
     scenario '他者投稿の表示していないこと' do
-      visit pet_path(Pet.last)
+      visit pet_path(Pet.last.id)
       expect(page).not_to have_link 'ペット情報を編集する'
       expect(page).to have_content 'test20221104'
+    end
+  end
+
+  describe 'お気に入り機能' do
+    before do
+      user_favorite = create(:user, email: 'test121212@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+      sign_in  user_favorite
+      visit pet_path(Pet.last)
+    end
+    scenario 'お気に入り登録できること' do
+      click_button '★ 気になるリストに追加'
+      expect(page).to have_content '☆ 気になるリストから削除'
+    end
+
+    scenario 'お気に入り削除できること' do
+      click_button '★ 気になるリストに追加'
+
+      click_button '☆ 気になるリストから削除'
+      expect(page).to have_content '★ 気になるリストに追加'
     end
   end
 end

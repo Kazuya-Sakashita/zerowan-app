@@ -148,4 +148,23 @@ RSpec.feature 'ホーム画面', type: :feature do
       end
     end
   end
+
+  describe 'お気に入り機能' do
+    before do
+      user_favorite = create(:user, email: 'test121212@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+      sign_in  user_favorite
+      visit root_path
+    end
+    scenario 'お気に入り登録できること' do
+      click_button '★ 気になるリストに追加'
+      expect(page).to have_content '☆ 気になるリストから削除'
+    end
+
+    scenario 'お気に入り削除できること' do
+      click_button '★ 気になるリストに追加'
+
+      click_button '☆ 気になるリストから削除'
+      expect(page).to have_content '★ 気になるリストに追加'
+    end
+  end
 end
