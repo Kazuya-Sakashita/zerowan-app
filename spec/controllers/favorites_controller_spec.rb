@@ -39,9 +39,9 @@ RSpec.describe FavoritesController, type: :controller do
 
     it '正しく設定された場合、登録されていること' do
       sign_in user
-      binding.pry
+      request.headers.merge! headers
       expect do
-        post :create,  params: params ,headers: headers
+        post :create,  params: params
       end.to change { Favorite.count }.by(1)
     end
 
