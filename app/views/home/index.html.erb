@@ -52,7 +52,7 @@
       <h2>掲載中の里親募集</h2>
       <div class="row">
         <% @pets.each do |pet| %>
-          <div class="col-4">
+          <div class="col-3">
 
             <div class="card my-2">
               <% if pet.pet_images.present? %>
@@ -92,4 +92,5 @@
     </div>
   </div>
   <!-- 投稿pet一覧 　end-->
+  <%= paginate @pets, theme: 'bootstrap-5' %>
 </div>
