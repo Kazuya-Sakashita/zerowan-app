@@ -7,9 +7,7 @@ RSpec.feature 'ページネーション表示', type: :feature do
 
   before do
     create(:area, place_name: '大阪')
-    # TODO pet,pet_areaセットで繰り返しデータ作成方法の書き方を後で考える
-    60.times do
-      create(:pet,
+      create_list(:pet,60,
              category: :dog,
              petname: 'taro20221101',
              age: 12,
@@ -20,8 +18,6 @@ RSpec.feature 'ページネーション表示', type: :feature do
              vaccination: :vaccinated,
              recruitment_status: 0,
              user_id: user.id)
-      create(:pet_area, pet_id: Pet.last.id, area_id: Area.last.id)
-    end
     visit root_path
   end
 
