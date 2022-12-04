@@ -19,5 +19,7 @@ class User < ApplicationRecord
     end
   end
 
-
+  def favorite_find(pet_id)
+    favorites.where(pet_id: pet_id).exists?
+  end
 end
