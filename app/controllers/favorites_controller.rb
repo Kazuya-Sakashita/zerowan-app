@@ -1,14 +1,19 @@
 class FavoritesController < ApplicationController
+  before_action :set_pet, only: %i[create destroy]
+  before_action :authenticate_user!, only: %i[create destroy]
   def create
-    @pet = Pet.find(params[:pet_id])
-    Favorite.create(user_id: current_user.id, pet_id: @pet.id)
+    @pet.favorites.create(user: current_user)
     redirect_to request.referer
   end
 
   def destroy
-    @pet = Pet.find(params[:pet_id])
-    favorite = Favorite.find_by(user_id: current_user.id, pet_id: @pet.id)
-    favorite.destroy
+    @pet.favorites.find_by!(user: current_user).destroy
     redirect_to request.referer, status: :see_other
   end
+
+  private
+  def set_pet
+    @pet = Pet.find(params[:pet_id])
+  end
+
 end
