@@ -19,9 +19,9 @@ RSpec.describe FavoritesController, type: :controller do
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
 
-      create(:user, email: 'pettoukou@test.com', password: 'password12345', password_confirmation: 'password12345', &:confirm)
-      create(:area, place_name: '大阪')
-      create(:pet,
+      pet_own = create(:user, email: 'pettoukou@test.com', password: 'password12345', password_confirmation: 'password12345', &:confirm)
+      own_area = create(:area, place_name: '大阪')
+      own_family = create(:pet,
              category: :dog,
              petname: 'taro20221101',
              age: 12,
@@ -31,8 +31,8 @@ RSpec.describe FavoritesController, type: :controller do
              castration: :neutered,
              vaccination: :vaccinated,
              recruitment_status: 0,
-             user: User.last)
-      create(:pet_area, pet_id: Pet.last.id, area_id: Area.last.id)
+             user: pet_own)
+      create(:pet_area, pet_id: own_family.id, area_id: own_area.id)
       sign_in user
       request.headers.merge! headers
     end
