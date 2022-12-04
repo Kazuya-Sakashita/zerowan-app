@@ -38,16 +38,12 @@ RSpec.describe FavoritesController, type: :controller do
     end
 
     it '正しく設定された場合、登録されていること' do
-      expect do
-        post :create,  params: params
-      end.to change { Favorite.count }.by(1)
+      expect { post :create, params: params }.to change(Favorite, :count).by(1)
     end
 
     it '正しく設定された場合、解除されていること' do
       post :create,  params: params
-      expect do
-        delete :destroy,  params: { pet_id: Pet.last.id, user_id: user.id }
-      end.to change { Favorite.count }.by(-1)
+      expect { delete :destroy, params: params }.to change(Favorite, :count).by(-1)
     end
   end
 end
