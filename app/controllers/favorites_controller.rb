@@ -1,6 +1,6 @@
 class FavoritesController < ApplicationController
-  before_action :set_pet, only: %i[create destroy]
-  before_action :authenticate_user!, only: %i[create destroy]
+  before_action :set_pet
+  before_action :authenticate_user!
   def create
     @pet.favorites.create(user: current_user)
     redirect_to request.referer
