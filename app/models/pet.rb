@@ -24,10 +24,10 @@ class Pet < ApplicationRecord
   enum castration: [:unknown, :neutered, :unneutered ],  _prefix: true
   enum recruitment_status: [:recruiting, :during_negotiations, :end_of_recruitment ]
 
-  def own(user,pet)
-    user == pet.user
+  def own?(viewer)
+    user == viewer
   end
-  def favorite?(pet_id,current_user)
-    current_user.favorites.where(pet_id: pet_id).exists?
+  def favorite?(pet_id,viewer)
+    viewer.favorites.where(pet_id: pet_id).exists?
   end
 end
