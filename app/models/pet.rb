@@ -28,6 +28,6 @@ class Pet < ApplicationRecord
     user == viewer
   end
   def favorite?(viewer)
-    self.favorites.detect{ |user| user.user_id == viewer.id }.present?
+    favorites.detect{ |user| user.user_id == viewer.id }.present?
   end
 end
