@@ -27,7 +27,7 @@ class Pet < ApplicationRecord
   def own?(viewer)
     user == viewer
   end
-  def favorite?(pet_id,viewer)
-    viewer.favorites.where(pet_id: pet_id).exists?
+  def favorite?(viewer)
+    self.favorites.detect{ |user| user.user_id == viewer.id }.present?
   end
 end
