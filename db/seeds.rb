@@ -54,3 +54,49 @@
 # Area.create(place_name: '宮崎')
 # Area.create(place_name: '鹿児島')
 # Area.create(place_name: '沖縄')
+
+# テストユーザー登録
+# 5.times do |n|
+#   User.create(email: "test#{n + 1}@test.com",
+#               password: 'password',
+#               password_confirmation: 'password',
+#               confirmed_at: DateTime.now,
+#               profile_attributes: {
+#                 name: "テストユーザー#{n + 1}",
+#                 address: '大阪市天王寺',
+#                 phone_number: '0' * 11,
+#                 birthday: '2010-02-11',
+#                 breeding_experience: '犬1年' })
+# end
+
+# User.create(email: "test_toukou@test.com",
+#             password: 'password',
+#             password_confirmation: 'password',
+#             confirmed_at: DateTime.now,
+#             profile_attributes: {
+#               name: "テスト投稿ユーザー",
+#               address: '大阪市天王寺',
+#               phone_number: '0' * 11,
+#               birthday: '2010-02-11',
+#               breeding_experience: '犬1年' })
+#
+# 50.times do |n|
+#   Pet.create(category: :dog,
+#              petname: "ワンコネーム#{n + 1}",
+#              age: 1,
+#              gender: :male,
+#              classification: :Chihuahua,
+#              introduction: 'おとなしく、賢い',
+#              castration: :neutered,
+#              vaccination: :vaccinated,
+#              recruitment_status: 0,
+#              user_id: User.last.id)
+#   PetImage.create(
+#     photo: File.open("./app/assets/images/dog_default.jpeg"),
+#     pet_id: Pet.last.id
+#   )
+#   PetArea.create(
+#     area_id: 27,
+#     pet_id: Pet.last.id
+#   )
+end

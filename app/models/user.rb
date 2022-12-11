@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_one :profile_image, dependent: :destroy
   has_many :pets
-
+  has_many :favorites
 
   accepts_nested_attributes_for :profile, allow_destroy: true
   accepts_nested_attributes_for :profile_image, allow_destroy: true

@@ -115,21 +115,13 @@ RSpec.feature '会員登録', type: :feature do
   end
 
   describe '本人確認' do
-    before do
-      fill_in 'メールアドレス', with: 'kz0508+88@gmail.com'
-      fill_in 'パスワード', with: 'password'
-      fill_in 'パスワード（確認用）', with: 'password'
-      fill_in 'お名前', with: 'KAZUYA'
-      fill_in 'ご住所', with: '大阪市'
-      fill_in 'お電話番号', with: '00000000000'
-      fill_in '生年月日', with: '2022-06-26'
-      fill_in '飼主経験', with: '猫1年'
-      click_button '登録内容確認'
+    let(:user) do
+      create(:user)
     end
+
     context '正常系' do
       scenario 'メールに含まれる確認トークンで本人確認 URL にアクセスするとログイン画面に遷移すること' do
         click_button '登録'
-        user = User.last
         visit user_confirmation_path(confirmation_token: user.confirmation_token)
         expect(current_path).to eq user_session_path
       end

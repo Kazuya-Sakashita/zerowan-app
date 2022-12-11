@@ -37,9 +37,11 @@ RSpec.feature 'ペット詳細情報', type: :feature do
       end
     end
     context '正常系' do
-      before do
+      let(:area_tokyo) do
         create(:area, place_name: '東京')
-        create(:pet_area, pet_id: @pet.reload.id, area_id: Area.last.id)
+      end
+      before do
+        create(:pet_area, pet_id: @pet.reload.id, area_id: area_tokyo.id)
         visit edit_pet_path(@pet)
         attach_file '画像選択', "#{Rails.root}/spec/fixtures/images/Dachshund3.jpeg"
         select 'イヌ', from: 'カテゴリ'

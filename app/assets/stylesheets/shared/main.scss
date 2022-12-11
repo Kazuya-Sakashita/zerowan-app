@@ -131,3 +131,39 @@ body {
 .image_form {
   display: none;
 }
+
+//favoriteボタン
+.favorite-btn-on {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-color: #dee2e6;
+  border-width: 1px;
+  .favorite-text {
+    color: #999999;
+  };
+  .star {
+    color: #F2BA29;
+  }
+}
+.favorite-btn-off {
+  background-color: #F2BA29;
+  text-align: center;
+  border-color: #dee2e6;
+  border-width: 1px;
+  .favorite-text {
+    color: #FFFFFF;
+  };
+  .star-non {
+    color: #FFFFFF;
+  }
+}
+
+.favorite-btn {
+  background-color: #F2BA29;
+  text-align: center;
+  border-color: #dee2e6;
+  border-width: 1px;
+}
+.button_to {
+  text-align: center;
+}

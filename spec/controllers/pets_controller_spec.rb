@@ -112,10 +112,14 @@ RSpec.describe PetsController, type: :controller do
     end
 
     context 'pet/show' do
+      let(:pet) do
+        create(:pet)
+      end
+
       context '正常系' do
         it 'SHOW画面が描画されること' do
-          post :create, params: params
-          get :show, params: { id: Pet.last.id }
+          # post :create, params: params
+          get :show, params: { id: pet.id }
           expect(response).to render_template 'pets/show'
         end
       end
