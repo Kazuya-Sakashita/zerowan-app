@@ -5,20 +5,26 @@ RSpec.feature 'ホーム画面', type: :feature do
     create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
   end
 
-  before do
+  let(:area) do
     create(:area, place_name: '大阪')
+  end
+
+  let(:pet) do
     create(:pet,
-                  category: :dog,
-                  petname: 'taro20221101',
-                  age: 12,
-                  gender: :male,
-                  classification: :Chihuahua,
-                  introduction: 'おとなしく、賢い',
-                  castration: :neutered,
-                  vaccination: :vaccinated,
-                  recruitment_status: 0,
-                  user_id: user.id)
-    create(:pet_area, pet_id: Pet.last.id, area_id: Area.last.id)
+           category: :dog,
+           petname: 'taro20221101',
+           age: 12,
+           gender: :male,
+           classification: :Chihuahua,
+           introduction: 'おとなしく、賢い',
+           castration: :neutered,
+           vaccination: :vaccinated,
+           recruitment_status: 0,
+           user_id: user.id)
+  end
+
+  before do
+    create(:pet_area, pet_id: pet.id, area_id: area.id)
   end
 
   describe 'ペット一覧表示' do
@@ -127,13 +133,13 @@ RSpec.feature 'ホーム画面', type: :feature do
       context '複数譲渡可能地域登録検索' do
         before do
           create(:area, place_name: '和歌山') do |area|
-            create(:pet_area, pet_id: Pet.last.id, area_id: area.id)
+            create(:pet_area, pet_id: pet.id, area_id: area.id)
           end
           create(:area, place_name: '兵庫') do |area|
-            create(:pet_area, pet_id: Pet.last.id, area_id: area.id)
+            create(:pet_area, pet_id: pet.id, area_id: area.id)
           end
           create(:area, place_name: '奈良') do |area|
-            create(:pet_area, pet_id: Pet.last.id, area_id: area.id)
+            create(:pet_area, pet_id: pet.id, area_id: area.id)
           end
         end
         scenario '複数の譲渡可能地域が登録されている且つ複数の譲渡可能地域を指定した場合、検索結果があること' do
