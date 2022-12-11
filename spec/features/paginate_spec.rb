@@ -7,7 +7,7 @@ RSpec.feature 'ページネーション表示', type: :feature do
 
   before do
     create(:area, place_name: '大阪')
-      create_list(:pet,60,
+      create_list(:pet,3,
              category: :dog,
              petname: 'taro20221101',
              age: 12,
@@ -21,21 +21,18 @@ RSpec.feature 'ページネーション表示', type: :feature do
     visit root_path
   end
 
-  describe '20件以上登録がある場合' do
-    scenario 'ページネーションが表示されていること' do
-      expect(page).to have_selector '.pagination', text: '1 2 3 Next Last'
+  describe 'ページネーション' do
+    scenario '正しく表示されていること' do
+      expect(page).to have_selector '.pagination', text: '1 2 Next Last'
     end
 
-    scenario 'ページネーションが正しく機能すること' do
+    scenario '正しく機能すること' do
       click_link '2'
       expect(page).to have_current_path root_path(page: '2')
-      click_link '3'
-      expect(page).to have_current_path root_path(page: '3')
       click_link 'First'
       expect(page).to have_current_path root_path('/')
       click_link 'Last'
-      expect(page).to have_current_path root_path(page: '3')
+      expect(page).to have_current_path root_path(page: '2')
     end
-
   end
 end
