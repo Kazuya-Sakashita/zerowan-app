@@ -27,16 +27,14 @@ RSpec.feature 'ページネーション表示', type: :feature do
     end
 
     scenario 'ページネーションが正しく機能すること' do
-      # TODO 評価として'/'が'/?page=2'になるような感じで実施したかったがやり方が見つからなかった
-      # 押した際にページネーションが変化するため、そこをマッチャーで評価とした
       click_link '2'
-      expect(page).to have_selector '.pagination', text: 'First Previous 1 2 3 Next Last'
+      expect(page).to have_current_path root_path(page: '2')
       click_link '3'
-      expect(page).to have_selector '.pagination', text: 'First Previous 1 2 3'
+      expect(page).to have_current_path root_path(page: '3')
       click_link 'First'
-      expect(page).to have_selector '.pagination', text: '1 2 3 Next Last'
+      expect(page).to have_current_path root_path('/')
       click_link 'Last'
-      expect(page).to have_selector '.pagination', text: 'First Previous 1 2 3'
+      expect(page).to have_current_path root_path(page: '3')
     end
 
   end
