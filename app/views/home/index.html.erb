@@ -50,7 +50,17 @@
 
     <div class='mt-5'>
       <h2>掲載中の里親募集</h2>
-      <th><%= sort_link(@q, :updated_at, "新着順" )%></th>
+
+      <%= search_form_for @q, url: root_path do |f| %>
+<!--        # params[:q][:s]["0"]に対応するよ("0"はコレクションの連番の1つ目を表すよ。)-->
+        <%= f.sort_fields do |s| %>
+<!--          # 属性のセレクトボックスと、asc/descのセレクトボックスをの2つを用意してくれる-->
+          <%= s.sort_select %>
+        <% end %>
+
+        <%= f.submit %>
+      <% end %>
+
       <hr>
       <div class="row">
         <% @pets.each do |pet| %>
