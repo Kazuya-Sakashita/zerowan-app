@@ -42,6 +42,7 @@
           </div>
         </div>
 
+        <%= f.select(:sorts, { '新着順': 'id desc', '登録順': 'id asc', 'お気に入りの多い順': 'favorites_count desc'} , { selected: params[:q][:sorts] }) %>
 
       </div>
       <br>
@@ -52,11 +53,7 @@
       <h2>掲載中の里親募集</h2>
 
       <%= search_form_for @q, url: root_path do |f| %>
-<!--        # params[:q][:s]["0"]に対応するよ("0"はコレクションの連番の1つ目を表すよ。)-->
-        <%= f.sort_fields do |s| %>
-<!--          # 属性のセレクトボックスと、asc/descのセレクトボックスをの2つを用意してくれる-->
-          <%= s.sort_select %>
-        <% end %>
+        <%= f.select(:sorts, { '新着順': 'id desc', '古い順': 'id asc'} , { selected: params[:q]}) %>
 
         <%= f.submit %>
       <% end %>
