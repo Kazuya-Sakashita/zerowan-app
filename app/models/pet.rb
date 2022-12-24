@@ -6,11 +6,6 @@ class Pet < ApplicationRecord
   belongs_to :user
   has_many :favorites, dependent: :destroy
 
-  ransacker :favorites_count do
-    query = '(SELECT COUNT(favorites.pet_id) FROM favorites where favorites.pet_id = pets.id GROUP BY favorites.pet_id)'
-    Arel.sql(query)
-  end
-
   with_options presence: true do
     validates :petname
     validates :category
