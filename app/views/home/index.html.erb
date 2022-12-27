@@ -43,18 +43,23 @@
           </div>
         </div>
 
-        <div class="col-xs-12 col-md-2">
-          <%= f.select(:sorts, { '新着順': 'id desc', '登録順': 'id asc' }, { selected: params[:q][:sorts] },{ class: 'form-select form-select-lg' }) %>
-        </div>
 
       </div>
       <br>
       <%= f.submit '検索する', class: 'btn btn-lg comfirm-btn btn-block' %>
+      <div class="row mt-md-4">
+        <div class="col-md-9">
+          <h2>掲載中の里親募集</h2>
+        </div>
+        <div class="col-md-3">
+          <div>
+            <%= f.select(:sorts, { '新着順': 'id desc', '登録順': 'id asc' }, { selected: params[:q][:sorts] }, { class: 'form-select form-select-lg' }) %>
+          </div>
+        </div>
+      </div>
     <% end %>
-
+    <hr>
     <div class='mt-5'>
-      <h2>掲載中の里親募集</h2>
-      <hr>
       <div class="row">
         <% @pets.each do |pet| %>
           <div class="col-3">
