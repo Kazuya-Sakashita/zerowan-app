@@ -1,0 +1,25 @@
+<h3>●●さんへのメッセージ</h3>
+<% binding.pry %>
+<div class="form-signup rounded mt-5">
+  <!--PET情報-->
+  <%= form_with model: @message, url: messages_path(id: @pet.id), local: true do |f| %>
+    <div class="form-label">
+      <%= f.label :content %>
+      <%= f.text_area :content, placeholder: 'メッセージを入力', class: 'form-control' %>
+    </div>
+    <div class="actions text-center">
+      <%= f.submit '送信', class: 'btn btn-lg msg-send-btn btn-block' %>
+    </div>
+  <% end %>
+
+  <!--  メッセージ送付フォーム-->
+
+</div>
+
+<div class="form-signup rounded mt-5">
+  <!--メッセージのやりとり履歴-->
+
+</div>
+
+
+<!--ページネーション-->
