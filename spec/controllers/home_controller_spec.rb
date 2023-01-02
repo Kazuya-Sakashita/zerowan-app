@@ -35,11 +35,18 @@ RSpec.describe HomeController, type: :controller do
     end
 
     it '登録順に表示されること' do
-      get :index, params: params
+      get :index
       binding.pry
+
+      # TODO @petsの中身を確認する
     end
 
-    '新着順に表示されること'
+    it '新着順に表示されること' do
+      get :index, params: params
+      binding.pry
+
+      # TODO @petsの中身を確認する
+    end
 
   end
 end
