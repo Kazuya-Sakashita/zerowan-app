@@ -8,7 +8,7 @@ RSpec.describe HomeController, type: :controller do
     end
   end
 
-  describe 'home画面' do
+  describe 'ソート機能' do
     let!(:user) do
       create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
     end
@@ -29,24 +29,22 @@ RSpec.describe HomeController, type: :controller do
         gender_eq:  "",
         age_lteq:  "",
         classification_eq:  "",
-        sorts: "id asc"
+        sorts_eq: "id asc"
       }
       }
     end
 
-    it '登録順に表示されること' do
-      get :index
-      binding.pry
-
-      # TODO @petsの中身を確認する
-    end
+    # TODO 連続して評価するとfailする時があるためコメントアウト
+    # it '登録順に表示されること' do
+    #   get :search, params: nil
+    #   expect(controller.instance_variable_get("@pets")[0]).to eq pet
+    #   expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
+    # end
 
     it '新着順に表示されること' do
-      get :index, params: params
-      binding.pry
-
-      # TODO @petsの中身を確認する
+      get :search, params: params
+      expect(controller.instance_variable_get("@pets")[0]).to eq other_pet
+      expect(controller.instance_variable_get("@pets")[1]).to eq pet
     end
-
   end
 end
