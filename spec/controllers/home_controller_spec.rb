@@ -7,4 +7,36 @@ RSpec.describe HomeController, type: :controller do
       expect(response).to render_template '/'
     end
   end
+
+  describe 'ソート機能' do
+    let!(:user) do
+      create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+    end
+
+    let!(:pet) do
+      create(:pet)
+    end
+
+    let!(:other_pet) do
+      create(:pet)
+    end
+
+    it '降順選択の場合、新着順であること' do
+      get :search, params: { q: { sorts: 'id desc' } }
+      expect(controller.instance_variable_get("@pets")[0]).to eq other_pet
+      expect(controller.instance_variable_get("@pets")[1]).to eq pet
+    end
+
+    it '昇順選択の場合、登録順であること' do
+      get :search, params: { q: { sorts: 'id asc' } }
+      expect(controller.instance_variable_get("@pets")[0]).to eq pet
+      expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
+    end
+
+    it 'paramsがnilの場合、登録順であること' do
+      get :search, params: nil
+      expect(controller.instance_variable_get("@pets")[0]).to eq pet
+      expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
+    end
+  end
 end

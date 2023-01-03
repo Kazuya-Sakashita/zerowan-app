@@ -31,6 +31,7 @@
                          { include_blank: '全て' },
                          { class: 'form-select form-select-lg' } %>
           </div>
+
         </div>
 
         <div class="form-label">
@@ -46,10 +47,19 @@
       </div>
       <br>
       <%= f.submit '検索する', class: 'btn btn-lg comfirm-btn btn-block' %>
+      <div class="row mt-md-4">
+        <div class="col-md-9">
+          <h2>掲載中の里親募集</h2>
+        </div>
+        <div class="col-md-3">
+          <div>
+            <%= f.select(:sorts, { '新着順': 'id desc', '登録順': 'id asc' }, { selected: params[:q][:sorts] }, { class: 'form-select form-select-lg' }) %>
+          </div>
+        </div>
+      </div>
     <% end %>
-
+    <hr>
     <div class='mt-5'>
-      <h2>掲載中の里親募集</h2>
       <div class="row">
         <% @pets.each do |pet| %>
           <div class="col-3">
@@ -59,7 +69,7 @@
                 <%= image_tag pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
               <% end %>
               <div class="card-body">
-                <h5 class="card-title"><%= pet.petname %></h5>
+                <h5 class="card-title petname"><%= pet.petname %></h5>
                 <p><%= pet.classification_i18n %>/<%= pet.age %>才/<%= pet.gender_i18n %></p>
                 <h5 class="card-title">譲渡可能地域</h5>
                 <% pet.pet_areas.each do |a| %>
@@ -69,7 +79,7 @@
                 <div class="button_to">
                   <%= link_to 'ペット詳細情報を確認', pet_path(pet.id), class: "btn btn-primary " %>
                 </div>
-                <% if user_signed_in? &&  pet.own?(current_user).blank? %>
+                <% if user_signed_in? && pet.own?(current_user).blank? %>
                   <% if pet.favorite?(current_user) %>
                     <%= button_to pet_favorites_path(pet.id), method: :delete, class: 'btn favorite-btn-off' do %>
                       <div class='favorite-registration-part-off'>
