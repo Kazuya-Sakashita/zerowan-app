@@ -21,28 +21,14 @@ RSpec.describe HomeController, type: :controller do
       create(:pet)
     end
 
-    let!(:params) do
-      {
-        q:
-          {
-            category_eq: "",
-            gender_eq: "",
-            age_lteq: "",
-            classification_eq: "",
-            sorts: "id desc"
-          }
-      }
-    end
-
     it '降順選択の場合、新着順であること' do
-      get :search, params: params
+      get :search, params: { q: { sorts: 'id desc' } }
       expect(controller.instance_variable_get("@pets")[0]).to eq other_pet
       expect(controller.instance_variable_get("@pets")[1]).to eq pet
     end
 
     it '昇順選択の場合、登録順であること' do
-      params[:q] = { sorts: 'id asc' }
-      get :search, params: params
+      get :search, params: { q: { sorts: 'id asc' } }
       expect(controller.instance_variable_get("@pets")[0]).to eq pet
       expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
     end
@@ -52,7 +38,5 @@ RSpec.describe HomeController, type: :controller do
       expect(controller.instance_variable_get("@pets")[0]).to eq pet
       expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
     end
-
-
   end
 end
