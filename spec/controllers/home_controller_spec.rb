@@ -24,27 +24,35 @@ RSpec.describe HomeController, type: :controller do
     let!(:params) do
       {
         q:
-      {
-        category_eq:  "0",
-        gender_eq:  "",
-        age_lteq:  "",
-        classification_eq:  "",
-        sorts_eq: "id asc"
-      }
+          {
+            category_eq: "",
+            gender_eq: "",
+            age_lteq: "",
+            classification_eq: "",
+            sorts: "id desc"
+          }
       }
     end
 
-    # TODO 連続して評価するとfailする時があるためコメントアウト
-    # it '登録順に表示されること' do
-    #   get :search, params: nil
-    #   expect(controller.instance_variable_get("@pets")[0]).to eq pet
-    #   expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
-    # end
-
-    it '新着順に表示されること' do
+    it '降順選択の場合、新着順であること' do
       get :search, params: params
       expect(controller.instance_variable_get("@pets")[0]).to eq other_pet
       expect(controller.instance_variable_get("@pets")[1]).to eq pet
     end
+
+    it '昇順選択の場合、登録順であること' do
+      params[:q] = { sorts: 'id asc' }
+      get :search, params: params
+      expect(controller.instance_variable_get("@pets")[0]).to eq pet
+      expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
+    end
+
+    it 'paramsがnilの場合、登録順であること' do
+      get :search, params: nil
+      expect(controller.instance_variable_get("@pets")[0]).to eq pet
+      expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
+    end
+
+
   end
 end
