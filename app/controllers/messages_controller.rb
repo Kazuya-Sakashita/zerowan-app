@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+  before_action :authenticate_user!
 
   def index
     @message = Message.new
@@ -9,13 +10,16 @@ class MessagesController < ApplicationController
     @pet = Pet.find(params[:pet_id])
     @message = Message.new
     @customer_entry = Entry.where(user_id: current_user.id)
+    @pet_entry = Entry.where(pet_id: @pet.id)
     @owner_entry = Entry.where(user_id: @pet.user_id)
     unless @pet.user_id == current_user.id
       @customer_entry.each do |current|
-        @owner_entry.each do |owner|
-          if current.room_id == owner.room_id
-            @is_room = true
-            @room_id = current.room_id
+        @pet_entry.each do |pet|
+          @owner_entry.each do |owner|
+            if current.room_id == owner.room_id && owner.room_id == pet.room_id
+              @is_room = true
+              @room_id = current.room_id
+            end
           end
         end
       end
@@ -25,6 +29,7 @@ class MessagesController < ApplicationController
         @owner_entry = Entry.create(room_id: @room.id, user_id: @pet.user_id, pet_id: @pet.id)
       end
     end
+    @all_message_exchanges = Message.where(room_id: @room_id).order(id: "DESC")
   end
 
   def create

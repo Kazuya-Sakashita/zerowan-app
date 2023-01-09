@@ -3,7 +3,6 @@
   <!--PET情報-->
 
 
-
   <!--  メッセージ送付フォーム-->
   <%= form_with model: @message, url: pet_messages_path(@pet), data: { turbo_method: :post }, local: true do |f| %>
     <div class="form-label">
@@ -15,12 +14,15 @@
   <% end %>
 
 
-
 </div>
 
 <div class="form-signup rounded mt-5">
   <!--メッセージのやりとり履歴-->
-
+  <% if @all_message_exchanges.present? %>
+    <% @all_message_exchanges.each do |message| %>
+      <%= message.body %>
+    <% end %>
+  <% end %>
 </div>
 
 
