@@ -1,11 +1,22 @@
 <h3><%= "#{@pet.user.profile.name}" %>"さんへのメッセージ</h3>
-<div class="form-signup rounded mt-5">
+<div class="form-signup rounded mt-5 border border-2">
   <!--PET情報-->
 
-
+  <div>
+    <div class="row">
+      <div class="col-4">
+        <%= image_tag @pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
+      </div>
+      <div class="col-8">
+        <h5 class="card-title petname"><%= @pet.petname %></h5>
+        <p><%= @pet.classification_i18n %>/<%= @pet.age %>才/<%= @pet.gender_i18n %></p>
+        <p class="card-text"><%= @pet.introduction %></p>
+      </div>
+    </div>
+  </div>
   <!--  メッセージ送付フォーム-->
   <%= form_with model: @message, url: pet_messages_path(@pet), data: { turbo_method: :post }, local: true do |f| %>
-    <div class="form-label">
+    <div class="form-label mt-4">
       <%= f.text_area :body, placeholder: 'メッセージを入力', class: 'form-control' %>
     </div>
     <div class="actions text-center">
@@ -16,11 +27,20 @@
 
 </div>
 
-<div class="form-signup rounded mt-5">
-  <!--メッセージのやりとり履歴-->
+
+<!--メッセージのやりとり履歴-->
+<div class=" mt-5 ">
   <% if @all_message_exchanges.present? %>
     <% @all_message_exchanges.each do |message| %>
-      <%= message.body %>
+      <div class="form-signup mt-2 border border-2">
+        <div class="card-body　object-fit-fill ">
+          <ul class="dm-body">
+            <li><%= message.user.profile.name %></li>
+            <li><%= message.updated_at.strftime('%Y/%m/%d %H:%M:%S') %></li>
+            <li><%= message.body %></li>
+          </ul>
+        </div>
+      </div>
     <% end %>
   <% end %>
 </div>
