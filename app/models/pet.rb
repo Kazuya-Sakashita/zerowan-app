@@ -5,6 +5,7 @@ class Pet < ApplicationRecord
   has_many :areas, through: :pet_areas
   belongs_to :user
   has_many :favorites, dependent: :destroy
+  has_many :entries
 
   with_options presence: true do
     validates :petname
