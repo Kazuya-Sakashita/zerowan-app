@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
     @message = Message.new
   end
 
-  def new
+  def show
     @pet = Pet.find(params[:pet_id])
     @message = Message.new
     unless @pet.user_id == current_user.id

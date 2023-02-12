@@ -72,7 +72,7 @@
           <% end %>
           <div class='text-center mt-1'>
             <% unless @pet.user_id == current_user.id %>
-              <%= link_to 'ペット飼い主にメッセージを送る', new_pet_message_path(pet_id: @pet.id), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
+              <%= link_to 'ペット飼い主にメッセージを送る', pet_message_path(pet_id: @pet.id), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
           <% end %>
             <p><span class='send-mail-info-text'>*メッセージ機能を利用するには会員登録が必要です</span></p>
           </div>
