@@ -13,32 +13,35 @@ RSpec.describe MessagesController, type: :controller do
     end
 
     context 'newアクション' do
-      it 'petへの問い合わせが初めての場合、エントリテーブルに登録' do
+      it 'petへの問い合わせが初めての場合、ルームテーブルに登録' do
         expect do
           get :new, params: { pet_id: @pet.id }
-        end.to change { Entry.count }.by(2)
+        end.to change { Room.count }.by(1)
       end
 
-      it 'petへの問い合わせが2回目以降の場合、エントリテーブルに登録しない' do
-        get :new, params: { pet_id: @pet.id }
+      it 'petへの問い合わせが2回目以降の場合、ルームテーブルに登録しない' do
+        @message = get :new, params: { pet_id: @pet.id }
         expect do
           get :new, params: { pet_id: @pet.id }
-        end.to change { Entry.count }.by(0)
+        end.to change { Room.count }.by(0)
       end
-      # TODO 設定内容を確認する方法が不明
-      'petへの問い合わせが2回目以降の場合、ルームIDを設定する'
-
     end
 
     context 'createアクション' do
-      it 'パラーメーターが正しく設定されて場合、メッセージが保存できる' do
-        allow(controller).to receive(:current_user).and_return(user)
+      let(:headers){ { 'HTTP_REFERER' => referer } }
+      let!(:referer){"/pets/#{@pet.id}/messages/new"}
+
+      before do
         get :new, params: { pet_id: @pet.id }
-        @room_id = Room.last.id
+        @room = Room.last
+        request.headers.merge! headers
+      end
+
+      it 'パラーメーターが正しく設定されて場合、メッセージが保存できる' do
+        params = { pet_id: @pet.id , user_id: user.id, message: {body: "はじめまして"}, room_id: @room.id }
         expect do
-          binding.pry
-          post :create, params: { body: "はじめまして"}
-        end.to change { Message.count}.by(1)
+          post :create, params:params
+        end.to change { Message.count }.by(1)
       end
     end
   end

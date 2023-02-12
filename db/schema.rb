@@ -20,18 +20,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_223532) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "entries", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "pet_id"
-    t.bigint "room_id"
-    t.integer "recruitment_status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["pet_id"], name: "index_entries_on_pet_id"
-    t.index ["room_id"], name: "index_entries_on_room_id"
-    t.index ["user_id"], name: "index_entries_on_user_id"
-  end
-
   create_table "favorites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "pet_id", null: false
@@ -103,9 +91,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_223532) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
+    t.bigint "owner_id", null: false
+    t.bigint "pet_id", null: false
+    t.integer "recruitment_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_rooms_on_owner_id"
+    t.index ["pet_id"], name: "index_rooms_on_pet_id"
+    t.index ["user_id", "owner_id", "pet_id"], name: "index_rooms_on_user_id_and_owner_id_and_pet_id", unique: true
     t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
@@ -136,4 +130,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_223532) do
   add_foreign_key "pet_areas", "pets"
   add_foreign_key "pet_images", "pets"
   add_foreign_key "pets", "users"
+  add_foreign_key "rooms", "pets"
+  add_foreign_key "rooms", "users"
+  add_foreign_key "rooms", "users", column: "owner_id"
 end
