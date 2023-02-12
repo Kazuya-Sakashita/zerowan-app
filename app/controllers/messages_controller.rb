@@ -3,17 +3,13 @@ class MessagesController < ApplicationController
 
   def index
     @message = Message.new
-    # @message = @group.messages.includes(:user)
   end
 
   def new
     @pet = Pet.find(params[:pet_id])
     @message = Message.new
     unless @pet.user_id == current_user.id
-      if @room = Room.find_by(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)
-      else
-        @room = Room.create(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)
-      end
+      @room = Room.find_or_create_by(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)
       @all_message_exchanges = Message.where(room_id: @room.id).order(id: "DESC")
     end
   end
