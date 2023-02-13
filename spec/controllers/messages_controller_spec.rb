@@ -12,27 +12,35 @@ RSpec.describe MessagesController, type: :controller do
       sign_in user
     end
 
-    context 'newアクション' do
+    context 'showアクション' do
+      let(:headers){ { 'HTTP_REFERER' => referer } }
+      let!(:referer){"/pets/#{@pet.id}/messages/show"}
+
+      before do
+        request.headers.merge! headers
+      end
+
       it 'petへの問い合わせが初めての場合、ルームテーブルに登録' do
+        binding.pry
         expect do
-          get :new, params: { pet_id: @pet.id }
+          get :show, params: { pet_id: @pet.id }
         end.to change { Room.count }.by(1)
       end
 
       it 'petへの問い合わせが2回目以降の場合、ルームテーブルに登録しない' do
-        @message = get :new, params: { pet_id: @pet.id }
+        @message = get :show, params: { pet_id: @pet.id }
         expect do
-          get :new, params: { pet_id: @pet.id }
+          get :show, params: { pet_id: @pet.id }
         end.to change { Room.count }.by(0)
       end
     end
 
     context 'createアクション' do
       let(:headers){ { 'HTTP_REFERER' => referer } }
-      let!(:referer){"/pets/#{@pet.id}/messages/new"}
+      let!(:referer){"/pets/#{@pet.id}/messages/show"}
 
       before do
-        get :new, params: { pet_id: @pet.id }
+        get :show, params: { pet_id: @pet.id }
         @room = Room.last
         request.headers.merge! headers
       end
