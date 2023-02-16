@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
 
   def create
     @pet = Pet.find(params[:pet_id])
-    @room = Room.find_by(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)
+    @room = @pet.rooms.find_by(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)
     @message = current_user.messages.create(message_params)
     redirect_to request.referer
   end
