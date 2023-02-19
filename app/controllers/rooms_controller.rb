@@ -5,9 +5,17 @@ class RoomsController < ApplicationController
     @pet = Pet.find(params[:pet_id])
     @message = Message.new
 
-    unless @pet.user_id == current_user.id
-      @room = @pet.rooms.find_or_create_by(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)
+    user_identification && return
+
+    @room = @pet.rooms.find_or_create_by(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)
+    @all_message_exchanges = Message.where(room_id: @room.id).order(id: :desc)
+  end
+
+  private
+
+  def  user_identification
+    if @pet.user_id == current_user.id
+      redirect_to pet_path(@pet)
     end
-      @all_message_exchanges = Message.where(room_id: @room.id).order(id: :desc)
   end
 end
