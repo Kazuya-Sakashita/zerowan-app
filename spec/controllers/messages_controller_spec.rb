@@ -18,7 +18,7 @@ RSpec.describe MessagesController, type: :controller do
 
       before do
         request.headers.merge! headers
-        @room = @pet.rooms.find_or_create_by(user_id: user.id, pet_id: @pet.id, owner_id: @pet.user_id)
+        @room = @pet.rooms.create(user_id: user.id, pet_id: @pet.id, owner_id: @pet.user_id)
       end
 
       it 'メッセージが保存できること' do

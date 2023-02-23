@@ -6,10 +6,10 @@ class User < ApplicationRecord
 
   has_one :profile, dependent: :destroy
   has_one :profile_image, dependent: :destroy
-  has_many :pets
+  has_many :pets, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :messages, dependent: :destroy
-  has_many :rooms
+  has_many :rooms, dependent: :destroy
 
   accepts_nested_attributes_for :profile, allow_destroy: true
   accepts_nested_attributes_for :profile_image, allow_destroy: true
