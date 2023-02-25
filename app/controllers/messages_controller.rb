@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   before_action :room_identification, only: [:create]
 
   def index
-    @message = Message.new
+    @messages = Message.all
   end
 
   def create

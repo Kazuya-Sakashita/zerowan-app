@@ -1,8 +1,11 @@
 class RoomsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_pet
+  before_action :find_pet, only: [:show]
   before_action :user_identification, only: [:show]
 
+  def index
+    @rooms = Room.all
+  end
   def show
     @message = Message.new
     user_identification && return
