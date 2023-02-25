@@ -1,8 +1,11 @@
 class RoomsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_pet
+  before_action :find_pet, only: [:show]
   before_action :user_identification, only: [:show]
 
+  def index
+    @rooms = Room.all
+  end
   def show
     @message = Message.new
     @room = @pet.rooms.find_or_create_by(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)

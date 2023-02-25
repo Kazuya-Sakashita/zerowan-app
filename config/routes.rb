@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  resource :users, only:[:show, :edit]
-  resource :profiles, only:[:update]
+  resource :users, only: [:show, :edit]
+  resource :profiles, only: [:update]
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     confirmations: 'users/confirmations'
@@ -16,17 +16,16 @@ Rails.application.routes.draw do
 
   resources :pets do
     resource :favorites, only: [:create, :destroy]
-    resources :messages
-    resource :rooms, only: [:create,:show]
+    resources :messages, only: [:new, :create]
+    resource :rooms, only: [:create, :show]
   end
   # post 'pets/confirm', to: 'pets#confirm'
 
-  resources :home ,only:[:index] do
+  resources :home, only: [:index] do
     collection do
       match 'search' => 'home#search', via: [:get, :post], as: :search
     end
   end
 
-
-
+  resources :rooms, only: [:index]
 end
