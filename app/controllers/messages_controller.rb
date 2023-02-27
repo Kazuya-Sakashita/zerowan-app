@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_pet
+  before_action :find_room, only: [:create]
   before_action :room_identification, only: [:create]
 
   def index
@@ -8,8 +9,6 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @room = @pet.rooms.find_by(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)
-    room_identification && return
     @message = current_user.messages.create(message_params)
     redirect_to request.referer
   end
@@ -24,7 +23,11 @@ class MessagesController < ApplicationController
     @pet = Pet.find(params[:pet_id])
   end
 
+  def find_room
+    @room = @pet.rooms.find_by(user_id: current_user.id, pet_id: @pet.id, owner_id: @pet.user_id)
+  end
+
   def room_identification
-    redirect_to pet_path(@pet) if @room == nil?
+    redirect_to pet_path(@pet) if @room.nil?
   end
 end
