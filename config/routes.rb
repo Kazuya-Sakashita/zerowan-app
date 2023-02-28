@@ -14,16 +14,19 @@ Rails.application.routes.draw do
     get 'users/sign_up/complete', to: 'users/registrations#complete'
   end
 
-
   resources :pets do
     resource :favorites, only: [:create, :destroy]
+    resources :messages
+    resource :rooms, only: [:create,:show]
   end
   # post 'pets/confirm', to: 'pets#confirm'
-
 
   resources :home ,only:[:index] do
     collection do
       match 'search' => 'home#search', via: [:get, :post], as: :search
     end
   end
+
+
+
 end

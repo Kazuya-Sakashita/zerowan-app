@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_27_071800) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_25_223532) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_071800) do
     t.datetime "updated_at", null: false
     t.index ["pet_id"], name: "index_favorites_on_pet_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "room_id"
+    t.bigint "user_id"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "pet_areas", force: :cascade do |t|
@@ -80,6 +90,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_071800) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "rooms", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "owner_id", null: false
+    t.bigint "pet_id", null: false
+    t.integer "recruitment_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_rooms_on_owner_id"
+    t.index ["pet_id"], name: "index_rooms_on_pet_id"
+    t.index ["user_id", "owner_id", "pet_id"], name: "index_rooms_on_user_id_and_owner_id_and_pet_id", unique: true
+    t.index ["user_id"], name: "index_rooms_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -107,4 +130,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_071800) do
   add_foreign_key "pet_areas", "pets"
   add_foreign_key "pet_images", "pets"
   add_foreign_key "pets", "users"
+  add_foreign_key "rooms", "pets"
+  add_foreign_key "rooms", "users"
+  add_foreign_key "rooms", "users", column: "owner_id"
 end

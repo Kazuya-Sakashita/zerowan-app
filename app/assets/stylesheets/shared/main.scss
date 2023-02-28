@@ -138,6 +138,9 @@ body {
   text-align: center;
   border-color: #dee2e6;
   border-width: 1px;
+  padding: 0.5rem;
+  margin: 0;
+  width: 100%;
   .favorite-text {
     color: #999999;
   };
@@ -150,6 +153,9 @@ body {
   text-align: center;
   border-color: #dee2e6;
   border-width: 1px;
+  padding: 0.5rem;
+  margin: 0;
+  width: 100%;
   .favorite-text {
     color: #FFFFFF;
   };
@@ -171,4 +177,36 @@ body {
 //ページネーション
 .pagination {
   justify-content: center;
+}
+
+//Pet#show to_owner_send_mail
+.to_owner_send_mail {
+  background-color: #F2BA29;
+  text-align: center;
+  border-color: #dee2e6;
+  border-width: 1px;
+  color: #FFFFFF;
+  padding: 0.5rem;
+  margin: 0;
+  width: 100%;
+}
+
+.send-mail-info-text {
+  color: #999999;
+}
+
+// メッセージ送信ボタン
+.msg-send-btn {
+  margin-top: 10px;
+  color: #fff;
+  background-color: #F2BA29;
+  border-color: #FFFBEE;
+  width: auto;
+  padding: 6px 50px;
+}
+
+
+.dm-body {
+  list-style: none;
+  margin: 0;
 }

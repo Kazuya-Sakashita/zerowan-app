@@ -72,12 +72,13 @@ RSpec.feature '里親募集', type: :feature do
     end
   end
 
-  describe 'お気に入り機能' do
+  describe '機能' do
     before do
       customer = create(:user, email: 'test121212@test.com', password: 'password', password_confirmation: 'password', &:confirm)
       sign_in customer
       visit pet_path(pet)
     end
+
     scenario 'お気に入り登録できること' do
       click_button '★ 気になるリストに追加'
       expect(page).to have_content '☆ 気になるリストから削除'
@@ -89,7 +90,12 @@ RSpec.feature '里親募集', type: :feature do
       click_button '☆ 気になるリストから削除'
       expect(page).to have_content '★ 気になるリストに追加'
     end
+
+    scenario 'メッセージを送るボタンが表示されていること' do
+      expect(page).to have_link 'ペット飼い主にメッセージを送る'
+    end
   end
+
 end
 
 

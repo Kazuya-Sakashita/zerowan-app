@@ -55,23 +55,30 @@
           </table>
         </div>
       </div>
-      <% if user_signed_in? &&  @pet.own?(current_user).blank? %>
-        <% if @pet.favorite?(current_user) %>
-          <%= button_to pet_favorites_path(@pet.id), method: :delete, class: 'btn favorite-btn-off' do %>
-            <div class='favorite-registration-part-off'>
-              <span class='star-non'>☆</span> <span class='favorite-text'>気になるリストから削除</span>
-            </div>
+      <div>
+        <% if user_signed_in? && @pet.own?(current_user).blank? %>
+          <% if @pet.favorite?(current_user) %>
+            <%= button_to pet_favorites_path(@pet.id), method: :delete, class: 'btn favorite-btn-off' do %>
+              <div class='favorite-registration-part-off'>
+                <span class='star-non'>☆</span> <span class='favorite-text'>気になるリストから削除</span>
+              </div>
+            <% end %>
+          <% else %>
+            <%= button_to pet_favorites_path(@pet.id), data: { turbo_method: :post }, class: 'btn btn favorite-btn-on' do %>
+              <div class='favorite-registration-part-on'>
+                <span class='star'>★</span> <span class='favorite-text'>気になるリストに追加</span>
+              </div>
+            <% end %>
           <% end %>
-        <% else %>
-          <%= button_to pet_favorites_path(@pet.id), data: { turbo_method: :post }, class: 'btn btn favorite-btn-on' do %>
-            <div class='favorite-registration-part-on'>
-              <span class='star'>★</span> <span class='favorite-text'>気になるリストに追加</span>
-            </div>
+          <div class='text-center mt-1'>
+            <% unless @pet.user_id == current_user.id %>
+              <%= link_to 'ペット飼い主にメッセージを送る', pet_rooms_path(pet_id: @pet.id), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
           <% end %>
+            <p><span class='send-mail-info-text'>*メッセージ機能を利用するには会員登録が必要です</span></p>
+          </div>
         <% end %>
-      <% end %>
+      </div>
     </div>
-
     <!-- ペット詳細情報表示 end -->
   </div>
 </div>
