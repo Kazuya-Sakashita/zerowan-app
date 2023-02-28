@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :pets do
     resource :favorites, only: [:create, :destroy]
     resources :messages
+    resource :rooms, only: [:create,:show]
   end
   # post 'pets/confirm', to: 'pets#confirm'
 
@@ -27,5 +28,5 @@ Rails.application.routes.draw do
   end
 
 
-  resources :rooms, only: [:create,:show]
+
 end
