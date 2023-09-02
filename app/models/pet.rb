@@ -31,4 +31,10 @@ class Pet < ApplicationRecord
   def favorite?(viewer)
     favorites.detect{ |user| user.user_id == viewer.id }.present?
   end
+
+  def self.petname_extraction(room_id)
+    @room = Room.find(room_id)
+    @pet = @room.pet
+  end
+
 end
