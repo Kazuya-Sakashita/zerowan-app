@@ -28,4 +28,5 @@ Rails.application.routes.draw do
   end
 
   resources :rooms, only: [:index]
+  resources :messages, only: [:index, :show]
 end
