@@ -30,7 +30,7 @@ class RoomsController < ApplicationController
       redirect_to room_path(@room)
     else
       # Roomが存在しない（作成に失敗した）場合、エラーメッセージをフラッシュに設定
-      flash[:error] = 'Failed to create room.'
+      flash[:error] = '問合せできませんでした。'
     end
 
   end
@@ -39,7 +39,7 @@ class RoomsController < ApplicationController
     @pet = Pet.find(@room.pet_id)
     @message = Message.new
     @all_message_exchanges = @room.messages
-    set_user_name
+    set_user_name #viewの宛名表示に使う
   end
 
   private
