@@ -13,6 +13,7 @@ class RoomsController < ApplicationController
     # 両方を合成
     all_rooms = owned_rooms | joined_rooms
 
+
     # 最新メッセージをそれぞれ取得
     @latest_messages = all_rooms.map(&:latest_message).compact.sort_by(&:created_at).reverse
   end

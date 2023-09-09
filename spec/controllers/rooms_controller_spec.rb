@@ -56,21 +56,92 @@ RSpec.describe RoomsController, type: :controller do
     end
     end
 
-  #   context 'ペットの飼い主と閲覧ユーザー' do
-  #     before do
-  #       @pet_cust = create(:pet, user_id: user.id)
-  #     end
+  describe '#index' do
 
-  #     it '正しく設定された場合は、rooms/showに遷移すること' do
-  #       get :show, params: { pet_id: @pet.id }
-  #       expect(response).to render_template 'rooms/show'
-  #     end
+    let!(:owned_user) do
+      user = create(:user)
+      user.confirm
+      user
+    end
 
-  #     it '正しく設定されなかった場合は、pet/showのままであること' do
-  #       get :show, params: { pet_id: @pet_cust.id }
-  #       expect(response).to redirect_to pet_path(@pet_cust)
-  #     end
-  #   end
-  # end
+    let!(:owned_user) do
+      user = create(:user)
+      user.confirm
+      user
+    end
 
+    let!(:joined_users) do
+      users = create_list(:user, 3)
+      users.each(&:confirm)
+      users
+    end
+
+    let!(:pets) { create_list(:pet, 3, user: owned_user) }
+    let!(:joined_rooms) do
+      rooms = []
+      joined_users.each do |joined_user|
+        pets.each do |pet|
+          room = create(:room, user: joined_user, owner: owned_user, pet: pet)
+          create(:message, room: room, user: joined_user, body: "テストメッセージ")
+          create(:message, room: room, user: owned_user, body: "オーナーからの返信")
+          rooms << room
+        end
+      end
+      rooms
+    end
+
+    let!(:another_owned_user) do
+      user = create(:user)
+      user.confirm
+      user
+    end
+
+  let!(:another_owned_user_pet) { create(:pet, user: another_owned_user) }
+
+  let!(:room_for_another_owned_user) do
+    create(:room, user: owned_user, owner: another_owned_user, pet: another_owned_user_pet)
+  end
+
+
+    context 'joined_userがログインしている場合' do
+      before do
+        sign_in joined_users.first
+        get :index
+      end
+
+      it 'ルーム一覧に遷移すること' do
+        expect(request.fullpath).to eq('/rooms')
+      end
+
+      it 'ユーザーが参加しているルームを取得できること' do
+        expect(assigns(:latest_messages).map(&:room).map(&:user_id).uniq).to include(joined_users.first.id)
+      end
+    end
+
+    context 'owned_userがログインしている場合' do
+
+      before do
+        sign_in owned_user
+        get :index
+      end
+
+      it 'ルーム一覧に遷移すること' do
+        expect(request.fullpath).to eq('/rooms')
+      end
+
+      it 'ユーザーがオーナーであるルームを取得できること' do
+        expect(assigns(:latest_messages).map(&:room).map(&:owner_id).uniq).to include(owned_user.id)
+      end
+
+      it '最新のメッセージを取得できること' do
+        message_timestamps = assigns(:latest_messages).map(&:created_at)
+        expect(message_timestamps).to eq(message_timestamps.sort.reverse)
+    end
+
+
+
+
+# TODO メッセージを作成日時の降順で取得する
+    end
+  end
 end

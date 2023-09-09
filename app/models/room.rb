@@ -1,5 +1,4 @@
 class Room < ApplicationRecord
-  has_many :messages, dependent: :destroy
   has_many :messages, -> { order(created_at: :desc) }, dependent: :destroy # メッセージは作成日時で降順に並べる
   belongs_to :pet
   belongs_to :user
