@@ -57,17 +57,8 @@ RSpec.describe RoomsController, type: :controller do
     end
 
   describe '#index' do
-
-    let!(:owned_user) do
-      user = create(:user)
-      user.confirm
-      user
-    end
-
-    let!(:owned_user) do
-      user = create(:user)
-      user.confirm
-      user
+    let(:owned_user) do
+      create(:user, &:confirm)
     end
 
     let!(:joined_users) do
