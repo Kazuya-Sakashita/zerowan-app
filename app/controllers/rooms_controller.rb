@@ -13,9 +13,10 @@ class RoomsController < ApplicationController
     # 両方を合成
     all_rooms = owned_rooms | joined_rooms
 
-
     # 最新メッセージをそれぞれ取得
+    # ページネーションのデフォルトのページ数を適用（例: 25件/ページ）
     @latest_messages = all_rooms.map(&:latest_message).compact.sort_by(&:created_at).reverse
+    @latest_messages = Kaminari.paginate_array(@latest_messages).page(params[:page]).per(10)
   end
 
   def new
