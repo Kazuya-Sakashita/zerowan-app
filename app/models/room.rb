@@ -3,10 +3,8 @@ class Room < ApplicationRecord
   belongs_to :pet
   belongs_to :user
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
-
-  def latest_message
-    messages.first # 最新のメッセージを取得(並べ変え後に１つ目のメッセージを取得)
-  end
+  has_many :messages, -> { order(created_at: :desc)}
+  has_one :latest_message, -> { order(created_at: :desc).limit(1) }, class_name: 'Message'
 
   def self.petname_extraction(room_id)
     @room = Room.find(room_id)
