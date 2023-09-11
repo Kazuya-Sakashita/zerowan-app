@@ -13,9 +13,4 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:body).merge(room_id: params[:room_id])
   end
 
-  def find_pet
-    room = Room.find(params[:room_id])
-    @pet = Pet.find(room.pet_id)
-  end
-
 end
