@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
   before_action :authorize_access, only: [:show, :edit, :update, :destroy]
 
   def index
-    all_rooms = Room.where(owner_id: current_user.id).or(Room.where(user_id: current_user.id))
+    all_rooms = Room.preload(:messages).where(owner_id: current_user.id).or(Room.where(user_id: current_user.id)) 
 
   # 最新メッセージをそれぞれ取得
     @latest_messages = all_rooms.map(&:latest_message).compact.sort_by(&:created_at).reverse
