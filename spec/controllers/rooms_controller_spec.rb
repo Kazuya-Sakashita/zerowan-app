@@ -31,11 +31,12 @@ RSpec.describe RoomsController, type: :controller do
 
       it "部屋が作成できない場合、エラーメッセージを設定する" do
         pet = create(:pet)
-        room = build(:room, pet_id: pet.id, user_id: user.id)  # 未保存のRoomインスタンス
-        allow(room).to receive(:persisted?).and_return(false)  # persisted?をスタブ化
+        room = build(:room, user_id: user.id, owner_id: pet.user_id)
 
-        fake_relation = instance_double("ActiveRecord::Relation", find_or_create_by: room)
-        allow_any_instance_of(Pet).to receive(:rooms).and_return(fake_relation)
+        allow(Pet).to receive(:find).and_return(pet)
+        allow(pet.rooms).to receive(:find_or_initialize_by).and_return(room)
+        allow(room).to receive(:persisted?).and_return(false)
+        allow(room).to receive(:save).and_return(false)
 
         get :new, params: { format: pet.id }
 
@@ -57,9 +58,7 @@ RSpec.describe RoomsController, type: :controller do
     end
 
   describe '#index' do
-    let(:owned_user) do
-      create(:user, &:confirm)
-    end
+    let(:owned_user) { create(:user, &:confirm) }
 
     let!(:joined_users) do
       users = create_list(:user, 3)
@@ -92,7 +91,6 @@ RSpec.describe RoomsController, type: :controller do
   let!(:room_for_another_owned_user) do
     create(:room, user: owned_user, owner: another_owned_user, pet: another_owned_user_pet)
   end
-
 
     context 'joined_userがログインしている場合' do
       before do
@@ -127,12 +125,39 @@ RSpec.describe RoomsController, type: :controller do
       it '最新のメッセージを取得できること' do
         message_timestamps = assigns(:latest_messages).map(&:created_at)
         expect(message_timestamps).to eq(message_timestamps.sort.reverse)
+      end
+    end
+  end
+
+  describe 'GET #show' do
+
+    let(:owned_user) { create(:user, &:confirm) }
+    let(:joined_user) { create(:user, &:confirm) }
+    let(:pet) { create(:pet, user_id: owned_user.id) }
+    let(:room) { create(:room, user: joined_user, owner: owned_user, pet: pet) }
+
+    before do
+      sign_in joined_user
     end
 
+    it 'リクエストされたroomを@roomにアサインする' do
+      get :show, params: { id: room.id }
+      expect(assigns(:room)).to eq room
+    end
 
+    it '関連するpetを@petにアサインする' do
+      get :show, params: { id: room.id }
+      expect(assigns(:pet)).to eq pet
+    end
 
+    it '@messageに新しいmessageをアサインする' do
+      get :show, params: { id: room.id }
+      expect(assigns(:message)).to be_a_new(Message)
+    end
 
-# TODO メッセージを作成日時の降順で取得する
+    it ':showテンプレートをレンダリングする' do
+      get :show, params: { id: room.id }
+      expect(response).to render_template :show
     end
   end
 end
