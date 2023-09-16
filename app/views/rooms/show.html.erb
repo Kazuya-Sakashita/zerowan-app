@@ -5,12 +5,12 @@
   <div>
     <div class="row">
       <div class="col-4">
-        <%= image_tag @pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
+        <%= image_tag @room.pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
       </div>
       <div class="col-8">
-        <h5 class="card-title petname"><%= @pet.petname %></h5>
-        <p><%= @pet.classification_i18n %>/<%= @pet.age %>才/<%= @pet.gender_i18n %></p>
-        <p class="card-text"><%= @pet.introduction %></p>
+        <h5 class="card-title petname"><%= @room.pet.petname %></h5>
+        <p><%= @room.pet.classification_i18n %>/<%= @room.pet.age %>才/<%= @room.pet.gender_i18n %></p>
+        <p class="card-text"><%= @room.pet.introduction %></p>
       </div>
     </div>
   </div>
