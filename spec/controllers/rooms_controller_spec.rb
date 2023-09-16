@@ -1,135 +1,105 @@
 require 'rails_helper'
 
 RSpec.describe RoomsController, type: :controller do
-  describe '#new' do
-    let!(:user) do
-      create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
-    end
-    let(:another_user) { create(:user) }
-    let(:pet) { create(:pet, user_id: another_user.id) }
+  describe '.new' do
+    let!(:user) { create(:user, &:confirm) }
+    let!(:another_user) { create(:user) }
+    let!(:pet) { create(:pet, user_id: another_user.id) }
 
     before do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      @pet = create(:pet)
       sign_in user
     end
 
-    context '部屋がまだ存在しない場合' do
+    context '自分自身のペットを選択した場合' do
+      let!(:my_pet) { create(:pet, user_id: user.id) }
+
+      before do
+        get :new, params: { format: my_pet.id }
+      end
+
+      it 'エラーメッセージが表示される' do
+        expect(flash[:error]).to eq('自分自身にメッセージはできません')
+      end
+
+      it '前のページにリダイレクトされる' do
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'Roomがまだ存在しない場合' do
       before do
         get :new, params: { format: pet.id }
       end
 
-      it '適切なページ(rooms/id)にリダイレクトする' do
-        expect(response).to redirect_to(room_path(Room.last))
+      it '新しいRoomが作成される' do
+        room = Room.find_by(user_id: user.id, owner_id: another_user.id, pet_id: pet.id)
+        expect(room).not_to be_nil
       end
 
-      it 'Roomを作成する' do
-        expect(Room.last.pet_id).to eq(pet.id)
-        expect(Room.last.user_id).to eq(user.id)
-        expect(Room.last.owner_id).to eq(another_user.id)
-      end
-
-      it "部屋が作成できない場合、エラーメッセージを設定する" do
-        pet = create(:pet)
-        room = build(:room, user_id: user.id, owner_id: pet.user_id)
-
-        allow(Pet).to receive(:find).and_return(pet)
-        allow(pet.rooms).to receive(:find_or_initialize_by).and_return(room)
-        allow(room).to receive(:persisted?).and_return(false)
-        allow(room).to receive(:save).and_return(false)
-
-        get :new, params: { format: pet.id }
-
-        expect(flash[:error]).to eq("問合せできませんでした。")
+      it '新しいRoomのページにリダイレクトする' do
+        room = Room.find_by(user_id: user.id, owner_id: another_user.id, pet_id: pet.id)
+        expect(response).to redirect_to(room_path(room))
       end
     end
 
-    context '部屋が既に存在する場合' do
-      let!(:existing_room) { create(:room, pet_id: pet.id, user_id: user.id, owner_id: another_user.id) }
-
+    context '部屋の作成に失敗した場合' do
       before do
+        allow_any_instance_of(Pet).to receive(:rooms).and_raise(StandardError)
         get :new, params: { format: pet.id }
       end
 
-      it '既存の部屋にリダイレクトする' do
-        expect(response).to redirect_to(room_path(existing_room))
+      it 'エラーメッセージが表示される' do
+        expect(flash[:error]).to eq('問合せできませんでした。')
+      end
+
+      it '前のページにリダイレクトされる' do
+        expect(response).to redirect_to(root_path)
       end
     end
-    end
+  end
 
-  describe '#index' do
+
+  describe '.index' do
     let(:owned_user) { create(:user, &:confirm) }
+    let(:other_owned_user) { create(:user, &:confirm) }
+    let(:joined_user) { create(:user, &:confirm) }
+    let(:pet) { create(:pet, user_id: owned_user.id) }
+    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet: pet) }
+    let!(:room_user_belongs_to) { create(:room, owner: other_owned_user, user: owned_user, pet: pet) }
+    let!(:other_room) { create(:room, owner: other_owned_user, user: joined_user, pet: pet) }
 
-    let!(:joined_users) do
-      users = create_list(:user, 3)
-      users.each(&:confirm)
-      users
+    before do
+      sign_in owned_user
+      get :index
     end
 
-    let!(:pets) { create_list(:pet, 3, user: owned_user) }
-    let!(:joined_rooms) do
-      rooms = []
-      joined_users.each do |joined_user|
-        pets.each do |pet|
-          room = create(:room, user: joined_user, owner: owned_user, pet: pet)
-          create(:message, room: room, user: joined_user, body: "テストメッセージ")
-          create(:message, room: room, user: owned_user, body: "オーナーからの返信")
-          rooms << room
-        end
-      end
-      rooms
+    it '正常にレスポンスを返すこと' do
+      expect(response).to be_successful
     end
 
-    let!(:another_owned_user) do
-      user = create(:user)
-      user.confirm
-      user
-    end
-
-  let!(:another_owned_user_pet) { create(:pet, user: another_owned_user) }
-
-  let!(:room_for_another_owned_user) do
-    create(:room, user: owned_user, owner: another_owned_user, pet: another_owned_user_pet)
-  end
-
-    context 'joined_userがログインしている場合' do
-      before do
-        sign_in joined_users.first
-        get :index
-      end
-
-      it 'ルーム一覧に遷移すること' do
-        expect(request.fullpath).to eq('/rooms')
-      end
-
-      it 'ユーザーが参加しているルームを取得できること' do
-        expect(assigns(:latest_messages).map(&:room).map(&:user_id).uniq).to include(joined_users.first.id)
+    context 'ログイン中のユーザーに関連する部屋' do
+      it '取得すること' do
+        expect(assigns(:rooms)).to include(room_owned_by_user, room_user_belongs_to)
       end
     end
 
-    context 'owned_userがログインしている場合' do
-
-      before do
-        sign_in owned_user
-        get :index
+    context 'ログイン中のユーザーに関連していない部屋' do
+      it '取得しないこと' do
+        expect(assigns(:rooms)).not_to include(other_room)
       end
+    end
 
-      it 'ルーム一覧に遷移すること' do
-        expect(request.fullpath).to eq('/rooms')
-      end
-
-      it 'ユーザーがオーナーであるルームを取得できること' do
-        expect(assigns(:latest_messages).map(&:room).map(&:owner_id).uniq).to include(owned_user.id)
-      end
-
-      it '最新のメッセージを取得できること' do
-        message_timestamps = assigns(:latest_messages).map(&:created_at)
-        expect(message_timestamps).to eq(message_timestamps.sort.reverse)
-      end
+    it '部屋を最新のメッセージの作成日時で並べること' do
+      room1 = room_owned_by_user
+      room2 = room_user_belongs_to
+      create(:message, room: room1, user: joined_user, created_at: 1.day.ago)
+      create(:message, room: room2, user: joined_user, created_at: 2.days.ago)
+      expect(assigns(:rooms).first).to eq(room1)
+      expect(assigns(:rooms).second).to eq(room2)
     end
   end
 
-  describe 'GET #show' do
+  describe '.show' do
 
     let(:owned_user) { create(:user, &:confirm) }
     let(:joined_user) { create(:user, &:confirm) }

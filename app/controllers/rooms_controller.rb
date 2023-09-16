@@ -4,10 +4,10 @@ class RoomsController < ApplicationController
   before_action :authorize_access, only: [:show, :edit, :update, :destroy]
 
   def index
-    all_rooms = Room.preload(:messages).where(owner_id: current_user.id).or(Room.where(user_id: current_user.id)) 
-
-  # 最新メッセージをそれぞれ取得
-    @latest_messages = all_rooms.map(&:latest_message).compact.sort_by(&:created_at).reverse
+    @rooms = Room.eager_load(:latest_message)
+                                .where(owner_id: current_user.id)
+                                .or(Room.where(user_id: current_user.id))
+                                .order('messages.created_at DESC')
   end
 
   def new
@@ -22,16 +22,12 @@ class RoomsController < ApplicationController
     end
 
     # 以下の条件にマッチするRoomが存在するか確認し、なければ新しいRoomを作成
-    @room = @pet.rooms.find_or_initialize_by(user_id: current_user.id, owner_id: @pet.user_id)
-
-    # Roomが既にデータベースに存在する（保存されている）場合とそうでない場合で処理を分ける
-    if @room.persisted? || @room.save
-      # Roomが存在する場合、そのRoomの詳細ページ（show）にリダイレクト
-      redirect_to room_path(@room)
-    else
-      # Roomが存在しない（作成に失敗した）場合、エラーメッセージをフラッシュに設定
+    begin
+    @room = @pet.rooms.find_or_create_by!(user_id: current_user.id, owner_id: @pet.user_id)
+    redirect_to room_path(@room)
+    rescue => e
       flash[:error] = '問合せできませんでした。'
-      redirect_back(fallback_location: root_path) # 保存失敗時も前のページにリダイレクト。
+      redirect_back(fallback_location: root_path)
     end
   end
   
