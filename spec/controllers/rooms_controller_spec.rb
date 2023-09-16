@@ -115,11 +115,6 @@ RSpec.describe RoomsController, type: :controller do
       expect(assigns(:room)).to eq room
     end
 
-    it '関連するpetを@petにアサインする' do
-      get :show, params: { id: room.id }
-      expect(assigns(:pet)).to eq pet
-    end
-
     it '@messageに新しいmessageをアサインする' do
       get :show, params: { id: room.id }
       expect(assigns(:message)).to be_a_new(Message)

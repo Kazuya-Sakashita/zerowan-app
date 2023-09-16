@@ -32,7 +32,6 @@ class RoomsController < ApplicationController
   end
   
   def show
-    @pet = Pet.find(@room.pet_id)
     @message = Message.new
     @all_message_exchanges = @room.messages
     set_user_name #viewの宛名表示に使う
@@ -50,8 +49,8 @@ class RoomsController < ApplicationController
   end
 
   def authorize_access
-    unless [@room.user_id, @room.owner_id].include?(current_user.id)
-      redirect_to root_path, alert: "このルームにアクセスする権限がありません。"
-    end
+    return if [@room.user_id, @room.owner_id].include?(current_user.id)
+    
+    redirect_to root_path, alert: "このルームにアクセスする権限がありません。"
   end
 end
