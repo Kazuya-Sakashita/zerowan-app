@@ -8,6 +8,7 @@ class RoomsController < ApplicationController
                                 .where(owner_id: current_user.id)
                                 .or(Room.where(user_id: current_user.id))
                                 .order('messages.created_at DESC')
+.page(params[:page]).per(5)
   end
 
   def new
@@ -33,7 +34,7 @@ class RoomsController < ApplicationController
   
   def show
     @message = Message.new
-    @all_message_exchanges = @room.messages
+    @all_message_exchanges = @room.messages.page(params[:page]).per(5)
 
     @user_name = @room.recipient(current_user).profile.name
   end
