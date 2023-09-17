@@ -1,0 +1,40 @@
+<h1>メッセージ</h1>
+<% if @latest_messages.present? %>
+  <% @latest_messages.each_with_index do |msg, index| %>
+    <% if msg.present? %>
+      <div class="list-group message-card">
+        <% extracted_pet = Room.petname_extraction(msg.room_id) %>
+        <div class="card-group d-flex">
+          <div>
+            <%= image_tag extracted_pet.pet_images.first.photo.to_s, class: "img-thumbnail" %>
+          </div>
+
+          <div class="card">
+            <p class="petname">
+              <%= extracted_pet.petname %>
+              <% if extracted_pet.gender == "male" %>
+                くん
+              <% elsif extracted_pet.gender == "female" %>
+                ちゃん
+              <% end %>
+            </p>
+            <p>
+              <%= extracted_pet.classification_i18n %>/&nbsp;
+              <%= extracted_pet.age %>才/&nbsp;
+              <%= extracted_pet.gender_i18n %>
+            </p>
+            <p><%= extracted_pet.introduction %></p>
+          </div>
+        </div>
+        <div class="card mb-4 p-3">
+          <div class="d-flex justify-content-between">
+            <p><%= current_user == msg.user ? '自分' : msg.user.profile.name %></p>
+            <p><%= time_ago_in_words(msg.created_at) %>前</p>
+          </div>
+          <p><%= msg.body %></p>
+          <%= link_to 'こちらのメッセージに返信する', room_path(msg.room_id), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

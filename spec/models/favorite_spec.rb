@@ -14,8 +14,12 @@ RSpec.describe Favorite, type: :model do
     before do
       create(:favorite, user_id: customer.id, pet_id: pet.id)
     end
+
     it 'すでにお気に入りしている場合は、お気に入り登録されないこと' do
-      expect { create(:favorite, user_id: customer.id, pet_id: pet.id) }.to raise_error('レコード無効')
+      duplicate_favorite = Favorite.new(user: customer, pet: pet)
+
+      expect(duplicate_favorite.valid?).to be_falsey
+      expect(duplicate_favorite.errors[:pet_id]).to include("お気に入りはすでに設定されています。")
     end
 
   end

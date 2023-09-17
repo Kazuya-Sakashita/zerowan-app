@@ -1,16 +1,16 @@
 <h3><%= "#{@user_name}" %>さんへのメッセージ</h3>
-<div class="form-signup rounded mt-5 border border-2">
+<div class="message-form rounded mt-5 border border-2">
   <!--PET情報-->
 
   <div>
     <div class="row">
       <div class="col-4">
-        <%= image_tag @pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
+        <%= image_tag @room.pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
       </div>
       <div class="col-8">
-        <h5 class="card-title petname"><%= @pet.petname %></h5>
-        <p><%= @pet.classification_i18n %>/<%= @pet.age %>才/<%= @pet.gender_i18n %></p>
-        <p class="card-text"><%= @pet.introduction %></p>
+        <h5 class="card-title petname"><%= @room.pet.petname %></h5>
+        <p><%= @room.pet.classification_i18n %>/<%= @room.pet.age %>才/<%= @room.pet.gender_i18n %></p>
+        <p class="card-text"><%= @room.pet.introduction %></p>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@
 <div class=" mt-5 ">
   <% if @all_message_exchanges.present? %>
     <% @all_message_exchanges.each do |message| %>
-      <div class="form-signup mt-2 border border-2">
+      <div class="message-form mt-2 border border-2">
         <div class="card-body object-fit-fill ">
           <div class="card mb-4 p-3">
             <div class="d-flex justify-content-between">

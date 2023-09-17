@@ -1,27 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe Room, type: :model do
-  # インスタンスを作成
   let(:user) { create(:user) }
   let(:owner) { create(:user) }
   let(:pet) { create(:pet, user: owner) }
   let(:room) { create(:room, user: user, owner: owner, pet: pet) }
 
 
-  # latest_messageメソッドのテスト
-  describe "#latest_messageメソッド" do
-    let!(:older_message) { create(:message, room: room, user: user, created_at: 1.day.ago) }
-    let!(:newer_message) { create(:message, room: room, user: user) }
+  describe "バリデーション" do
+    context "user_idとowner_idが同じ場合" do
+    
+        let(:room) { Room.new(user_id: user.id, owner_id: user.id, pet_id: pet.id) }
+      
 
-    it "最新のメッセージを返すこと" do
-      expect(room.latest_message).to eq(newer_message)
+      it "無効である" do
+        expect(room).not_to be_valid
+      end
+
+      it '無効である場合、バリデーションエラー発生すること' do
+        room.valid?
+        expect(room.errors[:owner_id]).to include("owner_idとuser_idは同じにできません")
+      end
     end
-  end
 
-  # petname_extractionクラスメソッドのテスト
-  describe ".petname_extractionクラスメソッド" do
-    it "ルームに関連するペットを返すこと" do
-      expect(Room.petname_extraction(room.id)).to eq(pet)
+    context "user_idとowner_idが異なる場合" do
+      it "有効である" do
+        room = Room.new(user_id: user.id, owner_id: owner.id, pet_id: pet.id)
+        expect(room).to be_valid
+      end
     end
   end
 end

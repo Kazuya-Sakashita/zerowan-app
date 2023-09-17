@@ -25,10 +25,4 @@ class User < ApplicationRecord
     self.role == 'owner'
   end
 
-  # def latest_messages
-  #   @latest_messages = current_user.rooms.joins(:messages).group('rooms.id').maximum('messages.created_at')
-  #   @rooms_cust = @latest_messages.map do |room_id, latest_created_at|
-  #   Message.find_by(room_id: room_id, created_at: latest_created_at)
-  #   end.sort_by { |message| message.created_at }.reverse
-  # end
 end

@@ -3,13 +3,18 @@ class Room < ApplicationRecord
   belongs_to :pet
   belongs_to :user
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
+  has_one :latest_message, -> { order(created_at: :desc).limit(1) }, class_name: 'Message'
 
-  def latest_message
-    messages.first # 最新のメッセージを取得(並べ変え後に１つ目のメッセージを取得)
+  validate :different_user_and_owner
+
+
+  def recipient(current_user)
+    current_user == user ? owner : user
   end
 
-  def self.petname_extraction(room_id)
-    @room = Room.find(room_id)
-    @pet = @room.pet
+  private
+
+  def different_user_and_owner
+    errors.add(:owner_id, :different_user_and_owner) if user_id == owner_id
   end
 end

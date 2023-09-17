@@ -1,42 +1,51 @@
 <h1>メッセージ</h1>
-<% if @latest_messages.present? %>
-  <% @latest_messages.each_with_index do |msg, index| %>
-    <% if msg.present? %>
-      <div class="list-group message-card">
-        <% extracted_pet = Room.petname_extraction(msg.room_id) %>
-        <div class="card-group d-flex">
-          <div>
-            <%= image_tag extracted_pet.pet_images.first.photo.to_s, class: "img-thumbnail" %>
+<% if @rooms.present? %>
+  <% displayed_rooms = false %>
+  <% @rooms.each do |room| %>
+    <% if room.messages.any? %>
+      <% displayed_rooms = true %>
+      <div class="container">
+        <div class="row message-form mt-2">
+          <div class="col-3">
+            <%= image_tag room.pet.pet_images.first.photo.to_s, class: "img-thumbnail" %>
           </div>
-
-          <div class="card">
-            <p class="petname">
-              <%= extracted_pet.petname %>
-              <% if extracted_pet.gender == "male" %>
+          <div class="col">
+            <div>
+              <%= room.pet.petname %>
+              <% if room.pet.gender == "male" %>
                 くん
-              <% elsif extracted_pet.gender == "female" %>
+              <% elsif room.pet.gender == "female" %>
                 ちゃん
               <% end %>
-            </p>
-            <p>
-              <%= extracted_pet.classification_i18n %>/&nbsp;
-              <%= extracted_pet.age %>才/&nbsp;
-              <%= extracted_pet.gender_i18n %>
-            </p>
-            <p><%= extracted_pet.introduction %></p>
+            </div>
+            <div>
+              <%= room.pet.classification_i18n %>/&nbsp;
+              <%= room.pet.age %>才/&nbsp;
+              <%= room.pet.gender_i18n %>
+            </div>
+            <div>
+              <%= room.pet.introduction %>
+            </div>
           </div>
-        </div>
-        <div class="card mb-4 p-3">
-          <div class="d-flex justify-content-between">
-            <p><%= current_user == msg.user ? '自分' : msg.user.profile.name %></p>
-            <p><%= time_ago_in_words(msg.created_at) %>前</p>
+
+          <div>
+            <div>
+              <%= room.messages.last.user.profile.name %>
+            </div>
+            <div class="col-12 mb-4">
+              <%= room.messages.first.body %>
+              <%= link_to 'こちらのメッセージに返信する', room_path(room.id), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
+            </div>
           </div>
-          <p><%= msg.body %></p>
-          <%= link_to 'こちらのメッセージに返信する', room_path(msg.room_id), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
         </div>
       </div>
     <% end %>
   <% end %>
+  <% unless displayed_rooms %>
+    <h2>表示するメッセージがありません。</h2>
+  <% end %>
+<% else %>
+  <h2>表示するルームがありません。</h2>
 <% end %>
 
 <%= paginate @latest_messages, theme: 'bootstrap-5' %>
