@@ -7,6 +7,11 @@ class Room < ApplicationRecord
 
   validate :different_user_and_owner
 
+
+  def recipient(current_user)
+    current_user == user ? owner : user
+  end
+
   private
 
   def different_user_and_owner

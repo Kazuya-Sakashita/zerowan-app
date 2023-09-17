@@ -34,18 +34,14 @@ class RoomsController < ApplicationController
   def show
     @message = Message.new
     @all_message_exchanges = @room.messages
-    set_user_name #viewの宛名表示に使う
+
+    @user_name = @room.recipient(current_user).profile.name
   end
 
   private
 
   def set_room
     @room =  Room.find(params[:id])
-  end
-
-  def set_user_name
-    target_user = current_user == @room.user ? @room.owner : @room.user
-    @user_name = target_user.profile.name
   end
 
   def authorize_access
