@@ -51,3 +51,12 @@ ja:
         recruiting: 募集中
         during_negotiations: 交渉中
         end_of_recruitment: 募集終了
+
+  activerecord:
+    errors:
+      models:
+        room:
+          attributes:
+            owner_id:
+              different_user_and_owner: "owner_idとuser_idは同じにできません"
+

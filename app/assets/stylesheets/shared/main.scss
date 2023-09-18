@@ -210,3 +210,31 @@ body {
   list-style: none;
   margin: 0;
 }
+
+//メッセージ
+//表示幅を設定
+
+    .message-card {
+      width: 80%;
+      margin: auto;
+    }
+
+    .img-thumbnail {
+      max-height: 150px;
+    }
+
+    .petname {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+
+
+
+.message-form {
+  width: 80%;
+  max-width: 1000px;
+  padding: 15px;
+  margin: auto;
+  background-color: white;
+}

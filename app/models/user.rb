@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :rooms, dependent: :destroy
+  
 
   accepts_nested_attributes_for :profile, allow_destroy: true
   accepts_nested_attributes_for :profile_image, allow_destroy: true
@@ -19,4 +20,9 @@ class User < ApplicationRecord
       validates :email
     end
   end
+
+  def is_owner?
+    self.role == 'owner'
+  end
+
 end
