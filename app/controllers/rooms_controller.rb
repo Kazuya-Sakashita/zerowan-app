@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
   before_action :authorize_access, only: [:show, :edit, :update, :destroy]
 
   def index
-    @rooms = Room.eager_load(:latest_message)
+    @rooms = Room.eager_load(latest_message: { user: :profile })
                                 .where(owner_id: current_user.id)
                                 .or(Room.where(user_id: current_user.id))
                                 .order('messages.created_at DESC')
