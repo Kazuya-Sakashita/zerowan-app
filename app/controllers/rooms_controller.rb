@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
   before_action :authorize_access, only: [:show, :edit, :update, :destroy]
 
   def index
-    @rooms = Room.eager_load(:latest_message)
+    @rooms = Room.eager_load(latest_message: { user: :profile })
                                 .where(owner_id: current_user.id)
                                 .or(Room.where(user_id: current_user.id))
                                 .order('messages.created_at DESC')
@@ -36,7 +36,7 @@ class RoomsController < ApplicationController
     @message = Message.new
     @all_message_exchanges = @room.messages.page(params[:page]).per(5)
 
-    @user_name = @room.recipient(current_user).profile.name
+    @recipient = @room.recipient(current_user)
   end
 
   private

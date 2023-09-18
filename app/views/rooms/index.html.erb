@@ -30,10 +30,10 @@
 
           <div>
             <div>
-              <%= room.messages.last.user.profile.name %>
+              <%= room.latest_message.user.profile.name %>
             </div>
             <div class="col-12 mb-4">
-              <%= room.messages.first.body %>
+              <%= room.latest_message.body %>
               <%= link_to 'こちらのメッセージに返信する', room_path(room.id), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
             </div>
           </div>
