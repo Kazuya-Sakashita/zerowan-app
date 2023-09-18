@@ -35,7 +35,7 @@ class RoomsController < ApplicationController
     @message = Message.new
     @all_message_exchanges = @room.messages
 
-    @user_name = @room.recipient(current_user).profile.name
+    @recipient = @room.recipient(current_user)
   end
 
   private
