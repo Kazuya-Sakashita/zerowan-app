@@ -8,7 +8,7 @@ class RoomsController < ApplicationController
                                 .where(owner_id: current_user.id)
                                 .or(Room.where(user_id: current_user.id))
                                 .order('messages.created_at DESC')
-.page(params[:page]).per(5)
+                                .page(params[:page]).per(10)
   end
 
   def new
