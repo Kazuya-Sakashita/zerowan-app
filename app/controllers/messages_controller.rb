@@ -1,7 +1,7 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_message, only: [:edit, :update]
-
+  before_action :check_owner, only: [:edit, :update]
 
   def create
     @message = current_user.messages.create(message_params_merge_room)
@@ -31,6 +31,11 @@ class MessagesController < ApplicationController
 
   def message_params_merge_room
     params.require(:message).permit(:body).merge(room_id: params[:room_id])
+  end
+
+  def check_owner
+    return if @message.user == current_user
+    redirect_to room_path(@message.room_id), alert: '他のユーザーのメッセージを編集することはできません。'
   end
 
 end
