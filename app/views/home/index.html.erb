@@ -67,7 +67,11 @@
             <div class="card my-2">
               <% if pet.pet_images.present? %>
                 <%= image_tag pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
+                <% if pet.new? %>
+                    <span class="new-mark">New</span>
+                <% end %>
               <% end %>
+
               <div class="card-body">
                 <h5 class="card-title petname"><%= pet.petname %></h5>
                 <p><%= pet.classification_i18n %>/<%= pet.age %>才/<%= pet.gender_i18n %></p>
