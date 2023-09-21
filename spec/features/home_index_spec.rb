@@ -173,4 +173,30 @@ RSpec.feature 'ホーム画面', type: :feature do
       expect(page).to have_content '★ 気になるリストに追加'
     end
   end
+
+  describe '新着表示' do
+    before do
+      visit root_path
+    end
+
+    scenario "7日を超えるペットが追加されても、新着表示が増えないこと" do
+      initial_count = page.all("span.new-mark").count
+
+      create(:pet, created_at: 7.days.ago)
+      visit root_path
+      final_count = page.all("span.new-mark").count
+
+      expect(final_count).to eq(initial_count)
+    end
+
+    scenario "6日以内のペットが追加された場合、新着表示が増えること" do
+      initial_count = page.all("span.new-mark").count
+
+      create(:pet, created_at: 5.days.ago)
+      visit root_path
+      final_count = page.all("span.new-mark").count
+
+      expect(final_count).to eq(initial_count + 1)
+    end
+  end
 end
