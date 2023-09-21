@@ -1,0 +1,10 @@
+<div class="container">  
+  <%= form_with model: @message, url: message_path, data: { turbo_method: :put }, local: true do |f| %>
+    <div class="form-label mt-4">
+      <%= f.text_area :body, placeholder: 'メッセージを入力', class: 'form-control' %>
+    </div>
+    <div class="actions text-center">
+      <%= f.submit '送信', class: 'btn btn-lg msg-send-btn btn-block' %>
+    </div>
+  <% end %>
+</div>

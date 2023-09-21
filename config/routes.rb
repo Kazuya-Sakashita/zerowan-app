@@ -29,4 +29,5 @@ Rails.application.routes.draw do
   resources :rooms do
     resources :messages, only: [:index,:new, :create]
   end
+  resources :messages, only: [:edit, :update, :destroy]
 end

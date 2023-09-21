@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
-  describe 'メッセージ機能' do
+  describe '.create' do
     let!(:user) do
       create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
     end
 
     before do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
       @pet = create(:pet)
       sign_in user
     end
@@ -59,6 +58,89 @@ RSpec.describe MessagesController, type: :controller do
         end.to_not change { Message.count }
 
         expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
+  describe '.edit' do
+
+    let!(:owned_user) { create(:user, &:confirm) }
+    let!(:joined_user) { create(:user, &:confirm) }
+    let!(:other_user) { create(:user, &:confirm) }
+    let!(:pet) { create(:pet, user_id: owned_user.id) }
+    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet: pet) }
+    let!(:message) { create(:message, room:room_owned_by_user, user: joined_user, body:'coment test 1') }
+
+    context 'ユーザーが認証されていない場合' do
+      before { get :edit, params: { id: message.id } }
+
+      it 'ログインページにリダイレクトすること' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'メッセージの所有者である場合' do
+      before do
+        sign_in joined_user
+        get :edit, params: { id: message.id }
+      end
+
+      it 'editテンプレートが表示されること' do
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context 'メッセージの所有者でない場合' do
+      before do
+        sign_in other_user
+        get :edit, params: { id: message.id }
+      end
+
+      it 'ルームのページにリダイレクトし、アラートが表示されること' do
+        expect(response).to redirect_to(room_path(message.room_id))
+        expect(flash[:alert]).to eq '他のユーザーのメッセージを編集することはできません。'
+      end
+    end
+  end
+
+  describe '.update' do
+    let!(:owned_user) { create(:user, &:confirm) }
+    let!(:joined_user) { create(:user, &:confirm) }
+    let!(:other_user) { create(:user, &:confirm) }
+    let!(:pet) { create(:pet, user_id: owned_user.id) }
+    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet: pet) }
+    let!(:message) { create(:message, room: room_owned_by_user, user: joined_user, body: 'comment test 1') }
+    let(:valid_params) { { body: 'updated comment' } }
+    let(:invalid_params) { { body: '' } } 
+
+    context 'メッセージの所有者が更新を試みる場合' do
+      before { sign_in joined_user }
+
+      it 'メッセージが正常に更新されること' do
+        put :update, params: { id: message.id, message: valid_params }
+        message.reload
+        expect(message.body).to eq 'updated comment'
+        expect(response).to redirect_to(room_path(message.room_id))
+        expect(flash[:notice]).to eq 'メッセージが更新されました。'
+      end
+
+      context '無効なパラメータが送られた場合' do
+        it 'メッセージが更新されず、editページが再表示されること' do
+          put :update, params: { id: message.id, message: invalid_params }
+          expect(response).to render_template(:edit)
+        end
+      end
+    end
+
+    context 'メッセージの所有者ではないユーザーが更新を試みる場合' do
+      before { sign_in owned_user }
+
+      it 'メッセージが更新されないこと' do
+        original_body = message.body
+        put :update, params: { id: message.id, message: valid_params }
+        message.reload
+        expect(message.body).to eq original_body
+        # このテストには前提として、メッセージの所有者以外がupdateアクションを実行できないようにする処理がコントローラに追加されている必要があります。
       end
     end
   end
