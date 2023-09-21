@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   before_action :check_owner, only: [:edit, :update]
 
   def create
-    @message = current_user.messages.create(message_params_merge_room)
+    @message = current_user.messages.create(message_params_on_create)
     redirect_to request.referer
   end
 
@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
   end
 
   def update
-    if @message.update(message_params)
+    if @message.update(message_params_on_update)
       redirect_to room_path(@message.room_id) , notice: 'メッセージが更新されました。'
     else
       render :edit
@@ -25,11 +25,11 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
   end
 
-  def message_params
+  def message_params_on_update
     params.require(:message).permit(:body)
   end
 
-  def message_params_merge_room
+  def message_params_on_create
     params.require(:message).permit(:body).merge(room_id: params[:room_id])
   end
 
