@@ -43,4 +43,40 @@ RSpec.describe Pet, type: :model do
       expect(pet.errors[:vaccination]).to include('を入力してください')
     end
   end
+
+  describe '#new?' do
+    let(:pet) { build(:pet, created_at: created_at) }
+
+    context 'ペットが6日以内に作成された場合' do
+      let(:created_at) { 5.days.ago }
+
+      it 'trueを返すこと' do
+        expect(pet.new?).to be_truthy
+      end
+    end
+
+    context 'ペットがちょうど6日後の23:59に作成された場合' do
+      let(:created_at) { 6.days.ago.change(hour: 23, min: 59) }
+
+      it 'trueを返すこと' do
+        expect(pet.new?).to be_truthy
+      end
+    end
+
+    context 'ペットがちょうど7日00:00に作成された場合' do
+      let(:created_at) { 7.days.ago.change(hour: 0, min: 0) }
+
+      it 'falseを返すこと' do
+        expect(pet.new?).to be_falsey
+      end
+    end
+
+    context 'ペットが6日より前に作成された場合' do
+      let(:created_at) { 7.days.ago }
+
+      it 'falseを返すこと' do
+        expect(pet.new?).to be_falsey
+      end
+    end
+  end
 end
