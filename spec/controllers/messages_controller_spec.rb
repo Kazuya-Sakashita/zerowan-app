@@ -144,4 +144,56 @@ RSpec.describe MessagesController, type: :controller do
       end
     end
   end
+
+  describe '.destroy' do
+
+    let!(:owned_user) { create(:user, &:confirm) }
+    let!(:joined_user) { create(:user, &:confirm) }
+    let!(:other_user) { create(:user, &:confirm) }
+    let!(:pet) { create(:pet, user_id: owned_user.id) }
+    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet: pet) }
+    let!(:message) { create(:message, room: room_owned_by_user, user: joined_user, body: 'comment test 1') }
+
+    before { sign_in joined_user }
+
+    context 'メッセージが正常に削除された場合' do
+      it 'メッセージが削除されること' do
+        expect {
+          delete :destroy, params: { id: message.id }
+        }.to change(Message, :count).by(-1)
+      end
+
+      it 'roomのページにリダイレクトされること' do
+        delete :destroy, params: { id: message.id }
+        expect(response).to redirect_to(room_path(message.room_id))
+      end
+
+      it '成功のフラッシュメッセージが表示されること' do
+        delete :destroy, params: { id: message.id }
+        expect(flash[:notice]).to eq 'メッセージが削除されました。'
+      end
+    end
+
+    context 'メッセージが削除に失敗した場合' do
+      before do
+        allow_any_instance_of(Message).to receive(:destroy).and_return(false)
+      end
+
+      it 'メッセージが削除されないこと' do
+        expect {
+          delete :destroy, params: { id: message.id }
+        }.to_not change(Message, :count)
+      end
+
+      it 'roomのページにリダイレクトされること' do
+        delete :destroy, params: { id: message.id }
+        expect(response).to redirect_to(room_path(message.room_id))
+      end
+
+      it 'エラーのフラッシュメッセージが表示されること' do
+        delete :destroy, params: { id: message.id }
+        expect(flash[:alert]).to eq 'メッセージが削除に失敗しました。'
+      end
+    end
+  end
 end
