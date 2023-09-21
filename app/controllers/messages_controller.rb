@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_message, only: [:edit, :update]
+  before_action :set_message, only: [:edit, :update, :destroy]
   before_action :check_owner, only: [:edit, :update]
 
   def create
@@ -16,6 +16,14 @@ class MessagesController < ApplicationController
       redirect_to room_path(@message.room_id) , notice: 'メッセージが更新されました。'
     else
       render :edit
+    end
+  end
+
+  def destroy
+    if @message.destroy
+      redirect_to room_path(@message.room_id) , notice: 'メッセージが削除されました。'
+    else
+      redirect_to room_path(@message.room_id) , alert: 'メッセージが削除に失敗しました。'
     end
   end
 
