@@ -140,7 +140,6 @@ RSpec.describe MessagesController, type: :controller do
         put :update, params: { id: message.id, message: valid_params }
         message.reload
         expect(message.body).to eq original_body
-        # このテストには前提として、メッセージの所有者以外がupdateアクションを実行できないようにする処理がコントローラに追加されている必要があります。
       end
     end
   end
@@ -154,9 +153,11 @@ RSpec.describe MessagesController, type: :controller do
     let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet: pet) }
     let!(:message) { create(:message, room: room_owned_by_user, user: joined_user, body: 'comment test 1') }
 
-    before { sign_in joined_user }
 
     context 'メッセージが正常に削除された場合' do
+
+      before { sign_in joined_user }
+
       it 'メッセージが削除されること' do
         expect {
           delete :destroy, params: { id: message.id }
@@ -176,6 +177,7 @@ RSpec.describe MessagesController, type: :controller do
 
     context 'メッセージが削除に失敗した場合' do
       before do
+        sign_in joined_user
         allow_any_instance_of(Message).to receive(:destroy).and_return(false)
       end
 
@@ -193,6 +195,16 @@ RSpec.describe MessagesController, type: :controller do
       it 'エラーのフラッシュメッセージが表示されること' do
         delete :destroy, params: { id: message.id }
         expect(flash[:alert]).to eq 'メッセージが削除に失敗しました。'
+      end
+    end
+
+    context 'メッセージの所有者ではないユーザーが削除を試みる場合' do
+      before { sign_in owned_user }
+
+      it 'メッセージが削除されないこと' do
+        expect {
+          delete :destroy, params: { id: message.id }
+        }.to_not change(Message, :count)
       end
     end
   end
