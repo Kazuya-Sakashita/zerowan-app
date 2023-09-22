@@ -176,20 +176,21 @@ RSpec.feature 'ホーム画面', type: :feature do
 
   describe '新着表示' do
     before do
+      Pet.destroy_all
       visit root_path
     end
 
-    scenario "7日を超えるペットが追加されても、新着表示が増えないこと" do
+    scenario "7日を超えるペットが追加されても、新着表示が増えないこと（表示されていないこと）" do
       initial_count = page.all("span.new-mark").count
 
       create(:pet, created_at: 7.days.ago)
       visit root_path
       final_count = page.all("span.new-mark").count
-
       expect(final_count).to eq(initial_count)
+      expect(page).not_to have_css("span.new-mark")
     end
 
-    scenario "6日以内のペットが追加された場合、新着表示が増えること" do
+    scenario "6日以内のペットが追加された場合、新着表示が増えること（表示されてること）" do
       initial_count = page.all("span.new-mark").count
 
       create(:pet, created_at: 5.days.ago)
@@ -197,6 +198,7 @@ RSpec.feature 'ホーム画面', type: :feature do
       final_count = page.all("span.new-mark").count
 
       expect(final_count).to eq(initial_count + 1)
+      expect(page).to have_css("span.new-mark")
     end
   end
 end
