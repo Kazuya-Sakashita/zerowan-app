@@ -42,6 +42,7 @@
               <% if current_user == message.user %>
                 <!-- 編集リンクを表示 -->
                 <%= link_to '編集', edit_message_path(message) %>
+                <%= link_to '削除', message_path(message), data: {turbo_method: :delete, turbo_confirm: 'メールを削除します。よろしいですか？'}  %>
               <% end %>
               </p>
               </div>
