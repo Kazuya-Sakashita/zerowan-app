@@ -10,24 +10,27 @@ RSpec.feature 'ホーム画面', type: :feature do
   end
 
   let(:pet) do
-    create(:pet,
-           category: :dog,
-           petname: 'taro20221101',
-           age: 12,
-           gender: :male,
-           classification: :Chihuahua,
-           introduction: 'おとなしく、賢い',
-           castration: :neutered,
-           vaccination: :vaccinated,
-           recruitment_status: 0,
-           user_id: user.id)
+    created_pet = create(:pet,
+          category: :dog,
+          petname: 'taro20221101',
+          age: 12,
+          gender: :male,
+          classification: :Chihuahua,
+          introduction: 'おとなしく、賢い',
+          castration: :neutered,
+          vaccination: :vaccinated,
+          recruitment_status: 0,
+          user_id: user.id)
+    create(:pet_area, pet_id: created_pet.id, area_id: area.id)
+    created_pet
   end
 
-  before do
-    create(:pet_area, pet_id: pet.id, area_id: area.id)
-  end
 
   describe 'ペット一覧表示' do
+    before do
+      pet
+    end
+
     scenario '未ログイン状態で表示されていること' do
       visit root_path
       expect(page).to have_content 'taro20221101'
@@ -41,6 +44,7 @@ RSpec.feature 'ホーム画面', type: :feature do
   end
   describe '検索機能' do
     before do
+      pet
       create(:area, place_name: '東京')
     end
     context '組合せ検索' do
@@ -157,6 +161,7 @@ RSpec.feature 'ホーム画面', type: :feature do
 
   describe 'お気に入り機能' do
     before do
+      pet
       user_favorite = create(:user, email: 'test121212@test.com', password: 'password', password_confirmation: 'password', &:confirm)
       sign_in  user_favorite
       visit root_path
@@ -176,7 +181,6 @@ RSpec.feature 'ホーム画面', type: :feature do
 
   describe '新着表示' do
     before do
-      Pet.destroy_all
       visit root_path
     end
 
