@@ -32,4 +32,9 @@ class Pet < ApplicationRecord
   def favorite?(viewer)
     favorites.detect{ |user| user.user_id == viewer.id }.present?
   end
+
+  def new?
+    end_of_new_period = (self.created_at + 6.days).end_of_day
+    Time.now <= end_of_new_period
+  end
 end

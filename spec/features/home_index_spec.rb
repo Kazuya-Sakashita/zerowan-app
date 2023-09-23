@@ -10,24 +10,27 @@ RSpec.feature 'ホーム画面', type: :feature do
   end
 
   let(:pet) do
-    create(:pet,
-           category: :dog,
-           petname: 'taro20221101',
-           age: 12,
-           gender: :male,
-           classification: :Chihuahua,
-           introduction: 'おとなしく、賢い',
-           castration: :neutered,
-           vaccination: :vaccinated,
-           recruitment_status: 0,
-           user_id: user.id)
+    created_pet = create(:pet,
+          category: :dog,
+          petname: 'taro20221101',
+          age: 12,
+          gender: :male,
+          classification: :Chihuahua,
+          introduction: 'おとなしく、賢い',
+          castration: :neutered,
+          vaccination: :vaccinated,
+          recruitment_status: 0,
+          user_id: user.id)
+    create(:pet_area, pet_id: created_pet.id, area_id: area.id)
+    created_pet
   end
 
-  before do
-    create(:pet_area, pet_id: pet.id, area_id: area.id)
-  end
 
   describe 'ペット一覧表示' do
+    before do
+      pet
+    end
+
     scenario '未ログイン状態で表示されていること' do
       visit root_path
       expect(page).to have_content 'taro20221101'
@@ -41,6 +44,7 @@ RSpec.feature 'ホーム画面', type: :feature do
   end
   describe '検索機能' do
     before do
+      pet
       create(:area, place_name: '東京')
     end
     context '組合せ検索' do
@@ -157,6 +161,7 @@ RSpec.feature 'ホーム画面', type: :feature do
 
   describe 'お気に入り機能' do
     before do
+      pet
       user_favorite = create(:user, email: 'test121212@test.com', password: 'password', password_confirmation: 'password', &:confirm)
       sign_in  user_favorite
       visit root_path
@@ -171,6 +176,33 @@ RSpec.feature 'ホーム画面', type: :feature do
 
       click_button '☆ 気になるリストから削除'
       expect(page).to have_content '★ 気になるリストに追加'
+    end
+  end
+
+  describe '新着表示' do
+    before do
+      visit root_path
+    end
+
+    scenario "7日を超えるペットが追加されても、新着表示が増えないこと（表示されていないこと）" do
+      initial_count = page.all("span.new-mark").count
+
+      create(:pet, created_at: 7.days.ago)
+      visit root_path
+      final_count = page.all("span.new-mark").count
+      expect(final_count).to eq(initial_count)
+      expect(page).not_to have_css("span.new-mark")
+    end
+
+    scenario "6日以内のペットが追加された場合、新着表示が増えること（表示されてること）" do
+      initial_count = page.all("span.new-mark").count
+
+      create(:pet, created_at: 5.days.ago)
+      visit root_path
+      final_count = page.all("span.new-mark").count
+
+      expect(final_count).to eq(initial_count + 1)
+      expect(page).to have_css("span.new-mark")
     end
   end
 end
