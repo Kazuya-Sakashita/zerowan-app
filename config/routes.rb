@@ -30,4 +30,6 @@ Rails.application.routes.draw do
     resources :messages, only: [:index,:new, :create]
   end
   resources :messages, only: [:edit, :update, :destroy]
+
+  resources :members, only: [:index]
 end
