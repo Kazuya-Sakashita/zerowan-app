@@ -31,5 +31,6 @@ Rails.application.routes.draw do
   end
   resources :messages, only: [:edit, :update, :destroy]
 
-  resources :members, only: [:index]
+  get 'members/pets', to: 'members#index', as: 'members_pets'
+
 end

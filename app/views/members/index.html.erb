@@ -6,27 +6,13 @@
   <% else %>
     <div class="row">
       <% @pets.each do |pet| %>
-        <div class="col-3">
-
-          <div class="card my-2">
-            <% if pet.pet_images.present? %>
-              <%= image_tag pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
-            <% end %>
-            <div class="card-body">
-              <h5 class="card-title"><%= pet.petname %></h5>
-              <p><%= pet.classification_i18n %>/<%= pet.age %>才/<%= pet.gender_i18n %></p>
-              <h5 class="card-title">譲渡可能地域</h5>
-              <p class="card-text"><%= pet.introduction %></p>
-              <%= link_to 'ペット詳細情報を確認', pet_path(pet.id), class: "btn btn-primary" %>
-            </div>
-          </div>
-        </div>
+        <%= render 'pets/pet_card', pet: pet %>
       <% end %>
     </div>
   <% end %>
   <% if @show_more_link %>
     <div class="mt-3">
-      <p><%= link_to 'もっと見る', pets_path(all: true,user_id: params[:user_id]), class: 'btn btn-secondary' %></p>
+      <p><%= link_to 'もっと見る', members_pets_path(all: true, user_id: params[:user_id]), class: 'btn btn-secondary' %></p>
     </div>
   <% end %>
 </div>
