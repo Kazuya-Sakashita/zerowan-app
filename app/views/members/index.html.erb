@@ -4,11 +4,7 @@
   <% if @pets.empty? %>
     <h2>現在掲載中の募集はありません。</h2>
   <% else %>
-    <div class="row">
-      <% @pets.each do |pet| %>
-        <%= render 'pets/pet_card', pet: pet %>
-      <% end %>
-    </div>
+    <%= render 'pets/pet_list', locals: { pets: @pets }%>
   <% end %>
   <% if @show_more_link %>
     <div class="mt-3">

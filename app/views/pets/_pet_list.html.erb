@@ -1,0 +1,5 @@
+<div class="row">
+  <% @pets.each do |pet| %>
+      <%= render partial: 'pets/pet_card', locals: { pet: pet } %>
+  <% end %>
+</div>
