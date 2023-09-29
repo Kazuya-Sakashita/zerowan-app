@@ -1,11 +1,7 @@
 <h1>掲載中の里親募集</h1>
 
 <div class="container">
-  <% if @pets.empty? %>
-    <h2>現在掲載中の募集はありません。</h2>
-  <% else %>
-    <%= render 'pets/pet_list', locals: { pets: @pets }%>
-  <% end %>
+  <%= render 'pets/pet_list', locals: { pets: @pets }%>
   <% if @show_more_link %>
     <div class="mt-3">
       <p><%= link_to 'もっと見る', members_pets_path(all: true, user_id: params[:user_id]), class: 'btn btn-secondary' %></p>

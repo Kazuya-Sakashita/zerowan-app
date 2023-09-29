@@ -1,5 +1,9 @@
-<div class="row">
-  <% @pets.each do |pet| %>
-      <%= render partial: 'pets/pet_card', locals: { pet: pet } %>
-  <% end %>
-</div>
+<% if @pets.empty? %>
+  <h2>現在掲載中の募集はありません。</h2>
+<% else %>
+  <div class="row">
+    <% @pets.each do |pet| %>
+        <%= render partial: 'pets/pet_card', locals: { pet: pet } %>
+    <% end %>
+  </div>
+<% end %>
