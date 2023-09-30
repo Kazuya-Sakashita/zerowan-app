@@ -2,6 +2,8 @@ class PetsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
 
 def index
+    @user = User.find(params[:id])
+    @pets = @user.pets.all
 end
 
   def new

@@ -1,16 +1,10 @@
 class MembersController < ApplicationController
 
-  def index
-    @user = User.find(params[:user_id])
+  def show
+    @member = User.find(params[:id])
+    @pets = @member.pets.limit(4)
 
-    total_pets_count = @user.pets.count
-
-    if params[:all]
-      @pets = @user.pets.all
-    else
-      @pets = @user.pets.limit(4)
-    end
-
+    total_pets_count = @member.pets.count
     @show_more_link = total_pets_count > 4 && @pets.count < total_pets_count
   end
 end
