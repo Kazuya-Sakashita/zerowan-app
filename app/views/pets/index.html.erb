@@ -2,4 +2,5 @@
 
 <div class="container">
   <%= render 'pets/pet_list', locals: { pets: @pets }%>
+  <%= paginate @pets, theme: 'bootstrap-5' %>
 </div>
