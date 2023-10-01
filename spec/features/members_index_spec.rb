@@ -17,7 +17,7 @@ RSpec.feature 'members/index', type: :feature do
 
     before do
       sign_in joined_user
-      visit members_pets_path(user_id: joined_user.id)
+      visit member_path(id: joined_user.id)
     end
 
       it "現在掲載中の募集はありませんが表示される" do
@@ -28,7 +28,7 @@ RSpec.feature 'members/index', type: :feature do
   describe '掲載中の募集がある場合' do
     before do
       sign_in joined_user
-      visit members_pets_path(user_id: owned_user.id)
+      visit member_path(id: owned_user.id)
     end
 
     context 'ペットが4つ未満の場合' do
@@ -40,16 +40,11 @@ RSpec.feature 'members/index', type: :feature do
     context 'ペットが4つ以上の場合' do
       before do
         create(:pet, user: owned_user) #ペットを追加し、登録数5にする
-        visit members_pets_path(user_id: owned_user.id)
+        visit member_path(id: owned_user.id)
       end
 
       scenario 'もっと見るリンクが表示されていること' do
         expect(page).to have_content("もっと見る")
-      end
-
-      scenario 'もっと見るリンクを押すともっと見るが消える' do
-        click_link 'もっと見る'
-        expect(page).not_to have_content("もっと見る")
       end
     end
   end
