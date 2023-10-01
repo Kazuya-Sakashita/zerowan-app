@@ -36,7 +36,7 @@
           <div class="card mb-4 p-3">
             <div class="d-flex justify-content-between">
         <div class="d-flex align-items-center"> 
-              <p><%= message.user.profile.name %></p>
+              <p><%= link_to message.user.profile.name, member_path(id: message.user.id) %></p>
               <p>
               <!-- 自分のメッセージであるかのチェック -->
               <% if current_user == message.user %>

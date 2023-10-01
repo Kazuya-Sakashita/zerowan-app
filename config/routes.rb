@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     get 'users/sign_up/complete', to: 'users/registrations#complete'
   end
 
-  resources :pets do
+  resources :pets, except: [:index] do
     resource :favorites, only: [:create, :destroy]
     resource :rooms, only: [:create, :show]
   end
@@ -30,4 +30,8 @@ Rails.application.routes.draw do
     resources :messages, only: [:index,:new, :create]
   end
   resources :messages, only: [:edit, :update, :destroy]
+
+  resources :members, only: [:show] do
+    resources :pets, only: %i[index], module: :members
+  end
 end

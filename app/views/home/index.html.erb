@@ -61,47 +61,9 @@
     <hr>
     <div class='mt-5'>
       <div class="row">
-        <% @pets.each do |pet| %>
-          <div class="col-3">
-
-            <div class="card my-2">
-              <% if pet.pet_images.present? %>
-                <%= image_tag pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
-                <% if pet.new? %>
-                    <span class="new-mark">New</span>
-                <% end %>
-              <% end %>
-
-              <div class="card-body">
-                <h5 class="card-title petname"><%= pet.petname %></h5>
-                <p><%= pet.classification_i18n %>/<%= pet.age %>才/<%= pet.gender_i18n %></p>
-                <h5 class="card-title">譲渡可能地域</h5>
-                <% pet.pet_areas.each do |a| %>
-                  <%= a.area.place_name %>
-                <% end %>
-                <p class="card-text"><%= pet.introduction %></p>
-                <div class="button_to">
-                  <%= link_to 'ペット詳細情報を確認', pet_path(pet.id), class: "btn btn-primary " %>
-                </div>
-                <% if user_signed_in? && pet.own?(current_user).blank? %>
-                  <% if pet.favorite?(current_user) %>
-                    <%= button_to pet_favorites_path(pet.id), method: :delete, class: 'btn favorite-btn-off' do %>
-                      <div class='favorite-registration-part-off'>
-                        <span class='star-non'>☆</span> <span class='favorite-text'>気になるリストから削除</span>
-                      </div>
-                    <% end %>
-                  <% else %>
-                    <%= button_to pet_favorites_path(pet.id), data: { turbo_method: :post }, class: 'btn favorite-btn-on' do %>
-                      <div class='favorite-registration-part-on'>
-                        <span class='star'>★</span> <span class='favorite-text'>気になるリストに追加</span>
-                      </div>
-                    <% end %>
-                  <% end %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        <% end %>
+      <% @pets.each do |pet| %>
+        <%= render 'pets/pet_card', pet: pet %>
+      <% end %>
       </div>
     </div>
   </div>

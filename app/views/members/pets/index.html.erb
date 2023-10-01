@@ -1,0 +1,6 @@
+<h1>掲載中の里親募集</h1>
+
+<div class="container">
+  <%= render 'pets/pet_list', locals: { pets: @pets }%>
+  <%= paginate @pets, theme: 'bootstrap-5' %>
+</div>

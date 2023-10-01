@@ -1,9 +1,8 @@
 class PetsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
 
-  def index
-    @pets = Pet.all
-  end
+def index
+end
 
   def new
     # pet ペット情報を保存　petForm 画像を保存で分ける
