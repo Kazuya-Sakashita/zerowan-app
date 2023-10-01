@@ -39,10 +39,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     if params[:user][:current_password].present?
-      super
+      self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+      prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+      resource_updated = update_resource(resource, account_update_params)
+      yield resource if block_given?
+      if resource_updated
+        set_flash_message_for_update(resource, prev_unconfirmed_email)
+        bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
+
+        # 更新が成功した場合のリダイレクト先を設定
+        respond_with resource, location: edit_users_path
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        # 更新が失敗した場合もedit_users_pathにリダイレクト
+        flash[:alert] = '更新できませんでした: ' + resource.errors.full_messages.join(', ')
+        redirect_to edit_users_path
+      end
     else
-      flash.now[:alert] = '変更する場合は現在のパスワードを入力してください。'
-      render 'users/edit'
+      flash[:alert] = '変更する場合は現在のパスワードを入力してください。'
+      redirect_to edit_users_path
     end
   end
 

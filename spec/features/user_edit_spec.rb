@@ -38,7 +38,7 @@ RSpec.feature '会員情報編集', type: :feature do
           fill_in '生年月日', with: '2022-06-26'
           fill_in '飼主経験', with: '猫1年'
           click_button 'プロフィール内容変更'
-          expect(page).to have_current_path users_path
+          expect(page).to have_current_path edit_users_path
         end
       end
 
@@ -81,7 +81,7 @@ RSpec.feature '会員情報編集', type: :feature do
         click_button 'アカウント情報更新'
       end
       scenario 'アカウント情報を正しく入力した場合、Home 画面に遷移すること' do
-        expect(page).to have_current_path root_path
+        expect(page).to have_current_path edit_users_path
       end
       scenario 'アカウント情報を正しく入力した場合、flash メッセージが正しく表示されること' do
         expect(page).to have_content 'アカウント情報を変更しました。'
