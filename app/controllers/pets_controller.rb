@@ -2,10 +2,6 @@ class PetsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
 
 def index
-    member = User.find(params[:id])
-    @pets = Pet.preload(:pet_images, :pet_areas, :areas, :user, :favorites, :rooms)
-               .where(user_id:  member.id)
-               .page(params[:page]).per(20)
 end
 
   def new

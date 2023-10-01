@@ -4,7 +4,7 @@
   <%= render 'pets/pet_list', locals: { pets: @pets }%>
   <% if @show_more_link %>
     <div class="mt-3">
-      <p><%= link_to 'もっと見る', pets_member_path(params[:id]), class: 'btn btn-secondary' %></p>
+      <p><%= link_to 'もっと見る', member_pets_path(member_id: params[:id]), class: 'btn btn-secondary' %></p>
     </div>
   <% end %>
 </div>

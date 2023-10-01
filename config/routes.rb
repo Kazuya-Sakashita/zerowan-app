@@ -31,11 +31,7 @@ Rails.application.routes.draw do
   end
   resources :messages, only: [:edit, :update, :destroy]
 
-  resources :users, as: :members, controller: 'members', path: 'members', only: [:show] do
-    member do
-      get 'pets', to: 'pets#index', as: 'pets'
-    end
+  resources :members, only: [:show] do
+    resources :pets, only: %i[index], module: :members
   end
-
-
 end
