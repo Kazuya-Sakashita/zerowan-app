@@ -48,8 +48,4 @@ RSpec.feature 'members/index', type: :feature do
       end
     end
   end
-
-
-
-
 end
