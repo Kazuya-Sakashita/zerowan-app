@@ -80,7 +80,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       it '正しく値が設定された場合、Home 画面が描画されること' do
         user_params = attributes_for(:user, email: user.email, password:'password',password_confirmation: 'password', current_password: 'password12345' )
         put :update, params: { user: user_params }
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to edit_users_path
       end
 
       it '正しく値が設定された場合(パスワード)、flash メッセージが正しく表示されること' do
@@ -114,15 +114,14 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       it '正しく値が設定されなかった場合、登録情報編集画面が描画されること' do
         user_params = attributes_for(:user, email: user.email, current_password: nil )
         put :update, params: { user: user_params }
-        expect(response).to render_template :edit
+        expect(response).to redirect_to edit_users_path
       end
 
       it '正しく値が設定されなかった場合、flash メッセージが正しく表示されること' do
         user_params = attributes_for(:user, email: user.email, current_password: nil )
         put :update, params: { user: user_params }
-        expect(flash[:alert]).to eq '変更する場合は現在のパスワードを入力してください。'
+        expect(flash[:alert]).to eq '更新できませんでした: ' + user.errors.full_messages.join(', ')
       end
     end
-
   end
 end

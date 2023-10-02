@@ -9,10 +9,10 @@ class ProfilesController < ApplicationController
 
     if @user.update(user_params)
       flash[:notice] = "更新しました。"
-      redirect_to users_path
+      redirect_to edit_users_path
     else
-      flash[:alert] = "更新できませんでした。"
-      render 'users/edit'
+      flash[:alert] = "更新できませんでした: " + @user.errors.full_messages.join(', ')
+      redirect_to edit_users_path
     end
   end
 

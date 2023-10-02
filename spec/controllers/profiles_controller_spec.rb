@@ -12,7 +12,7 @@ RSpec.describe ProfilesController, type: :controller do
       it '正しく値が設定された場合ユーザーのマイページ画面が描画されること' do
         profile_params = attributes_for(:profile)
         put :update, params: { user: { profile_attributes: profile_params } }
-        expect(response).to redirect_to users_path
+        expect(response).to redirect_to edit_users_path
       end
 
       it '正しく値が設定された場合ユーザーの情報が更新されていること' do
@@ -33,10 +33,10 @@ RSpec.describe ProfilesController, type: :controller do
       end
     end
     context '異常系' do
-      it '正しく値が設定されなかった場合、登録情報編集画面が描画されること' do
+      it '正しく値が設定されなかった場合、登録情報編集画面にリダイレクトされること' do
         profile_params = attributes_for(:profile, name: nil, user_id: @user.id)
         put :update, params: { id: @user, user: { profile_attributes: profile_params } }
-        expect(response).to render_template 'users/edit'
+        expect(response).to redirect_to edit_users_path
       end
     end
   end

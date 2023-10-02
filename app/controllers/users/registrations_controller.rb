@@ -41,8 +41,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if params[:user][:current_password].present?
       super
     else
-      flash.now[:alert] = '変更する場合は現在のパスワードを入力してください。'
-      render 'users/edit'
+      flash[:alert] = "更新できませんでした: " + @user.errors.full_messages.join(', ')
+      redirect_to edit_users_path
     end
   end
 
@@ -89,6 +89,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def account_update_params
     params.require(:user).permit(:email, :password, :password_confirmation, :current_password)
+  end
+
+  def after_update_path_for(resource)
+    edit_users_path
   end
 
   private
