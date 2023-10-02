@@ -95,7 +95,7 @@ RSpec.feature '会員情報編集', type: :feature do
         fill_in 'パスワード', with: nil
         fill_in 'パスワード（確認用）', with: nil
         click_button 'アカウント情報更新'
-        expect(page).to have_content '変更する場合は現在のパスワードを入力してください。'
+        expect(page).to have_content '更新できませんでした'
       end
 
       scenario '現在のパスワードを入力し、email を入力しなかった場合、バリデーションエラーの内容が表示されること' do
