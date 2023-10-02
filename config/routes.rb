@@ -14,6 +14,11 @@ Rails.application.routes.draw do
     get 'users/sign_up/complete', to: 'users/registrations#complete'
   end
 
+  devise_for :admins, controllers: {
+    registrations: 'admins/registrations',
+    confirmations: 'admins/confirmations'
+  }
+
   resources :pets, except: [:index] do
     resource :favorites, only: [:create, :destroy]
     resource :rooms, only: [:create, :show]
