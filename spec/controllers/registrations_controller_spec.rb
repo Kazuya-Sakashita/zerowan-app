@@ -120,7 +120,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       it '正しく値が設定されなかった場合、flash メッセージが正しく表示されること' do
         user_params = attributes_for(:user, email: user.email, current_password: nil )
         put :update, params: { user: user_params }
-        expect(flash[:alert]).to eq '更新できませんでした: '
+        expect(flash[:alert]).to eq '更新できませんでした: ' + user.errors.full_messages.join(', ')
       end
     end
   end
