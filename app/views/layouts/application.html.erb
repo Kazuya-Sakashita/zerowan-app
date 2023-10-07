@@ -10,11 +10,7 @@
 </head>
 
   <body>
-    <% if request.fullpath.include?('/admin') || admin_signed_in? %>
-      <%= render 'layouts/shared/admins_header' %>
-    <% else %>
-      <%= render 'layouts/shared/header' %>
-    <% end %>
+    <%= render 'layouts/shared/header' %>
     <div class="mt-5">
       <%= render 'layouts/shared/flash' %>
       <%= yield %>
