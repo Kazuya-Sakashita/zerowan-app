@@ -3,7 +3,7 @@
     <h2>ログイン</h2>
   </div>
   <div class="form-signup rounded ">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { data: { turbo: "false" } }) do |f| %>      <div class="field">
       <div class="form-label">
         <%= f.label :email, 'メールアドレス' %>
         <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>

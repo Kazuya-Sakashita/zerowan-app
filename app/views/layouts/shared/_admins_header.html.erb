@@ -1,0 +1,32 @@
+<header class="fixed-top">
+  <nav class="navbar navbar-expand navbar-light ">
+    <div class="container-fluid nab-color ">
+      <h1>ZeroWanApp 管理者画面</h1>
+      <ul class="nav navbar-nav navbar-right">
+
+        <li class="nav-item active">
+          <%= link_to 'トップ', root_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item active">
+          <%= link_to 'このサイトについて', root_path, class: "nav-link" %>
+        </li>
+        <% if admin_signed_in? %>
+          <li class="nav-item active">
+            <%= link_to '管理画面', '#', class: "nav-link" %>
+          </li>
+          <li class="nav-item active">
+            <%= link_to '管理者ログアウト', destroy_admin_session_path, class: "nav-link", data: { turbo_method: :delete } %>
+          </li>
+        <% else %>
+          <li class="nav-item active">
+            <%= link_to '管理者登録', new_admin_registration_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item active">
+            <%= link_to '管理者ログイン', new_admin_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+  <hr class="nav-divider">
+</header>
