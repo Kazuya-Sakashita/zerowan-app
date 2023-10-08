@@ -5,10 +5,11 @@ class RoomsController < ApplicationController
 
   def index
     @rooms = Room.eager_load(latest_message: { user: :profile })
-                                .where(owner_id: current_user.id)
-                                .or(Room.where(user_id: current_user.id))
-                                .order('messages.created_at DESC')
-                                .page(params[:page]).per(10)
+                 .where(owner_id: current_user.id)
+                 .or(Room.where(user_id: current_user.id))
+                 .where.not(messages: { created_at: nil })
+                 .order('messages.created_at DESC')
+                 .page(params[:page]).per(10)
   end
 
   def new
