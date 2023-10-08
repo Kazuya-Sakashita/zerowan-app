@@ -1,0 +1,13 @@
+# config/redis.yml
+
+development:
+  host: redis
+  port: 6379
+
+test:
+  host: redis
+  port: 6379
+
+production:
+  host: <%= ENV['REDIS_HOST'] %>
+  port: <%= ENV['REDIS_PORT'] %>

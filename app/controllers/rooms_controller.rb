@@ -37,6 +37,9 @@ class RoomsController < ApplicationController
     @all_message_exchanges = @room.messages.page(params[:page]).per(5)
 
     @recipient = @room.recipient(current_user)
+
+    # current_userとroom.idに合うものを削除
+    $redis.srem("user:#{current_user.id}:unread_messages_in_rooms", @room.id)
   end
 
   private

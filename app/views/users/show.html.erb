@@ -3,6 +3,22 @@
     <%= render partial: 'layouts/shared/sidebar_html' %>
     <!-- 投稿pet一覧 -->
     <div class="col-9">
+      <!-- メッセージ着信を表示する -->
+  <% if @has_unread_messages %>
+    <div class="alert alert-danger">
+      新着メッセージがあります。
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      <p> お知らせはありません。</p>
+    </div>
+  <% end %>
+
+
+      <div>
+      </div>
+      <!-- ここまで -->
+
       <div>
         <h2>掲載中の里親募集</h2>
         <div class="row">
