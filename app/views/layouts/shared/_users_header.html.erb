@@ -1,0 +1,32 @@
+<header class="fixed-top">
+  <nav class="navbar navbar-expand navbar-light ">
+    <div class="container-fluid nab-color ">
+      <h1>ZeroWanApp</h1>
+      <ul class="nav navbar-nav navbar-right">
+
+        <li class="nav-item active">
+          <%= link_to 'トップ', root_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item active">
+          <%= link_to 'このサイトについて', root_path, class: "nav-link" %>
+        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item active">
+            <%= link_to 'マイページ', users_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item active">
+            <%= link_to 'ログアウト', destroy_user_session_path, class: "nav-link", data: { turbo_method: :delete } %>
+          </li>
+        <% else %>
+          <li class="nav-item active">
+            <%= link_to '会員登録', new_user_registration_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item active">
+            <%= link_to 'ログイン', new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+  <hr class="nav-divider">
+</header>
