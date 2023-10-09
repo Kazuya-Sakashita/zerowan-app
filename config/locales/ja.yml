@@ -60,3 +60,8 @@ ja:
             owner_id:
               different_user_and_owner: "owner_idとuser_idは同じにできません"
 
+    attributes:
+      admin: # ここであなたの管理者モデルの名前を使用します
+        email: 'メールアドレス'
+        password: 'パスワード'
+        remember_me: 'ログイン状態を保存'
