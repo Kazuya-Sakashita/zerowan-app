@@ -5,11 +5,11 @@
     <div class="col-9">
       <!-- メッセージ着信を表示する -->
   <% if @has_unread_messages %>
-    <div class="alert alert-danger">
+    <div class="alert alert-light text-red">
       新着メッセージがあります。
     </div>
   <% else %>
-    <div class="alert alert-info">
+    <div class="alert alert-light">
       <p> お知らせはありません。</p>
     </div>
   <% end %>
