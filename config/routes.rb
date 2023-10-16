@@ -26,7 +26,8 @@ Rails.application.routes.draw do
   }
 
   namespace :admins do
-    get 'home/index' 
+    root 'home#index'
+    delete 'sign_out', to: 'sessions#destroy', as: :destroy_admin_session
   end
 
   resources :pets, except: [:index] do
