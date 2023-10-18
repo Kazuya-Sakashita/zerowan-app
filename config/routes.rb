@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  namespace :admins do
-    get 'home/index'
-  end
-
   root 'home#index'
 
   resource :users, only: [:show, :edit]
