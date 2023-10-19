@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  before_action :redirect_if_logged_in, only: %i[new create]
+  before_action :redirect_if_admin_logged_in, only: [:new]
 
   # before_action :configure_sign_in_params, only: [:create]
 
@@ -37,7 +37,10 @@ class Users::SessionsController < Devise::SessionsController
 
   private
 
-  def redirect_if_logged_in
-    redirect_to admins_root_path, alert: '既にログインしています。' if user_signed_in?
+  def redirect_if_admin_logged_in
+    return unless admin_signed_in?
+
+    flash[:alert] = 'すでにログインされています。'
+    redirect_to admins_home_index_path
   end
 end
