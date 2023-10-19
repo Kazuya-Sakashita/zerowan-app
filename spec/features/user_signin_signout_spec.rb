@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'ログイン認証', type: :feature do
-
   let!(:user) do
     create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
   end
@@ -22,7 +21,7 @@ RSpec.feature 'ログイン認証', type: :feature do
         fill_in 'メールアドレス', with: 'test123456789@test.com'
         fill_in 'パスワード', with: 'password'
         click_button 'ログイン'
-        expect(current_path).to eq users_path
+        expect(page).to have_current_path users_path, ignore_query: true
       end
 
       scenario 'flash メッセージが正しく表示されること' do
@@ -33,14 +32,14 @@ RSpec.feature 'ログイン認証', type: :feature do
       end
     end
 
-      context '正しく値を入力しなかった場' do
-        scenario 'flash メッセージが正しく表示されること' do
-          fill_in 'メールアドレス', with: nil
-          fill_in 'パスワード', with: nil
-          click_button 'ログイン'
-          expect(page).to have_content 'メールアドレスまたはパスワードが違います。'
-        end
+    context '正しく値を入力しなかった場' do
+      scenario 'flash メッセージが正しく表示されること' do
+        fill_in 'メールアドレス', with: nil
+        fill_in 'パスワード', with: nil
+        click_button 'ログイン'
+        expect(page).to have_content 'メールアドレスまたはパスワードが違います。'
       end
+    end
   end
 
   describe 'ログアウト' do
@@ -51,7 +50,7 @@ RSpec.feature 'ログイン認証', type: :feature do
 
     scenario 'Home 画面に遷移すること' do
       click_link 'ログアウト'
-      expect(current_path).to eq root_path
+      expect(page).to have_current_path root_path, ignore_query: true
     end
 
     scenario 'flash メッセージが正しく表示されること' do

@@ -19,7 +19,7 @@ RSpec.feature 'ログイン認証', type: :feature do
         fill_in 'メールアドレス', with: "#{admin.email}"
         fill_in 'パスワード', with: "#{admin.password}"
         click_button 'ログイン'
-        expect(current_path).to eq admins_home_index_path
+        expect(page).to have_current_path admins_root_path, ignore_query: true
       end
 
       scenario 'flash メッセージが正しく表示されること' do
@@ -30,25 +30,25 @@ RSpec.feature 'ログイン認証', type: :feature do
       end
     end
 
-      context '正しく値を入力しなかった場' do
-        scenario 'flash メッセージが正しく表示されること' do
-          fill_in 'メールアドレス', with: nil
-          fill_in 'パスワード', with: nil
-          click_button 'ログイン'
-          expect(page).to have_content 'メールアドレスまたはパスワードが違います。'
-        end
+    context '正しく値を入力しなかった場' do
+      scenario 'flash メッセージが正しく表示されること' do
+        fill_in 'メールアドレス', with: nil
+        fill_in 'パスワード', with: nil
+        click_button 'ログイン'
+        expect(page).to have_content 'メールアドレスまたはパスワードが違います。'
       end
+    end
   end
 
   describe 'ログアウト' do
     before do
       sign_in admin
-      visit admins_home_index_path
+      visit admins_root_path
     end
 
     scenario 'ログイン 画面に遷移すること' do
       click_link '管理者ログアウト'
-      expect(current_path).to eq new_admin_session_path
+      expect(page).to have_current_path new_admin_session_path, ignore_query: true
     end
 
     scenario 'flash メッセージが正しく表示されること' do
