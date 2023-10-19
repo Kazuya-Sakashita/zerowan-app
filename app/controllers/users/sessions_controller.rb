@@ -41,6 +41,6 @@ class Users::SessionsController < Devise::SessionsController
     return unless admin_signed_in?
 
     flash[:alert] = 'すでにログインされています。'
-    redirect_to admins_home_index_path
+    redirect_to admins_root_path
   end
 end
