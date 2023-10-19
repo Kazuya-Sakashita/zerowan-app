@@ -37,6 +37,9 @@ class Admins::SessionsController < Devise::SessionsController
   private
 
   def redirect_if_user_logged_in
-    redirect_to users_path if user_signed_in?
+    return unless user_signed_in?
+
+    flash[:alert] = 'すでにログインされています。'
+    redirect_to users_path
   end
 end
