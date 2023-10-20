@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resource :users, only: [:show, :edit]
-  resource :admins, only: [:show, :edit]
   resource :profiles, only: [:update]
   devise_for :users, controllers: {
     registrations: 'users/registrations',
