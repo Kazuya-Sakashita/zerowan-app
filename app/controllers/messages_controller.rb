@@ -30,7 +30,7 @@ class MessagesController < ApplicationController
     if @message.destroy
       redirect_to room_path(@message.room_id) , notice: 'メッセージが削除されました。'
     else
-      redirect_to room_path(@message.room_id) , alert: 'メッセージが削除に失敗しました。'
+      redirect_to room_path(@message.room_id) , alert: 'メッセージ削除に失敗しました。'
     end
   end
 

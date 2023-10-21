@@ -1,0 +1,49 @@
+<div class="container-fluid mx-auto">
+
+  <div class="row col-11 mx-auto">
+
+    <!-- 標準カラーのサイドバー -->
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary col-md-3 bg-gray-50">
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <%= link_to 'ユーザー', admin_users_path, class: "nav-link" %>
+        </li>
+        <li>
+          <%= link_to '里親募集', '#', class: "nav-link" %>
+        </li>
+      </ul>
+    </div>
+    <!-- /標準カラーのサイドバー -->
+
+    <!-- 管理者 ユーザー一覧画面 -->
+    <div class="col-md-8">
+      <h1>ユーザー</h1>
+
+      <table class="text-center">
+        <thead>
+        <tr>
+          <th>ユーザー名</th>
+          <th>登録日時</th>
+          <th>里親募集</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.profile.name %></td>
+            <td><%= user.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+            <td><%= user.pets.count %></td>
+            <td class="d-flex justify-content-between">
+              <%= link_to '詳細', '#', class: "btn btn-warning" %>
+              <%= link_to '削除', admin_user_path(user.id), class: "nav-link", data: { turbo_method: :delete } %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= paginate @users, theme: 'bootstrap-5' %>
+    </div>
+    <!-- 管理者 ユーザー一覧画面 ここまで -->
+  </div>
+</div>
