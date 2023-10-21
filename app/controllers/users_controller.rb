@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @user_pets = @user.pets
+    @has_unread_messages = $redis.scard("user:#{current_user.id}:unread_messages_in_rooms").positive?
   end
 
   def edit; end

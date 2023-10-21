@@ -19,4 +19,40 @@ RSpec.feature 'マイページ表示', type: :feature do
           expect(page).not_to have_content 'test20221101'
         end
       end
+
+      describe 'お知らせ表示' do
+        let!(:owned_user) { create(:user, &:confirm) }
+        let!(:joined_user) { create(:user, &:confirm) }
+        let!(:pet) { create(:pet, user: owned_user) }
+
+        let!(:joined_room) do
+          room = create(:room, user: joined_user, owner: owned_user, pet: pet)
+            create(:message, room: room, user: joined_user, body: "テストメッセージ")
+          room
+        end
+
+        context '新着メッセーがある場合' do
+          before do
+            sign_in owned_user
+
+            $redis.sadd("user:#{owned_user.id}:unread_messages_in_rooms", joined_room.id)
+            visit users_path
+          end
+
+          scenario '新着メッセージがあります。が表示されていること' do
+            expect(page).to have_content '新着メッセージがあります。'
+          end
+        end
+
+        context '新着メッセーがない場合' do
+          before do
+            sign_in joined_user
+            visit users_path
+          end
+
+          scenario 'お知らせはありません。が表示されていること' do
+            expect(page).to have_content 'お知らせはありません。'
+          end
+        end
+      end
     end

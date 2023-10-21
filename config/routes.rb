@@ -1,19 +1,16 @@
 Rails.application.routes.draw do
-  namespace :admins do
-    get 'home/index'
-  end
-
   root 'home#index'
 
   resource :users, only: [:show, :edit]
   resource :profiles, only: [:update]
   devise_for :users, controllers: {
     registrations: 'users/registrations',
-    confirmations: 'users/confirmations'
+    confirmations: 'users/confirmations',
+    sessions: 'users/sessions'
   }
 
   devise_scope :user do
-    get '/users/sign_out' => 'devise/sessions#destroy'
+    get '/users/sign_out' => 'users/sessions#destroy'
     post 'users/sign_up/confirm', to: 'users/registrations#confirm'
     get 'users/sign_up/complete', to: 'users/registrations#complete'
   end
@@ -25,7 +22,8 @@ Rails.application.routes.draw do
   }
 
   namespace :admins do
-    get 'home/index' 
+    root 'home#index'
+    delete 'sign_out', to: 'sessions#destroy', as: :destroy_admin_session
   end
 
   resources :pets, except: [:index] do

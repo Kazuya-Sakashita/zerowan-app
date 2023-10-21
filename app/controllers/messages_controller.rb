@@ -5,6 +5,13 @@ class MessagesController < ApplicationController
 
   def create
     @message = current_user.messages.create(message_params_on_create)
+    
+    # 送信先（受取先id)を取得する、受取先id とmessage.idをredisに保存する
+    # 送信者はuserまたはownerである。
+
+    room = Room.find(params[:room_id])
+    receiver_id = (room.user_id == current_user.id) ? room.owner_id : room.user_id
+    $redis.sadd("user:#{receiver_id}:unread_messages_in_rooms", room.id)
     redirect_to request.referer
   end
 

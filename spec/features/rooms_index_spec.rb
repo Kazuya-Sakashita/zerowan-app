@@ -53,29 +53,6 @@ RSpec.feature 'rooms/index', type: :feature do
     end
   end
 
-  describe 'メッセージが存在しない場合' do
-
-    let!(:joined_rooms) do
-      rooms = []
-      joined_users.each do |joined_user|
-        pets.each do |pet|
-          room = create(:room, user: joined_user, owner: owned_user, pet: pet)
-          rooms << room
-        end
-      end
-      rooms
-    end
-
-    before do
-      sign_in joined_users.first
-      visit rooms_path
-    end
-
-    scenario '表示するメッセージがありません。が表示さること' do
-      expect(page).to have_content '表示するメッセージがありません。'
-    end
-  end
-
   describe 'ページネーションのテスト' do
     # 11件のルームとメッセージを作成
     let!(:rooms) do

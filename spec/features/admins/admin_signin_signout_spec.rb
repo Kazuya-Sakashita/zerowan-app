@@ -1,13 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature 'ログイン認証', type: :feature do
-  let!(:user) do
-    create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
-  end
+  let(:admin) { create(:admin) }
 
   describe 'ログイン' do
     before do
-      visit new_user_session_path
+      visit new_admin_session_path
     end
 
     scenario '表示される内容が正しいこと（フォームの内容やボタン、リンク等が正しく表示されていること）' do
@@ -17,16 +15,16 @@ RSpec.feature 'ログイン認証', type: :feature do
     end
 
     context '正しく値を入力した場合' do
-      scenario 'ユーザーのマイページ画面に遷移すること' do
-        fill_in 'メールアドレス', with: 'test123456789@test.com'
-        fill_in 'パスワード', with: 'password'
+      scenario '管理者画面に遷移すること' do
+        fill_in 'メールアドレス', with: "#{admin.email}"
+        fill_in 'パスワード', with: "#{admin.password}"
         click_button 'ログイン'
-        expect(page).to have_current_path users_path, ignore_query: true
+        expect(page).to have_current_path admins_root_path, ignore_query: true
       end
 
       scenario 'flash メッセージが正しく表示されること' do
-        fill_in 'メールアドレス', with: 'test123456789@test.com'
-        fill_in 'パスワード', with: 'password'
+        fill_in 'メールアドレス', with: "#{admin.email}"
+        fill_in 'パスワード', with: "#{admin.password}"
         click_button 'ログイン'
         expect(page).to have_content 'ログインしました。'
       end
@@ -44,17 +42,17 @@ RSpec.feature 'ログイン認証', type: :feature do
 
   describe 'ログアウト' do
     before do
-      sign_in user
-      visit users_path
+      sign_in admin
+      visit admins_root_path
     end
 
-    scenario 'Home 画面に遷移すること' do
-      click_link 'ログアウト'
-      expect(page).to have_current_path root_path, ignore_query: true
+    scenario 'ログイン 画面に遷移すること' do
+      click_link '管理者ログアウト'
+      expect(page).to have_current_path new_admin_session_path, ignore_query: true
     end
 
     scenario 'flash メッセージが正しく表示されること' do
-      click_link 'ログアウト'
+      click_link '管理者ログアウト'
       expect(page).to have_content 'ログアウトしました。'
     end
   end

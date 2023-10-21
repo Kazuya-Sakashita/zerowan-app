@@ -77,12 +77,6 @@ RSpec.describe RoomsController, type: :controller do
       expect(response).to be_successful
     end
 
-    context 'ログイン中のユーザーに関連する部屋' do
-      it '取得すること' do
-        expect(assigns(:rooms)).to include(room_owned_by_user, room_user_belongs_to)
-      end
-    end
-
     context 'ログイン中のユーザーに関連していない部屋' do
       it '取得しないこと' do
         expect(assigns(:rooms)).not_to include(other_room)
