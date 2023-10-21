@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  before_action :redirect_if_admin_logged_in, only: [:new]
-
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -33,14 +31,5 @@ class Users::SessionsController < Devise::SessionsController
 
   def after_sign_out_path_for(_resource)
     root_path
-  end
-
-  private
-
-  def redirect_if_admin_logged_in
-    return unless admin_signed_in?
-
-    flash[:alert] = 'すでにログインされています。'
-    redirect_to admins_root_path
   end
 end
