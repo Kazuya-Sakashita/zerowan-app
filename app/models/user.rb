@@ -5,7 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :trackable, :confirmable
 
   has_one :profile, dependent: :destroy
-  has_one :profile_image, dependent: :destroy
+
+  # TODO 未実装のため、ユーザー削除時にアイソレーションエラー発生
+  # has_one :profile_image, dependent: :destroy
+
   has_many :pets, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :messages, dependent: :destroy
@@ -13,7 +16,7 @@ class User < ApplicationRecord
   
 
   accepts_nested_attributes_for :profile, allow_destroy: true
-  accepts_nested_attributes_for :profile_image, allow_destroy: true
+  # accepts_nested_attributes_for :profile_image, allow_destroy: true
 
   with_options presence: true do
     with_options uniqueness: true do
