@@ -1,4 +1,4 @@
-    <% if request.fullpath.include?('/admin') || admin_signed_in? %>
+    <% if request.fullpath.include?('/admin') %>
       <%= render 'layouts/shared/admins_header' %>
     <% else %>
       <%= render 'layouts/shared/users_header' %>
