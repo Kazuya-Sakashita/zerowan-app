@@ -35,7 +35,7 @@
             <td><%= user.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
             <td><%= user.pets.size %></td>
             <td class="d-flex justify-content-between">
-              <%= link_to '詳細', '#', class: "btn btn-warning" %>
+              <%= link_to '詳細', admins_user_path(user.id), class: "btn btn-warning" %>
               <%= link_to '削除', admins_user_path(user.id), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: '本当に削除してよろしいですか？' } %>
             </td>
           </tr>

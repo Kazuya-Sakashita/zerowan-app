@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <%= link_to '<戻る', admins_users_path, class: 'btn btn-light mb-3' %>
+
+  <h1 class="mb-4">ユーザー詳細</h1>
+
+  <div class="card shadow-lg">
+    <div class="card-body">
+      <table class="table table-bordered-dark">
+        <tbody>
+          <tr>
+            <th class="bg-light">氏名</th>
+            <td><%= @user.profile.name %></td>
+          </tr>
+          <tr>
+            <th class="bg-light">ご住所</th>
+            <td><%= @user.profile.address %></td>
+          </tr>
+          <tr>
+            <th class="bg-light">電話番号</th>
+            <td><%= @user.profile.phone_number %></td>
+          </tr>
+          <tr>
+            <th class="bg-light">生年月日</th>
+            <td><%= @user.profile.birthday.strftime('%Y年%m月%d日') %></td>
+          </tr>
+          <tr>
+            <th class="bg-light">飼い主経験</th>
+            <td><%= @user.profile.breeding_experience %></td>
+          </tr>
+          <tr>
+            <th class="bg-light">登録日時</th>
+            <td><%= @user.profile.created_at.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+          </tr>
+          <tr>
+            <th class="bg-light">里親募集</th>
+            <td><%= @user.pets.size %> 件</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
