@@ -4,9 +4,7 @@ RSpec.describe Admins::UsersController, type: :controller do
   let(:admin) { create(:admin) }
   let!(:user) { create(:user, &:confirm) }
   let!(:users) do
-    users = create_list(:user, 20)
-    users.each(&:confirm)
-    users
+    create_list(:user, 20, &:confirm)
   end
   let!(:pets) do
     create_list(:pet, 5, user:)
