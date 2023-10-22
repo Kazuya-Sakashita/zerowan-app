@@ -4,9 +4,7 @@ RSpec.feature 'admins/users/index', type: :feature do
   let(:admin) { create(:admin) }
   let!(:user) { create(:user, &:confirm) }
   let!(:users) do
-    users = create_list(:user, 21)
-    users.each(&:confirm)
-    users
+    create_list(:user, 21, &:confirm)
   end
 
   before do
