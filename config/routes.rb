@@ -23,11 +23,8 @@ Rails.application.routes.draw do
 
   namespace :admins do
     root 'home#index'
-    delete 'sign_out', to: 'sessions#destroy', as: :destroy_admin_session
-  end
-
-  namespace :admin do
     resources :users, only: [:index,:destroy]
+    delete 'sign_out', to: 'sessions#destroy', as: :destroy_admin_session
   end
 
   resources :pets, except: [:index] do
