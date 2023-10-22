@@ -12,8 +12,8 @@ RSpec.describe MessagesController, type: :controller do
     end
 
     context 'パラーメーターが正しく設定されている場合' do
-      let(:headers){ { 'HTTP_REFERER' => referer } }
-      let!(:referer){"/pets/#{@pet.id}/rooms"}
+      let(:headers) { { 'HTTP_REFERER' => referer } }
+      let!(:referer) { "/pets/#{@pet.id}/rooms" }
 
       before do
         request.headers.merge! headers
@@ -21,16 +21,16 @@ RSpec.describe MessagesController, type: :controller do
       end
 
       it 'メッセージが保存できること' do
-        params = { pet_id: @pet.id , user_id: user.id, message: {body: "はじめまして"}, room_id: @room.id }
+        params = { pet_id: @pet.id, user_id: user.id, message: { body: 'はじめまして' }, room_id: @room.id }
         expect do
-          post :create, params:params
+          post :create, params:
         end.to change { Message.count }.by(1)
       end
     end
 
     context 'パラメーターが不正な場合' do
-      let(:headers){ { 'HTTP_REFERER' => referer } }
-      let!(:referer){"/pets/#{@pet.id}/rooms"}
+      let(:headers) { { 'HTTP_REFERER' => referer } }
+      let!(:referer) { "/pets/#{@pet.id}/rooms" }
 
       before do
         request.headers.merge! headers
@@ -38,10 +38,10 @@ RSpec.describe MessagesController, type: :controller do
       end
 
       it 'メッセージが保存されないこと' do
-        params = { pet_id: @pet.id , user_id: user.id, message: {body: nil}, room_id: @room.id }
+        params = { pet_id: @pet.id, user_id: user.id, message: { body: nil }, room_id: @room.id }
         expect do
-          post :create, params:params
-        end.to_not change { Message.count }
+          post :create, params:
+        end.not_to change { Message.count }
       end
     end
 
@@ -52,10 +52,10 @@ RSpec.describe MessagesController, type: :controller do
       end
 
       it 'メッセージは保存されず、ログインページにリダイレクトされる' do
-        params = { pet_id: @pet.id , user_id: user.id, message: {body: "はじめまして"}, room_id: @room.id }
+        params = { pet_id: @pet.id, user_id: user.id, message: { body: 'はじめまして' }, room_id: @room.id }
         expect do
-          post :create, params: params
-        end.to_not change { Message.count }
+          post :create, params:
+        end.not_to change { Message.count }
 
         expect(response).to redirect_to new_user_session_path
       end
@@ -63,13 +63,12 @@ RSpec.describe MessagesController, type: :controller do
   end
 
   describe '.edit' do
-
     let!(:owned_user) { create(:user, &:confirm) }
     let!(:joined_user) { create(:user, &:confirm) }
     let!(:other_user) { create(:user, &:confirm) }
     let!(:pet) { create(:pet, user_id: owned_user.id) }
-    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet: pet) }
-    let!(:message) { create(:message, room:room_owned_by_user, user: joined_user, body:'coment test 1') }
+    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet:) }
+    let!(:message) { create(:message, room: room_owned_by_user, user: joined_user, body: 'coment test 1') }
 
     context 'ユーザーが認証されていない場合' do
       before { get :edit, params: { id: message.id } }
@@ -108,10 +107,10 @@ RSpec.describe MessagesController, type: :controller do
     let!(:joined_user) { create(:user, &:confirm) }
     let!(:other_user) { create(:user, &:confirm) }
     let!(:pet) { create(:pet, user_id: owned_user.id) }
-    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet: pet) }
+    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet:) }
     let!(:message) { create(:message, room: room_owned_by_user, user: joined_user, body: 'comment test 1') }
     let(:valid_params) { { body: 'updated comment' } }
-    let(:invalid_params) { { body: '' } } 
+    let(:invalid_params) { { body: '' } }
 
     context 'メッセージの所有者が更新を試みる場合' do
       before { sign_in joined_user }
@@ -145,23 +144,20 @@ RSpec.describe MessagesController, type: :controller do
   end
 
   describe '.destroy' do
-
     let!(:owned_user) { create(:user, &:confirm) }
     let!(:joined_user) { create(:user, &:confirm) }
     let!(:other_user) { create(:user, &:confirm) }
     let!(:pet) { create(:pet, user_id: owned_user.id) }
-    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet: pet) }
+    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet:) }
     let!(:message) { create(:message, room: room_owned_by_user, user: joined_user, body: 'comment test 1') }
 
-
     context 'メッセージが正常に削除された場合' do
-
       before { sign_in joined_user }
 
       it 'メッセージが削除されること' do
-        expect {
+        expect do
           delete :destroy, params: { id: message.id }
-        }.to change(Message, :count).by(-1)
+        end.to change(Message, :count).by(-1)
       end
 
       it 'roomのページにリダイレクトされること' do
@@ -182,9 +178,9 @@ RSpec.describe MessagesController, type: :controller do
       end
 
       it 'メッセージが削除されないこと' do
-        expect {
+        expect do
           delete :destroy, params: { id: message.id }
-        }.to_not change(Message, :count)
+        end.not_to change(Message, :count)
       end
 
       it 'roomのページにリダイレクトされること' do
@@ -194,7 +190,7 @@ RSpec.describe MessagesController, type: :controller do
 
       it 'エラーのフラッシュメッセージが表示されること' do
         delete :destroy, params: { id: message.id }
-        expect(flash[:alert]).to eq 'メッセージが削除に失敗しました。'
+        expect(flash[:alert]).to eq 'メッセージ削除に失敗しました。'
       end
     end
 
@@ -202,9 +198,9 @@ RSpec.describe MessagesController, type: :controller do
       before { sign_in owned_user }
 
       it 'メッセージが削除されないこと' do
-        expect {
+        expect do
           delete :destroy, params: { id: message.id }
-        }.to_not change(Message, :count)
+        end.not_to change(Message, :count)
       end
     end
   end
