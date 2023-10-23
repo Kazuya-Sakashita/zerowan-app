@@ -44,4 +44,18 @@ RSpec.describe Admins::UsersController, type: :controller do
       end
     end
   end
+
+  describe 'GET #show' do
+    context '指定されたユーザーの詳細を表示' do
+      before { get :show, params: { id: user.id } }
+
+      it 'リクエストされたユーザーが@userに割り当てられていること' do
+        expect(assigns(:user)).to eq(user)
+      end
+
+      it 'showテンプレートがレンダリングされていること' do
+        expect(response).to render_template :show
+      end
+    end
+  end
 end
