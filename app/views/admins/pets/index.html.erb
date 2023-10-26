@@ -15,34 +15,41 @@
     </div>
     <!-- /標準カラーのサイドバー -->
 
-    <!-- 管理者 ユーザー一覧画面 -->
+    <!-- 管理者 里親募集ー一覧画面 -->
     <div class="col-md-8">
-      <h1>ユーザー</h1>
+      <h1>里親募集</h1>
 
       <table class="text-center">
         <thead>
         <tr>
-          <th>ユーザー名</th>
+          <th>名前</th>
+          <th>ステータス</th>
+          <th>カテゴリ</th>
+          <th>ユーザー</th>
           <th>登録日時</th>
-          <th>里親募集</th>
           <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <% @users.each do |user| %>
+        <% @pets.each do |pet| %>
           <tr>
-            <td><%= user.profile.name %></td>
-            <td><%= user.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
-            <td><%= user.pets.size %></td>
+            <td>
+              <%= image_tag pet.pet_images.first.photo.to_s, class: "img-thumbnail-h60" %>
+              <%= pet.petname %>
+            </td>
+            <td><%= pet.recruitment_status %></td>
+            <td><%= pet.user.profile.name %></td>
+            <td><%= pet.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
             <td class="d-flex justify-content-between">
-              <%= link_to '詳細', admins_user_path(user.id, page: params[:page]), class: "btn btn-warning" %>
-              <%= link_to '削除', admins_user_path(user.id), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: '本当に削除してよろしいですか？' } %>
+              <%= link_to '詳細', '#', class: "btn btn-warning" %>
+              <%= link_to '削除', admins_pet_path(pet.id), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: '本当に削除してよろしいですか？' } %>
             </td>
           </tr>
         <% end %>
         </tbody>
       </table>
-      <%= paginate @users, theme: 'bootstrap-5' %>
+
+      <%= paginate @pets, theme: 'bootstrap-5' %>
     </div>
     <!-- 管理者 ユーザー一覧画面 ここまで -->
   </div>
