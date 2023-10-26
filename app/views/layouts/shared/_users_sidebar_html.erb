@@ -1,0 +1,25 @@
+<!-- Sidebar -->
+<div class="col-3 sidebar-area border border-secondary">
+  <ul class="navbar-nav ">
+    <hr class="sidebar-divider">
+    <li class="nav-item sidebar-title ">
+      ダッシュボード
+    </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+      <%= link_to 'プロフィール', edit_users_path, class: "nav-link" %>
+    </li>
+
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+      <%= link_to 'メッセージ', rooms_path, class: "nav-link" %>
+    </li>
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+      <%= link_to '里親募集', new_pet_path, class: "nav-link" %>
+    </li>
+    <hr class="sidebar-divider">
+  </ul>
+</div>
+<!-- Sidebar end -->

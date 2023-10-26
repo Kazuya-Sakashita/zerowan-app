@@ -1,18 +1,8 @@
 <div class="container-fluid mx-auto">
 
   <div class="row col-11 mx-auto">
-
     <!-- 標準カラーのサイドバー -->
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary col-md-3 bg-gray-50">
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <%= link_to 'ユーザー', admins_users_path, class: "nav-link" %>
-        </li>
-        <li>
-          <%= link_to '里親募集', admins_pets_path, class: "nav-link" %>
-        </li>
-      </ul>
-    </div>
+    <%= render 'layouts/shared/sidebar_html'%>
     <!-- /標準カラーのサイドバー -->
 
     <!-- 管理者 里親募集ー一覧画面 -->
