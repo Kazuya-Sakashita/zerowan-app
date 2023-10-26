@@ -15,9 +15,9 @@ RSpec.feature 'admins/pets/index', type: :feature do
     expect(page).to have_content('里親募集')
   end
 
-  # TODO: 画像が表示されているのか追加
   scenario '里親募集画面の表示内容の確認' do
     within 'tbody' do
+      expect(page).to have_selector("img[src$='#{pet.pet_images.first.photo.url}']")
       expect(page).to have_content(pet.petname)
       expect(page).to have_content(pet.recruitment_status)
       expect(page).to have_content(pet.user.profile.name)
