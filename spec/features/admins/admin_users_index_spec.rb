@@ -23,7 +23,7 @@ RSpec.feature 'admins/users/index', type: :feature do
       expect(page).to have_content(user.pets.count)
     end
 
-    expect(page).to have_link('詳細', href: '#')
+    expect(page).to have_link('詳細', href: admins_user_path(user.id))
     expect(page).to have_link('削除', href: admins_user_path(user.id))
   end
 
