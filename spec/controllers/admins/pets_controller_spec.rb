@@ -27,16 +27,30 @@ RSpec.describe Admins::PetsController, type: :controller do
       end
     end
 
-    context 'ユーザーが削除できなかった場合' do
+    context 'ペットが削除できなかった場合' do
       before do
-        # Userモデルのdestroyメソッドがfalseを返すようにする
+        # Petモデルのdestroyメソッドがfalseを返すようにする
         allow_any_instance_of(Pet).to receive(:destroy).and_return(false)
       end
 
-      it 'ユーザー一覧にリダイレクトし、正しいアラートが表示されること' do
+      it 'ペット一覧にリダイレクトし、正しいアラートが表示されること' do
         delete :destroy, params: { id: pet.id }
         expect(response).to redirect_to(admins_pets_path)
         expect(flash[:alert]).to eq('ペット削除に失敗しました。')
+      end
+    end
+  end
+
+  describe 'GET #show' do
+    context '指定されたユーザーの詳細を表示' do
+      before { get :show, params: { id: pet.id } }
+
+      it 'リクエストされたユーザーが@petに割り当てられていること' do
+        expect(assigns(:pet)).to eq(pet)
+      end
+
+      it 'showテンプレートがレンダリングされていること' do
+        expect(response).to render_template :show
       end
     end
   end
