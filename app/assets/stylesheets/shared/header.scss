@@ -1,3 +1,19 @@
+.header-container {
+  margin: 0;
+  background-color:  #FFFBEE;
+}
+
+
+.header-content {
+  max-width: 850px;
+  margin: 0 auto; /* 中央配置 */
+  padding: 0 15px; /* 必要に応じて左右の内側の余白を追加 */
+}
+
+.nav-divider {
+  margin: bottom 0; /* 必要に応じて余白を削除 */
+}
+
 .navbar {
     position: relative;
     display: flex;
@@ -20,12 +36,11 @@ a {
     margin: 10px;
 }
 
-
-.navbar-nav {
-    .nav-item  {
-        font-size: 20px;
-    }
+.navbar-nav .nav-link,
+.navbar-nav .nav-item {
+  font-size: 1rem;
 }
+
 
 
 //ダッシュボードのLink

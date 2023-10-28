@@ -1,5 +1,12 @@
-    <% if request.fullpath.include?('/admin') %>
-      <%= render 'layouts/shared/admins_header' %>
-    <% else %>
-      <%= render 'layouts/shared/users_header' %>
-    <% end %>
+<header class="fixed-top">
+  <div class="header-container">
+    <div class="header-content">
+      <% if request.fullpath.include?('/admin') %>
+        <%= render 'layouts/shared/admins_header' %>
+      <% else %>
+        <%= render 'layouts/shared/users_header' %>
+      <% end %>
+    </div>
+    <hr class="nav-divider">
+  </div>
+</header>
