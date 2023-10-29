@@ -48,15 +48,18 @@
       <br>
       <%= f.submit '検索する', class: 'btn btn-lg comfirm-btn btn-block' %>
 
-    <div class="mt-5">
-      <h2>Pickup</h2>
-    <hr>
-      <div class="row">
-      <% @picked_up_pets.each do |pet| %>
-        <%= render 'pets/pet_card', pet: pet %>
-      <% end %>
+      <div class="mt-5">
+        <h2>Pickup</h2>
+        <hr>
+
+        <div id="pickup-area">
+          <div class="row">
+            <% @picked_up_pets.each do |pet| %>
+              <%= render 'pets/pet_card', pet: pet %>
+            <% end %>
+          </div>
+        </div>
       </div>
-    </div>
       <div class="row mt-md-4">
         <div class="col-md-9">
           <h2>掲載中の里親募集</h2>
@@ -70,10 +73,12 @@
     <% end %>
     <hr>
     <div class='mt-5'>
-      <div class="row">
-      <% @pets.each do |pet| %>
-        <%= render 'pets/pet_card', pet: pet %>
-      <% end %>
+      <div id="all-pets-area">
+        <div class="row">
+          <% @pets.each do |pet| %>
+            <%= render 'pets/pet_card', pet: pet %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

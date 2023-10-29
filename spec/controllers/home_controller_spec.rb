@@ -23,20 +23,39 @@ RSpec.describe HomeController, type: :controller do
 
     it '降順選択の場合、新着順であること' do
       get :search, params: { q: { sorts: 'id desc' } }
-      expect(controller.instance_variable_get("@pets")[0]).to eq other_pet
-      expect(controller.instance_variable_get("@pets")[1]).to eq pet
+      expect(controller.instance_variable_get('@pets')[0]).to eq other_pet
+      expect(controller.instance_variable_get('@pets')[1]).to eq pet
     end
 
     it '昇順選択の場合、登録順であること' do
       get :search, params: { q: { sorts: 'id asc' } }
-      expect(controller.instance_variable_get("@pets")[0]).to eq pet
-      expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
+      expect(controller.instance_variable_get('@pets')[0]).to eq pet
+      expect(controller.instance_variable_get('@pets')[1]).to eq other_pet
     end
 
     it 'paramsがnilの場合、登録順であること' do
       get :search, params: nil
-      expect(controller.instance_variable_get("@pets")[0]).to eq pet
-      expect(controller.instance_variable_get("@pets")[1]).to eq other_pet
+      expect(controller.instance_variable_get('@pets')[0]).to eq pet
+      expect(controller.instance_variable_get('@pets')[1]).to eq other_pet
+    end
+  end
+
+  describe 'ピックアップペットの取得' do
+    let!(:picked_up_pet_1) { create(:pet, picked_up: true, created_at: 2.days.ago) }
+    let!(:picked_up_pet_2) { create(:pet, picked_up: true, created_at: 1.day.ago) }
+    let!(:unpicked_pet) { create(:pet, picked_up: false) }
+
+    before do
+      get :index
+    end
+
+    it 'ピックアップ済みのペットを作成日の降順で取得すること' do
+      binding.pry
+      expect(controller.instance_variable_get('@picked_up_pets')).to match_array([picked_up_pet_2, picked_up_pet_1])
+    end
+
+    it 'ピックアップされていないペットは取得しないこと' do
+      expect(controller.instance_variable_get('@picked_up_pets')).not_to include(unpicked_pet)
     end
   end
 end

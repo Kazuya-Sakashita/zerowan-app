@@ -11,20 +11,19 @@ RSpec.feature 'ホーム画面', type: :feature do
 
   let(:pet) do
     created_pet = create(:pet,
-          category: :dog,
-          petname: 'taro20221101',
-          age: 12,
-          gender: :male,
-          classification: :Chihuahua,
-          introduction: 'おとなしく、賢い',
-          castration: :neutered,
-          vaccination: :vaccinated,
-          recruitment_status: 0,
-          user_id: user.id)
+                         category: :dog,
+                         petname: 'taro20221101',
+                         age: 12,
+                         gender: :male,
+                         classification: :Chihuahua,
+                         introduction: 'おとなしく、賢い',
+                         castration: :neutered,
+                         vaccination: :vaccinated,
+                         recruitment_status: 0,
+                         user_id: user.id)
     create(:pet_area, pet_id: created_pet.id, area_id: area.id)
     created_pet
   end
-
 
   describe 'ペット一覧表示' do
     before do
@@ -42,11 +41,13 @@ RSpec.feature 'ホーム画面', type: :feature do
       expect(page).to have_content 'taro20221101'
     end
   end
+
   describe '検索機能' do
     before do
       pet
       create(:area, place_name: '東京')
     end
+
     context '組合せ検索' do
       scenario '正しく値を入力した場合、検索結果があること' do
         visit root_path
@@ -68,6 +69,7 @@ RSpec.feature 'ホーム画面', type: :feature do
           click_button '検索する'
           expect(page).to have_content 'taro20221101'
         end
+
         scenario 'カテゴリでの登録がない場合、検索結果がないこと' do
           visit root_path
           select 'ネコ', from: 'q_category_eq'
@@ -83,6 +85,7 @@ RSpec.feature 'ホーム画面', type: :feature do
           click_button '検索する'
           expect(page).to have_content 'taro20221101'
         end
+
         scenario '性別での登録がない場合、検索結果がないこと' do
           visit root_path
           select 'メス', from: 'q_gender_eq'
@@ -90,6 +93,7 @@ RSpec.feature 'ホーム画面', type: :feature do
           expect(page).not_to have_content 'taro20221101'
         end
       end
+
       context '年齢' do
         scenario '年齢の登録範囲内（より若い）の場合、検索結果があること' do
           visit root_path
@@ -97,6 +101,7 @@ RSpec.feature 'ホーム画面', type: :feature do
           click_button '検索する'
           expect(page).to have_content 'taro20221101'
         end
+
         scenario '年齢の登録範囲内（より若い）でない場合、検索結果がないこと' do
           visit root_path
           fill_in 'q_age_lteq', with: '11'
@@ -104,6 +109,7 @@ RSpec.feature 'ホーム画面', type: :feature do
           expect(page).not_to have_content 'taro20221101'
         end
       end
+
       context '種別' do
         scenario '種別での登録がある場合、検索結果があること' do
           visit root_path
@@ -111,6 +117,7 @@ RSpec.feature 'ホーム画面', type: :feature do
           click_button '検索する'
           expect(page).to have_content 'taro20221101'
         end
+
         scenario '種別での登録がない場合、検索結果がないこと' do
           visit root_path
           select 'ダックス', from: 'q_classification_eq'
@@ -126,6 +133,7 @@ RSpec.feature 'ホーム画面', type: :feature do
           click_button '検索する'
           expect(page).to have_content 'taro20221101'
         end
+
         scenario '譲渡可能地域での登録がない場合、検索結果がないこと' do
           visit root_path
           check '東京'
@@ -146,6 +154,7 @@ RSpec.feature 'ホーム画面', type: :feature do
             create(:pet_area, pet_id: pet.id, area_id: area.id)
           end
         end
+
         scenario '複数の譲渡可能地域が登録されている且つ複数の譲渡可能地域を指定した場合、検索結果があること' do
           visit root_path
           check '大阪'
@@ -162,10 +171,12 @@ RSpec.feature 'ホーム画面', type: :feature do
   describe 'お気に入り機能' do
     before do
       pet
-      user_favorite = create(:user, email: 'test121212@test.com', password: 'password', password_confirmation: 'password', &:confirm)
-      sign_in  user_favorite
+      user_favorite = create(:user,
+                             email: 'test121212@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+      sign_in user_favorite
       visit root_path
     end
+
     scenario 'お気に入り登録できること' do
       click_button '★ 気になるリストに追加'
       expect(page).to have_content '☆ 気になるリストから削除'
@@ -184,25 +195,51 @@ RSpec.feature 'ホーム画面', type: :feature do
       visit root_path
     end
 
-    scenario "7日を超えるペットが追加されても、新着表示が増えないこと（表示されていないこと）" do
-      initial_count = page.all("span.new-mark").count
+    scenario '7日を超えるペットが追加されても、新着表示が増えないこと（表示されていないこと）' do
+      initial_count = page.all('span.new-mark').count
 
       create(:pet, created_at: 7.days.ago)
       visit root_path
-      final_count = page.all("span.new-mark").count
+      final_count = page.all('span.new-mark').count
       expect(final_count).to eq(initial_count)
-      expect(page).not_to have_css("span.new-mark")
+      expect(page).not_to have_css('span.new-mark')
     end
 
-    scenario "6日以内のペットが追加された場合、新着表示が増えること（表示されてること）" do
-      initial_count = page.all("span.new-mark").count
+    scenario '6日以内のペットが追加された場合、新着表示が増えること（表示されてること）' do
+      initial_count = page.all('span.new-mark').count
 
       create(:pet, created_at: 5.days.ago)
       visit root_path
-      final_count = page.all("span.new-mark").count
+      final_count = page.all('span.new-mark').count
 
       expect(final_count).to eq(initial_count + 1)
-      expect(page).to have_css("span.new-mark")
+      expect(page).to have_css('span.new-mark')
+    end
+  end
+
+  describe 'ピックアップペットの取得' do
+    let!(:picked_up_pet_1) { create(:pet, picked_up: true, created_at: 2.days.ago) }
+    let!(:picked_up_pet_2) { create(:pet, picked_up: true, created_at: 1.day.ago) }
+    let!(:unpicked_pet) { create(:pet, picked_up: false) }
+
+    scenario 'ホームページでピックアップペットが正しく表示される' do
+      visit root_path
+
+      within('#pickup-area') do
+        expect(page).to have_content(picked_up_pet_1.petname)
+        expect(page).to have_content(picked_up_pet_2.petname)
+        expect(page).not_to have_content(unpicked_pet.petname)
+      end
+    end
+
+    scenario 'ホームページで全てのペットが正しく表示される' do
+      visit root_path
+
+      within('#all-pets-area') do
+        expect(page).to have_content(picked_up_pet_1.petname)
+        expect(page).to have_content(picked_up_pet_2.petname)
+        expect(page).to have_content(unpicked_pet.petname)
+      end
     end
   end
 end
