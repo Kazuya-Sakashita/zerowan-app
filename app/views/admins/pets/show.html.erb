@@ -7,49 +7,50 @@
     <div class="card-body">
       <table class="table table-bordered-dark">
         <tbody>
-          <tr>
-            <th class="bg-light">画像</th>
-            <td>
-              <% @pet.pet_images.each do |image| %>
-                <%= image_tag image.photo.to_s, class: "img-thumbnail-h60" %>
-              <% end %>
-            </td>
-          </tr>
-          <tr>
-            <th class="bg-light">名前</th>
-            <td><%= @pet.petname %></td>
-          </tr>
-          <tr>
-            <th class="bg-light">カテゴリ</th>
-            <td><%= @pet.category_i18n %></td>
-          </tr>
-          <tr>
-            <th class="bg-light">ユーザー</th>
-            <td><%= @pet.user.profile.name %></td>
-          </tr>
-          <tr>
-            <th class="bg-light">性別</th>
-            <td><%= @pet.gender_i18n %></td>
-          </tr>
-          <tr>
-            <th class="bg-light">年齢</th>
-            <td><%= @pet.age %>才</td>
-          </tr>
-          <tr>
-            <th class="bg-light">種類</th>
-            <td><%= @pet.classification_i18n %></td>
-          </tr>
-            <th class="bg-light">性格</th>
-            <td><%= @pet.introduction %></td>
-          </tr>
-          <tr>
-            <th class="bg-light">登録日時</th>
-            <td><%= @pet.created_at.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
-          </tr>
+        <tr>
+          <th class="bg-light">画像</th>
+          <td>
+            <% @pet.pet_images.each do |image| %>
+              <%= image_tag image.photo.to_s, class: "img-thumbnail-h60" %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th class="bg-light">名前</th>
+          <td><%= @pet.petname %></td>
+        </tr>
+        <tr>
+          <th class="bg-light">カテゴリ</th>
+          <td><%= @pet.category_i18n %></td>
+        </tr>
+        <tr>
+          <th class="bg-light">ユーザー</th>
+          <td><%= @pet.user.profile.name %></td>
+        </tr>
+        <tr>
+          <th class="bg-light">性別</th>
+          <td><%= @pet.gender_i18n %></td>
+        </tr>
+        <tr>
+          <th class="bg-light">年齢</th>
+          <td><%= @pet.age %>才</td>
+        </tr>
+        <tr>
+          <th class="bg-light">種類</th>
+          <td><%= @pet.classification_i18n %></td>
+        </tr>
+        <th class="bg-light">性格</th>
+        <td><%= @pet.introduction %></td>
+        </tr>
+        <tr>
+          <th class="bg-light">登録日時</th>
+          <td><%= @pet.created_at.strftime('%Y年%m月%d日 %H:%M:%S') %></td>
+        </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-   <%= link_to 'ピックアップ追加', '#',  data: { turbo_method: :get }, class: "btn btn to_owner_send_mail mt-2" %>
+  <%= link_to 'ピックアップ追加', toggle_pickup_admins_pet_path(@pet), data: { turbo_method: :post }, class: "btn btn to_owner_send_mail mt-2" %>
+
 </div>
