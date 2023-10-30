@@ -50,7 +50,6 @@ RSpec.describe HomeController, type: :controller do
     end
 
     it 'ピックアップ済みのペットを作成日の降順で取得すること' do
-      binding.pry
       expect(controller.instance_variable_get('@picked_up_pets')).to match_array([picked_up_pet_2, picked_up_pet_1])
     end
 

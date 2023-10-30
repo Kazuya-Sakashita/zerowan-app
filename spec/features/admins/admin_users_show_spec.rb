@@ -24,7 +24,4 @@ RSpec.feature 'admins/users/show', type: :feature do
     expect(page).to have_content user.profile.created_at.strftime('%Y年%m月%d日 %H:%M:%S')
     expect(page).to have_content "#{user.pets.size} 件"
   end
-
-  expect(page).to have_link('詳細', href: admins_pet_path(pet.id))
-  expect(page).to have_link('削除', href: admins_pet_path(pet.id))
 end
