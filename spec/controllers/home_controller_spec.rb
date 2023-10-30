@@ -41,16 +41,19 @@ RSpec.describe HomeController, type: :controller do
   end
 
   describe 'ピックアップペットの取得' do
-    let!(:picked_up_pet_1) { create(:pet, picked_up: true, created_at: 2.days.ago) }
-    let!(:picked_up_pet_2) { create(:pet, picked_up: true, created_at: 1.day.ago) }
-    let!(:unpicked_pet) { create(:pet, picked_up: false) }
+    let!(:pet1) { create(:pet) }
+    let!(:pet2) { create(:pet) }
+    let!(:unpicked_pet) { create(:pet) }
+    let!(:picked_up_pet1) { create(:picked_up_pet, pet: pet1, picked_up_at: 2.days.ago) }
+    let!(:picked_up_pet2) { create(:picked_up_pet, pet: pet2, picked_up_at: 1.day.ago) }
 
     before do
       get :index
     end
 
     it 'ピックアップ済みのペットを作成日の降順で取得すること' do
-      expect(controller.instance_variable_get('@picked_up_pets')).to match_array([picked_up_pet_2, picked_up_pet_1])
+      expect(controller.instance_variable_get('@picked_up_pets')).to match_array([picked_up_pet2.pet,
+                                                                                  picked_up_pet1.pet])
     end
 
     it 'ピックアップされていないペットは取得しないこと' do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_29_091233) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_30_102505) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,12 +82,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_29_091233) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "picked_up"
     t.index ["age"], name: "index_pets_on_age"
     t.index ["category"], name: "index_pets_on_category"
     t.index ["classification"], name: "index_pets_on_classification"
     t.index ["gender"], name: "index_pets_on_gender"
     t.index ["user_id"], name: "index_pets_on_user_id"
+  end
+
+  create_table "picked_up_pets", force: :cascade do |t|
+    t.bigint "pet_id", null: false
+    t.datetime "picked_up_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_picked_up_pets_on_pet_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -143,6 +150,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_29_091233) do
   add_foreign_key "pet_areas", "pets"
   add_foreign_key "pet_images", "pets"
   add_foreign_key "pets", "users"
+  add_foreign_key "picked_up_pets", "pets"
   add_foreign_key "rooms", "pets"
   add_foreign_key "rooms", "users"
   add_foreign_key "rooms", "users", column: "owner_id"
