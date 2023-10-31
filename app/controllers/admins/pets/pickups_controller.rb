@@ -16,8 +16,9 @@ module Admins
 
       def destroy
         if @pet.pickup
-          @pet.pickup.destroy
-          redirect_to admins_pet_path(@pet), notice: 'ピックアップから削除されました。'
+          pickup = @pet.pickup
+          pickup.destroy
+          redirect_to root_path, notice: 'ピックアップから削除されました。'
         else
           redirect_to admins_pet_path(@pet), alert: 'このペットはピックアップされていません。'
         end
