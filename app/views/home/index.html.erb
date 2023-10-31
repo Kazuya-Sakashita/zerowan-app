@@ -54,9 +54,14 @@
 
         <div id="pickup-area">
           <div class="row">
-            <% @picked_up_pets.each do |pet| %>
-              <%= render 'pets/pet_card', pet: pet %>
+            <% if @pickups.present? %>
+              <% @pickups.each do |pet| %>
+                <%= render 'pets/pet_card', pet: pet %>
+              <% end %>
+            <% else %>
+              ピックアップはありません。
             <% end %>
+
           </div>
         </div>
       </div>

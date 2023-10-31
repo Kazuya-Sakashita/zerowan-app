@@ -5,7 +5,7 @@ class Pet < ApplicationRecord
   belongs_to :user
   has_many :favorites, dependent: :destroy
   has_many :rooms
-  has_one :picked_up_pet
+  has_one :pickup
 
   with_options presence: true do
     validates :petname

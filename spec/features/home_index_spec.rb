@@ -221,8 +221,8 @@ RSpec.feature 'ホーム画面', type: :feature do
     let!(:pet1) { create(:pet) }
     let!(:pet2) { create(:pet) }
     let!(:unpicked_pet) { create(:pet) }
-    let!(:picked_up_pet1) { create(:picked_up_pet, pet: pet1, picked_up_at: 2.days.ago) }
-    let!(:picked_up_pet2) { create(:picked_up_pet, pet: pet2, picked_up_at: 1.day.ago) }
+    let!(:picked_up_pet1) { create(:picked_up_pet, pet: pet1, created_at: 2.days.ago) }
+    let!(:picked_up_pet2) { create(:picked_up_pet, pet: pet2, created_at: 1.day.ago) }
 
     before do
       visit root_path

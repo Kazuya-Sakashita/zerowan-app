@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    @picked_up_pets = PickedUpPet.includes(:pet).order(picked_up_at: :desc).to_a.map(&:pet)
+    @pickups = Pet.joins(:pickup).order('pickup.created_at DESC')
 
     if params[:q].present?
       @q = Pet.ransack(params[:q])

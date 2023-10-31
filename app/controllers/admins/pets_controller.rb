@@ -16,22 +16,6 @@ class Admins::PetsController < ApplicationController
     end
   end
 
-  def toggle_pickup
-    picked_up_pet = PickedUpPet.find_by(pet: @pet)
-
-    if picked_up_pet
-      # ピックアップされている場合はレコードを削除
-      picked_up_pet.destroy
-      message = 'ピックアップから削除されました。'
-    else
-      # ピックアップされていない場合は新しいレコードを追加
-      PickedUpPet.create(pet: @pet)
-      message = 'ピックアップに追加されました。'
-    end
-
-    redirect_to admins_pet_path(@pet), notice: message
-  end
-
   private
 
   def set_pet
