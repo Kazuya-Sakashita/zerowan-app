@@ -14,7 +14,7 @@ class Admins::Pets::PickupsController < ApplicationController
 
   def destroy
     if @pet.pickup
-      @pet.pickup.destroys
+      @pet.pickup.destroy
       redirect_to root_path, notice: 'ピックアップから削除されました。'
     else
       redirect_to admins_pet_path(@pet), alert: 'このペットはピックアップされていません。'
