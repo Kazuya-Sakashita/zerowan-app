@@ -221,8 +221,8 @@ RSpec.feature 'ホーム画面', type: :feature do
     let!(:pet1) { create(:pet) }
     let!(:pet2) { create(:pet) }
     let!(:unpicked_pet) { create(:pet) }
-    let!(:picked_up_pet1) { create(:picked_up_pet, pet: pet1, created_at: 2.days.ago) }
-    let!(:picked_up_pet2) { create(:picked_up_pet, pet: pet2, created_at: 1.day.ago) }
+    let!(:pickup_1) { create(:pickup, pet: pet1, created_at: 2.days.ago) }
+    let!(:pickup_2) { create(:pickup, pet: pet2, created_at: 1.day.ago) }
 
     before do
       visit root_path
@@ -230,16 +230,16 @@ RSpec.feature 'ホーム画面', type: :feature do
 
     scenario 'ホームページでピックアップペットが正しく表示される' do
       within('#pickup-area') do
-        expect(page).to have_content(picked_up_pet1.pet.petname)
-        expect(page).to have_content(picked_up_pet2.pet.petname)
+        expect(page).to have_content(pickup_1.pet.petname)
+        expect(page).to have_content(pickup_2.pet.petname)
         expect(page).not_to have_content(unpicked_pet.petname)
       end
     end
 
     scenario 'ホームページで全てのペットが正しく表示される' do
       within('#all-pets-area') do
-        expect(page).to have_content(picked_up_pet1.pet.petname)
-        expect(page).to have_content(picked_up_pet2.pet.petname)
+        expect(page).to have_content(pickup_1.pet.petname)
+        expect(page).to have_content(pickup_2.pet.petname)
         expect(page).to have_content(unpicked_pet.petname)
       end
     end
