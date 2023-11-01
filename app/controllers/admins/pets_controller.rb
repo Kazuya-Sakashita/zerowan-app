@@ -1,6 +1,6 @@
 class Admins::PetsController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_pet, only: %i[destroy show toggle_pickup]
+  before_action :set_pet, only: %i[destroy show]
 
   def index
     @pets = Pet.includes(user: :profile, pet_images: []).page(params[:page]).per(20)
