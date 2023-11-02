@@ -32,7 +32,9 @@ RSpec.feature 'admins/pets/index', type: :feature do
     expect(page).to have_selector('.pagination')
 
     # ページネーションのページ数の検証
-    pagination_text = page.text.split("\n").last
+
+    # TODO: ページネーション表示部分にクラスを設定してクラスの中のテキストで評価する表に変更
+    pagination_text = page.find('.pagination').text
     expect(pagination_text).to include('1', '2', 'Next', 'Last')
   end
 end

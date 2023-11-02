@@ -24,7 +24,9 @@ Rails.application.routes.draw do
   namespace :admins do
     root 'home#index'
     resources :users, only: [:index,:destroy,:show]
-    resources :pets, only: [:index,:destroy,:show]
+    resources :pets, only: [:index,:destroy,:show] do
+      resource :pickup, only: [:create, :destroy], controller: 'pets/pickups'
+    end
     delete 'sign_out', to: 'sessions#destroy', as: :destroy_admin_session
   end
 
