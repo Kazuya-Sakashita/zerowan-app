@@ -3,7 +3,7 @@ class Admins::PetsController < ApplicationController
   before_action :set_pet, only: %i[destroy show]
 
   def index
-    @pets = Pet.includes(user: :profile, pet_images: []).page(params[:page]).per(20)
+    @pets = Pet.includes(user: :profile, pet_images: []).page(params[:page]).per(Settings.pagination.per.default)
   end
 
   def show; end

@@ -3,7 +3,7 @@ class Admins::UsersController < ApplicationController
   before_action :set_user, only: %i[show destroy]
 
   def index
-    @users = User.includes(%i[profile pets]).page(params[:page]).per(20)
+    @users = User.includes(%i[profile pets]).page(params[:page]).per(Settings.pagination.per.default)
   end
 
   def show; end

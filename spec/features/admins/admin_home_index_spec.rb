@@ -16,7 +16,6 @@ RSpec.feature 'admins/home/index', type: :feature do
     end
 
     scenario '管理者画面が表示されていること' do
-      binding.pry
       expect(page).to have_content 'ZeroWanApp 管理者画面'
     end
 

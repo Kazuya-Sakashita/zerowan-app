@@ -58,18 +58,18 @@ RSpec.describe RoomsController, type: :controller do
     end
   end
 
-
   describe '.index' do
     let(:owned_user) { create(:user, &:confirm) }
     let(:other_owned_user) { create(:user, &:confirm) }
     let(:joined_user) { create(:user, &:confirm) }
     let(:pet) { create(:pet, user_id: owned_user.id) }
-    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet: pet) }
-    let!(:room_user_belongs_to) { create(:room, owner: other_owned_user, user: owned_user, pet: pet) }
-    let!(:other_room) { create(:room, owner: other_owned_user, user: joined_user, pet: pet) }
+    let!(:room_owned_by_user) { create(:room, owner: owned_user, user: joined_user, pet:) }
+    let!(:room_user_belongs_to) { create(:room, owner: other_owned_user, user: owned_user, pet:) }
+    let!(:other_room) { create(:room, owner: other_owned_user, user: joined_user, pet:) }
 
     before do
       sign_in owned_user
+      allow(Settings.pagination.per).to receive(:room).and_return(10)
       get :index
     end
 
@@ -94,11 +94,10 @@ RSpec.describe RoomsController, type: :controller do
   end
 
   describe '.show' do
-
     let(:owned_user) { create(:user, &:confirm) }
     let(:joined_user) { create(:user, &:confirm) }
     let(:pet) { create(:pet, user_id: owned_user.id) }
-    let(:room) { create(:room, user: joined_user, owner: owned_user, pet: pet) }
+    let(:room) { create(:room, user: joined_user, owner: owned_user, pet:) }
 
     before do
       sign_in joined_user

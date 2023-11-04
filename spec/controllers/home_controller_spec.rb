@@ -21,6 +21,10 @@ RSpec.describe HomeController, type: :controller do
       create(:pet)
     end
 
+    before do
+      allow(Settings.pagination.per).to receive(:default).and_return(20)
+    end
+
     it '降順選択の場合、新着順であること' do
       get :search, params: { q: { sorts: 'id desc' } }
       expect(controller.instance_variable_get('@pets')[0]).to eq other_pet
@@ -48,12 +52,13 @@ RSpec.describe HomeController, type: :controller do
     let!(:pickup_2) { create(:pickup, pet: pet2, created_at: 1.day.ago) }
 
     before do
+      allow(Settings.pagination.per).to receive(:default).and_return(20)
       get :index
     end
 
     it 'ピックアップ済みのペットを作成日の降順で取得すること' do
       expect(controller.instance_variable_get('@pickups')).to match_array([pickup_2.pet,
-                                                                                  pickup_1.pet])
+                                                                           pickup_1.pet])
     end
 
     it 'ピックアップされていないペットは取得しないこと' do

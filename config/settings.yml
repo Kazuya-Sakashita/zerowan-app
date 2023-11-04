@@ -1,2 +1,5 @@
 pagination:
-  items_per_page: 20
+  per:
+    default: 20
+    room: 10
+    message: 5

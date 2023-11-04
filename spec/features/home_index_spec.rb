@@ -225,6 +225,7 @@ RSpec.feature 'ホーム画面', type: :feature do
     let!(:pickup_2) { create(:pickup, pet: pet2, created_at: 1.day.ago) }
 
     before do
+      allow(Settings.pagination.per).to receive(:default).and_return(20)
       visit root_path
     end
 

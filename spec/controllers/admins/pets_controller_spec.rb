@@ -13,7 +13,7 @@ RSpec.describe Admins::PetsController, type: :controller do
   describe 'GET #index' do
     it '全ユーザーを@usersとして割り当て、indexテンプレートをレンダリングすること' do
       get :index
-      expect(assigns(:pets)).to eq(Pet.all.page(1).per(20))
+      expect(assigns(:pets)).to eq(Pet.all.page(1).per(Settings.pagination.per.default))
       expect(response).to render_template(:index)
     end
   end

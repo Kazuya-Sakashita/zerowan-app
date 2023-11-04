@@ -17,7 +17,7 @@ RSpec.describe Admins::UsersController, type: :controller do
   describe 'GET #index' do
     it '全ユーザーを@usersとして割り当て、indexテンプレートをレンダリングすること' do
       get :index
-      expect(assigns(:users)).to eq(User.all.page(1).per(20))
+      expect(assigns(:users)).to eq(User.all.page(1).per(Settings.pagination.per.default))
       expect(response).to render_template(:index)
     end
   end
