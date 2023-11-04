@@ -178,14 +178,14 @@ RSpec.feature 'ホーム画面', type: :feature do
     end
 
     scenario 'お気に入り登録できること' do
-      click_button '★ 気になるリストに追加'
+      click_link '★ 気になるリストに追加'
       expect(page).to have_content '☆ 気になるリストから削除'
     end
 
     scenario 'お気に入り削除できること' do
-      click_button '★ 気になるリストに追加'
+      click_link '★ 気になるリストに追加'
 
-      click_button '☆ 気になるリストから削除'
+      click_link '☆ 気になるリストから削除'
       expect(page).to have_content '★ 気になるリストに追加'
     end
   end
