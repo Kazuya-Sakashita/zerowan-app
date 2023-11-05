@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_action :set_user_if_signed_in
   def index
     @pickups = Pet.joins(:pickup).order('pickup.created_at DESC')
 
@@ -15,5 +16,9 @@ class HomeController < ApplicationController
   def search
     index
     render :index
+  end
+
+  def set_user_if_signed_in
+    @user = current_user if user_signed_in?
   end
 end

@@ -20,7 +20,7 @@
           <% if @user.profile.avatar? %>
             <%= image_tag @user.profile.avatar.thumb.url, class: 'nav-avatar-img' %>
           <% else %>
-            <image src="/assets/default.png" class="d-inline" width="80"/>
+            <image src="/assets/default.png" class="nav-avatar-img"/>
           <% end %>
         </li>
       <% else %>
