@@ -16,6 +16,13 @@
         <li class="nav-item active">
           <%= link_to 'ログアウト', destroy_user_session_path, class: "nav-link", data: { turbo_method: :delete } %>
         </li>
+        <li class="nav-item active">
+          <% if @user.profile.avatar? %>
+            <%= image_tag @user.profile.avatar.thumb.url, class: 'nav-avatar-img' %>
+          <% else %>
+            <image src="/assets/default.png" class="d-inline" width="80"/>
+          <% end %>
+        </li>
       <% else %>
         <li class="nav-item active">
           <%= link_to '会員登録', new_user_registration_path, class: "nav-link" %>
