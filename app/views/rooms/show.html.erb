@@ -40,9 +40,15 @@
                 <div class="card mb-4 p-3">
                   <div class="d-flex justify-content-between">
                     <div class="d-flex align-items-center">
-                      <p><%= link_to message.user.profile.name, member_path(id: message.user.id) %></p>
                       <p>
-                        <!-- 自分のメッセージであるかのチェック -->
+
+                        <% if message.user.profile.avatar? %>
+                          <%= image_tag message.user.profile.avatar.thumb.url, class: 'nav-avatar-img' %>
+                        <% else %>
+                          <image src="/assets/default.png" class="nav-avatar-img"/>
+                        <% end %>
+                        <%= link_to message.user.profile.name, member_path(id: message.user.id) %>
+
                         <% if current_user == message.user %>
                           <!-- 編集リンクを表示 -->
                           <%= link_to '編集', edit_message_path(message) %>

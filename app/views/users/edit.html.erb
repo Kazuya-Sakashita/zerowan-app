@@ -8,8 +8,6 @@
       <div>
         <div class="form-pet-post rounded ">
           <%= form_with model: @user, url: profiles_path, method: :put, local: true do |f| %>
-
-
             <% if @user.profile.errors.any? %>
               <div class="alert">
                 <ul>
@@ -19,7 +17,6 @@
                 </ul>
               </div>
             <% end %>
-
 
             <%= f.fields_for :profile do |profile_fields| %>
               <div class="form-label">
@@ -103,7 +100,6 @@
                   <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'パスワード変更時の場合入力ねがいます' %>
                 </div>
               </div>
-
 
               <div class="actions">
                 <%= f.submit 'アカウント情報更新', class: 'btn btn-lg comfirm-btn btn-block' %>
