@@ -5,8 +5,8 @@
     <div class="col-9">
       <!-- メッセージ着信を表示する -->
       <% if @has_unread_messages %>
-        <div class="alert alert-light text-red">
-          新着メッセージがあります。
+        <div class="alert alert-light">
+          <%= link_to '新着メッセージがあります', rooms_path, class: "text-red" %>
         </div>
       <% else %>
         <div class="alert alert-light">

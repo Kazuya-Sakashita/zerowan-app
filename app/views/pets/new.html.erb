@@ -1,7 +1,7 @@
 <div class="container">
   <div class="col-9 m-auto">
     <h1>里親募集</h1>
-    <div class="form-form-pet-post rounded mt-5">
+    <div class="form-pet-post rounded mt-5">
       <%= form_with model: @pet, url: pets_path, local: true, multipart: true do |f| %>
         <%= fields_for @pet_images do |img| %>
           <div class="form-label">
@@ -11,7 +11,7 @@
           </div>
         <% end %>
 
-        <div class="form-pet-post-signup rounded mt-5">
+        <div class="form-pet-post rounded mt-5">
           <div class="form-label">
             <%= f.label :category %>
             <%= f.select :category, Pet.categories_i18n.invert, {}, class: 'form-control' %>

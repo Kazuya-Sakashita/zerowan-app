@@ -14,6 +14,9 @@
                   <%= image_tag room.pet.pet_images.first.photo.to_s, class: "img-thumbnail" %>
                 </div>
                 <div class="col">
+                      <% if new_messages?(room.id) %>
+      <span class="new-messages-badge">新着メッセージ</span>
+    <% end %>
                   <div>
                     <%= room.pet.petname %>
                     <% if room.pet.gender == "male" %>
