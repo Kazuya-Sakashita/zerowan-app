@@ -1,51 +1,61 @@
-<h1>メッセージ</h1>
-<% if @rooms.present? %>
-  <% displayed_rooms = false %>
-  <% @rooms.each do |room| %>
-    <% if room.messages.any? %>
-      <% displayed_rooms = true %>
-      <div class="container">
-        <div class="row message-form mt-2">
-          <div class="col-3">
-            <%= image_tag room.pet.pet_images.first.photo.to_s, class: "img-thumbnail" %>
-          </div>
-          <div class="col">
-            <div>
-              <%= room.pet.petname %>
-              <% if room.pet.gender == "male" %>
-                くん
-              <% elsif room.pet.gender == "female" %>
-                ちゃん
-              <% end %>
-            </div>
-            <div>
-              <%= room.pet.classification_i18n %>/&nbsp;
-              <%= room.pet.age %>才/&nbsp;
-              <%= room.pet.gender_i18n %>
-            </div>
-            <div>
-              <%= room.pet.introduction %>
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <%= room.latest_message.user.profile.name %>
-            </div>
-            <div class="col-12 mb-4">
-              <%= room.latest_message.body %>
-              <%= link_to 'こちらのメッセージに返信する', room_path(room.id), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="container">
+  <div class="row">
+    <%= render partial: 'layouts/shared/sidebar_html' %>
+    <div class="col-9">
+      <h2 class="px-lg-2">メッセージ</h2>
+      <% if @rooms.present? %>
+        <% displayed_rooms = false %>
+        <% @rooms.each do |room| %>
+          <% if room.messages.any? %>
+            <% displayed_rooms = true %>
+            <div class="container">
+              <div class="row message-form mt-2">
+                <div class="col-3">
+                  <%= image_tag room.pet.pet_images.first.photo.to_s, class: "img-thumbnail" %>
+                </div>
+                <div class="col">
+                      <% if new_messages?(room.id) %>
+      <span class="new-messages-badge">新着メッセージ</span>
     <% end %>
-  <% end %>
-  <% unless displayed_rooms %>
-    <h2>表示するメッセージがありません。</h2>
-  <% end %>
-<% else %>
-  <h2>表示するルームがありません。</h2>
-<% end %>
+                  <div>
+                    <%= room.pet.petname %>
+                    <% if room.pet.gender == "male" %>
+                      くん
+                    <% elsif room.pet.gender == "female" %>
+                      ちゃん
+                    <% end %>
+                  </div>
+                  <div>
+                    <%= room.pet.classification_i18n %>/&nbsp;
+                    <%= room.pet.age %>才/&nbsp;
+                    <%= room.pet.gender_i18n %>
+                  </div>
+                  <div>
+                    <%= room.pet.introduction %>
+                  </div>
+                </div>
 
-<%= paginate @rooms, theme: 'bootstrap-5' %>
+                <div>
+                  <div>
+                    <%= room.latest_message.user.profile.name %>
+                  </div>
+                  <div class="col-12 mb-4">
+                    <%= room.latest_message.body %>
+                    <%= link_to 'こちらのメッセージに返信する', room_path(room.id), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        <% unless displayed_rooms %>
+          <h4 class="px-lg-4">表示するメッセージがありません。</h4>
+        <% end %>
+      <% else %>
+        <h4 class="px-lg-4">表示するルームがありません。</h4>
+      <% end %>
+
+      <%= paginate @rooms, theme: 'bootstrap-5' %>
+    </div>
+  </div>
+</div>

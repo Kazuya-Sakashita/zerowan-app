@@ -1,71 +1,75 @@
-<h3>ペット情報を編集する</h3>
-<div>
-  <%= form_with model: @pet, url: pet_path, local: true, multipart: true do |f| %>
-    <div class="form-signup rounded mt-5 mb-2">
-      <%= fields_for @pet_images do |img| %>
-        <div class="image_input-label text-center">
-          <%= img.label :photos, '画像選択', class: 'image_input_btn' %>
-          <%= img.file_field :photos, multiple: true, include_hidden: false, class: 'image_form' %>
-          <span>４枚まで登録可能</span>
+<div class="container">
+  <div class="col-9 m-auto">
+    <h3>ペット情報を編集する</h3>
+    <div class="form-pet-post rounded">
+      <%= form_with model: @pet, url: pet_path, local: true, multipart: true do |f| %>
+        <div class="form-pet-post rounded mt-5 mb-2">
+          <%= fields_for @pet_images do |img| %>
+            <div class="image_input-label text-center">
+              <%= img.label :photos, '画像選択', class: 'image_input_btn' %>
+              <%= img.file_field :photos, multiple: true, include_hidden: false, class: 'image_form' %>
+              <span>４枚まで登録可能</span>
+            </div>
+          <% end %>
         </div>
-      <% end %>
-    </div>
-    <div class="form-signup rounded mt-5">
-      <div class="form-label">
-        <%= f.label :category %>
-        <%= f.select :category, Pet.categories_i18n.invert, {}, class: 'form-control' %>
-      </div>
+        </div>
+        <div class="form-pet-post rounded mt-5">
+          <div class="form-label">
+            <%= f.label :category %>
+            <%= f.select :category, Pet.categories_i18n.invert, {}, class: 'form-control' %>
+          </div>
 
-      <div class="form-label">
-        <%= f.label :petname %>
-        <%= f.text_field :petname, class: 'form-control' %>
-      </div>
+          <div class="form-label">
+            <%= f.label :petname %>
+            <%= f.text_field :petname, class: 'form-control' %>
+          </div>
 
-      <div class="form-label">
-        <%= f.label :gender %>
-        <%= f.select :gender, Pet.genders_i18n.invert, {}, class: 'form-control' %>
-      </div>
+          <div class="form-label">
+            <%= f.label :gender %>
+            <%= f.select :gender, Pet.genders_i18n.invert, {}, class: 'form-control' %>
+          </div>
 
-      <div class="form-label">
-        <%= f.label :age %>
-        <%= f.number_field :age, autocomplete: "off", class: 'form-control' %>
-      </div>
+          <div class="form-label">
+            <%= f.label :age %>
+            <%= f.number_field :age, autocomplete: "off", class: 'form-control' %>
+          </div>
 
-      <div class="form-label">
-        <%= f.label :classification %>
-        <%= f.select :classification, Pet.classifications_i18n.invert, {}, class: 'form-control' %>
-      </div>
+          <div class="form-label">
+            <%= f.label :classification %>
+            <%= f.select :classification, Pet.classifications_i18n.invert, {}, class: 'form-control' %>
+          </div>
 
 
-      <div class="form-label">
-        <%= f.label :introduction %>
-        <%= f.text_field :introduction, class: 'form-control' %>
-      </div>
+          <div class="form-label">
+            <%= f.label :introduction %>
+            <%= f.text_field :introduction, class: 'form-control' %>
+          </div>
 
-      <div class="form-label">
-        <%= f.label :vaccination %>
-        <%= f.select :vaccination, Pet.vaccinations_i18n.invert, {}, class: 'form-control' %>
+          <div class="form-label">
+            <%= f.label :vaccination %>
+            <%= f.select :vaccination, Pet.vaccinations_i18n.invert, {}, class: 'form-control' %>
 
-      </div>
-      <div class="form-label">
-        <%= f.label :castration %>
-        <%= f.select :castration, Pet.castrations_i18n.invert, {}, class: 'form-control' %>
-      </div>
+          </div>
+          <div class="form-label">
+            <%= f.label :castration %>
+            <%= f.select :castration, Pet.castrations_i18n.invert, {}, class: 'form-control' %>
+          </div>
 
-      <div class="form-label">
-        <%= fields_for @pet_areas do |p| %>
-          <div class="field">
-            <%= p.label :areas %><br/>
-            <%= p.collection_check_boxes(:areas, Area.all, :id, :place_name, include_hidden: false, checked: @pet_set_areas) do |area| %>
-              <%= area.label(class: "btn form-check-label") { area.check_box(class: "form-check-input") + area.text } %>
+          <div class="form-label">
+            <%= fields_for @pet_areas do |p| %>
+              <div class="field">
+                <%= p.label :areas %><br/>
+                <%= p.collection_check_boxes(:areas, Area.all, :id, :place_name, include_hidden: false, checked: @pet_set_areas) do |area| %>
+                  <%= area.label(class: "btn form-check-label") { area.check_box(class: "form-check-input") + area.text } %>
+                <% end %>
+              </div>
             <% end %>
           </div>
-        <% end %>
-      </div>
 
-      <div class="actions">
-        <%= f.submit 'ペット情報変更', class: 'btn btn-lg comfirm-btn btn-block' %>
+          <div class="actions">
+            <%= f.submit 'ペット情報変更', class: 'btn btn-lg comfirm-btn btn-block' %>
+          </div>
+      <% end %>
       </div>
-  <% end %>
-  </div>
+      </div>
 </div>

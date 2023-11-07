@@ -1,6 +1,6 @@
 class PetsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-
+  before_action :set_user
 def index
 end
 
@@ -80,5 +80,9 @@ end
 
   def pet_areas
     params.dig(:area_form, :areas) || []
+  end
+
+  def set_user
+    @user = current_user
   end
 end

@@ -1,60 +1,73 @@
-<h3><%= "#{@recipient.profile.name}" %>さんへのメッセージ</h3>
-<div class="message-form rounded mt-5 border border-2">
-  <!--PET情報-->
+<div class="container">
+  <div class="row">
+    <%= render partial: 'layouts/shared/sidebar_html' %>
+    <div class="col-9">
+      <h2 class="px-lg-2"><%= "#{@recipient.profile.name}" %>さんへのメッセージ</h2>
+      <div class="message-form rounded mt-5 border border-2">
+        <!--PET情報-->
 
-  <div>
-    <div class="row">
-      <div class="col-4">
-        <%= image_tag @room.pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
-      </div>
-      <div class="col-8">
-        <h5 class="card-title petname"><%= @room.pet.petname %></h5>
-        <p><%= @room.pet.classification_i18n %>/<%= @room.pet.age %>才/<%= @room.pet.gender_i18n %></p>
-        <p class="card-text"><%= @room.pet.introduction %></p>
-      </div>
-    </div>
-  </div>
-
-  <!--  メッセージ送付フォーム-->
-  <%= form_with model: @message, url: room_messages_path(@room), data: { turbo_method: :post }, local: true do |f| %>
-    <div class="form-label mt-4">
-      <%= f.text_area :body, placeholder: 'メッセージを入力', class: 'form-control' %>
-    </div>
-    <div class="actions text-center">
-      <%= f.submit '送信', class: 'btn btn-lg msg-send-btn btn-block' %>
-    </div>
-  <% end %>
-</div>
-
-
-<!--メッセージのやりとり履歴-->
-<div class="mt-5">
-  <% if @all_message_exchanges.present? %>
-    <% @all_message_exchanges.each do |message| %>
-      <div class="message-form mt-2 border border-2">
-        <div class="card-body object-fit-fill">
-          <div class="card mb-4 p-3">
-            <div class="d-flex justify-content-between">
-        <div class="d-flex align-items-center"> 
-              <p><%= link_to message.user.profile.name, member_path(id: message.user.id) %></p>
-              <p>
-              <!-- 自分のメッセージであるかのチェック -->
-              <% if current_user == message.user %>
-                <!-- 編集リンクを表示 -->
-                <%= link_to '編集', edit_message_path(message) %>
-                <%= link_to '削除', message_path(message), data: {turbo_method: :delete, turbo_confirm: 'メールを削除します。よろしいですか？'}  %>
-              <% end %>
-              </p>
-              </div>
-              <p><%= time_ago_in_words(message.updated_at) %>前</p>
+        <div>
+          <div class="row">
+            <div class="col-4">
+              <%= image_tag @room.pet.pet_images.first.photo.to_s, class: 'card-img-top' %>
             </div>
-            <p><%= message.body %></p>
+            <div class="col-8">
+              <h5 class="card-title petname"><%= @room.pet.petname %></h5>
+              <p><%= @room.pet.classification_i18n %>/<%= @room.pet.age %>才/<%= @room.pet.gender_i18n %></p>
+              <p class="card-text"><%= @room.pet.introduction %></p>
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
-  <% end %>
-</div>
 
-<!--ページネーション-->
-<%= paginate  @all_message_exchanges, theme: 'bootstrap-5' %>
+        <!--  メッセージ送付フォーム-->
+        <%= form_with model: @message, url: room_messages_path(@room), data: { turbo_method: :post }, local: true do |f| %>
+          <div class="form-label mt-4">
+            <%= f.text_area :body, placeholder: 'メッセージを入力', class: 'form-control' %>
+          </div>
+          <div class="actions text-center">
+            <%= f.submit '送信', class: 'btn btn-lg msg-send-btn btn-block' %>
+          </div>
+        <% end %>
+      </div>
+
+
+      <!--メッセージのやりとり履歴-->
+      <div class="mt-5">
+        <% if @all_message_exchanges.present? %>
+          <% @all_message_exchanges.each do |message| %>
+            <div class="message-form mt-2 border border-2">
+              <div class="card-body object-fit-fill">
+                <div class="card mb-4 p-3">
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <p>
+
+                        <% if message.user.profile.avatar? %>
+                          <%= image_tag message.user.profile.avatar.thumb.url, class: 'nav-avatar-img' %>
+                        <% else %>
+                          <image src="/assets/default.png" class="nav-avatar-img"/>
+                        <% end %>
+                        <%= link_to message.user.profile.name, member_path(id: message.user.id) %>
+
+                        <% if current_user == message.user %>
+                          <!-- 編集リンクを表示 -->
+                          <%= link_to '編集', edit_message_path(message) %>
+                          <%= link_to '削除', message_path(message), data: { turbo_method: :delete, turbo_confirm: 'メールを削除します。よろしいですか？' } %>
+                        <% end %>
+                      </p>
+                    </div>
+                    <p><%= time_ago_in_words(message.updated_at) %>前</p>
+                  </div>
+                  <p><%= message.body %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <!--ページネーション-->
+      <%= paginate @all_message_exchanges, theme: 'bootstrap-5' %>
+    </div>
+  </div>
+</div>

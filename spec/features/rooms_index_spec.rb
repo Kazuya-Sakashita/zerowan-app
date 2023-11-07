@@ -31,7 +31,7 @@ RSpec.feature 'rooms/index', type: :feature do
     end
 
     scenario 'ルーム一覧（メッセージ）が表示さること' do
-      expect(page).to have_selector('h1', text: 'メッセージ')
+      expect(page).to have_selector('h2', text: 'メッセージ')
       expect(page).to have_content pets.first.petname
       expect(page).to have_content pets.first.gender_i18n
       expect(page).to have_content pets.first.age

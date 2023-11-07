@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_message, only: [:edit, :update, :destroy]
   before_action :check_owner, only: [:edit, :update, :destroy]
+  before_action :set_user
 
   def create
     @message = current_user.messages.create(message_params_on_create)
@@ -15,8 +16,7 @@ class MessagesController < ApplicationController
     redirect_to request.referer
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @message.update(message_params_on_update)
@@ -51,6 +51,10 @@ class MessagesController < ApplicationController
   def check_owner
     return if @message.user == current_user
     redirect_to room_path(@message.room_id), alert: '他のユーザーのメッセージを編集することはできません。'
+  end
+
+  def set_user
+    @user = current_user
   end
 
 end
