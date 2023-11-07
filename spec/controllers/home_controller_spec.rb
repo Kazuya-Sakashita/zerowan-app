@@ -52,7 +52,6 @@ RSpec.describe HomeController, type: :controller do
     let!(:pickup_2) { create(:pickup, pet: pet2, created_at: 1.day.ago) }
 
     before do
-      allow(Settings.pagination.per).to receive(:default).and_return(20)
       get :index
     end
 
