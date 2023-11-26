@@ -2,6 +2,7 @@ class RoomsController < ApplicationController
   before_action :set_room, only: %i[show edit update destroy]
   before_action :authenticate_user!
   before_action :authorize_access, only: %i[show edit update destroy]
+  before_action :set_user
 
   def index
     @rooms = Room.eager_load(latest_message: { user: :profile })
@@ -46,7 +47,11 @@ class RoomsController < ApplicationController
   private
 
   def set_room
-    @room = Room.find(params[:id])
+    @room =  Room.find(params[:id])
+  end
+
+  def set_user
+    @user = current_user
   end
 
   def authorize_access

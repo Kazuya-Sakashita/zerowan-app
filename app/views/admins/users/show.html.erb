@@ -8,6 +8,16 @@
       <table class="table table-bordered-dark">
         <tbody>
           <tr>
+            <th class="bg-light">画像</th>
+            <td>
+                  <% if @user.profile.avatar? %>
+                    <%= image_tag @user.profile.avatar.thumb.url, class: 'img-thumbnail-h60' %>
+                  <% else %>
+                    <image src="/assets/default.png" class="d-inline" width="120"/>
+                  <% end %>
+            </td>
+          </tr>
+          <tr>
             <th class="bg-light">氏名</th>
             <td><%= @user.profile.name %></td>
           </tr>

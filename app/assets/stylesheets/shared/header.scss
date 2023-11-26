@@ -64,3 +64,9 @@ a {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
+.nav-avatar-img {
+  width: 50px;        /* 画像の幅を80pxに設定 */
+  height: 50px;       /* 画像の高さを80pxに設定 */
+  border-radius: 50%; /* 画像を円形にする */
+  object-fit: cover;  /* 画像が枠内に収まるようにする */
+}
