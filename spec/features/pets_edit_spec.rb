@@ -57,7 +57,7 @@ RSpec.feature 'ペット詳細情報', type: :feature do
       end
 
       scenario 'ペット情報を正しく値を入力した場合、ペット詳細画面に遷移すること' do
-        expect(page).to have_current_path pet_path(Pet.last.id)
+                expect(page).to have_current_path pet_path(Pet.last.id)
       end
 
       scenario 'ペット情報を正しく値を入力した場合、flash メッセージが正しく表示されていること' do
