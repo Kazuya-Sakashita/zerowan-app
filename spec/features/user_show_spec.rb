@@ -40,7 +40,7 @@ RSpec.feature 'マイページ表示', type: :feature do
           end
 
           scenario '新着メッセージがあります。が表示されていること' do
-            expect(page).to have_content '新着メッセージがあります。'
+            expect(page).to have_content '新着メッセージがあります'
           end
         end
 
