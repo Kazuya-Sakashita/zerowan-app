@@ -19,13 +19,13 @@
               </div>
               <% if user_signed_in? && !pet.own?(current_user) %>
                 <% if pet.favorite?(current_user) %>
-                  <%= button_to pet_favorites_path(pet.id), method: :delete, class: 'btn favorite-btn-off' do %>
+                  <%= link_to pet_favorites_path(pet.id), data: { turbo_method: :delete }, class: 'btn favorite-btn-off' do %>
                     <div class='favorite-registration-part-off'>
                       <span class='star-non'>☆</span> <span class='favorite-text'>気になるリストから削除</span>
                     </div>
                   <% end %>
                 <% else %>
-                  <%= button_to pet_favorites_path(pet.id), data: { turbo_method: :post }, class: 'btn favorite-btn-on' do %>
+                  <%= link_to pet_favorites_path(pet.id), data: { turbo_method: :post }, class: 'btn favorite-btn-on' do %>
                     <div class='favorite-registration-part-on'>
                       <span class='star'>★</span> <span class='favorite-text'>気になるリストに追加</span>
                     </div>

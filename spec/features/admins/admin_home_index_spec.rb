@@ -5,9 +5,7 @@ RSpec.feature 'admins/home/index', type: :feature do
     let(:admin) { create(:admin) }
 
     let!(:joined_users) do
-      users = create_list(:user, 10)
-      users.each(&:confirm)
-      users
+      create_list(:user, 10, &:confirm)
     end
 
     let!(:pets) { create_list(:pet, 5, user: joined_users.first) }

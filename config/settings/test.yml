@@ -1,0 +1,5 @@
+pagination:
+  per:
+    default: 1
+    room: 1
+    message: 1

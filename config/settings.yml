@@ -1,0 +1,5 @@
+pagination:
+  per:
+    default: 20
+    room: 10
+    message: 5

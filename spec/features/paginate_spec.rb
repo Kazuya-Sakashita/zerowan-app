@@ -1,39 +1,60 @@
 require 'rails_helper'
-# TODO 定数管理の整備をしてからモックを使ったテストを実証
 
-# RSpec.feature 'ページネーション表示', type: :feature do
-  # let(:user) do
-  #   create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
-  # end
-  #
-  # before do
-  #   create(:area, place_name: '大阪')
-  #     create_list(:pet,21,
-  #            category: :dog,
-  #            petname: 'taro20221101',
-  #            age: 12,
-  #            gender: :male,
-  #            classification: :Chihuahua,
-  #            introduction: 'おとなしく、賢い',
-  #            castration: :neutered,
-  #            vaccination: :vaccinated,
-  #            recruitment_status: 0,
-  #            user_id: user.id)
-  #   visit root_path
-  # end
-  #
-  # describe 'ページネーション' do
-  #   scenario '正しく表示されていること' do
-  #     expect(page).to have_selector '.pagination', text: '1 2 Next Last'
-  #   end
-  #
-  #   scenario '正しく機能すること' do
-  #     click_link '2'
-  #     expect(page).to have_current_path root_path(page: '2')
-  #     click_link 'First'
-  #     expect(page).to have_current_path root_path('/')
-  #     click_link 'Last'
-  #     expect(page).to have_current_path root_path(page: '2')
-  #   end
-  # end
-# end
+RSpec.feature 'ページネーションの表示', type: :feature do
+  let(:user) { create(:user, &:confirm) }
+  let!(:owner) { create(:user, &:confirm) }
+  let!(:pet) { create(:pet, user: owner) }
+
+  before do
+    sign_in user
+    visit root_path
+  end
+
+  describe '1件の場合' do
+    context '１ページ目' do
+      scenario '1件のペットが表示されていること' do
+        expect(page).to have_content pet.petname
+      end
+
+      scenario 'ページネーションコントロールが存在しないこと' do
+        expect(page).not_to have_selector '.pagination'
+      end
+    end
+  end
+
+  describe '2件以上ある場合' do
+    let!(:another_pet) { create(:pet, user: owner) }
+
+    before do
+      visit root_path
+    end
+
+    context '１ページ目' do
+      scenario 'ペットが表示されていること' do
+        expect(page).to have_content pet.petname
+      end
+
+      scenario '他のペットは表示されていないこと' do
+        expect(page).not_to have_content another_pet.petname
+      end
+
+      scenario 'ページネーションコントロールが存在すること' do
+        expect(page).to have_selector '.pagination'
+      end
+    end
+
+    context '2ページ目' do
+      before do
+        click_link '2'
+      end
+
+      scenario '2ページ目が表示されていること' do
+        expect(page).to have_current_path(/page=2/)
+      end
+
+      scenario '他のペットが表示されていること' do
+        expect(page).to have_content another_pet.petname
+      end
+    end
+  end
+end

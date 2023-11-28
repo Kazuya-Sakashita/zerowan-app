@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: [:show, :edit, :update, :destroy]
+  before_action :set_room, only: %i[show edit update destroy]
   before_action :authenticate_user!
-  before_action :authorize_access, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_access, only: %i[show edit update destroy]
   before_action :set_user
 
   def index
@@ -10,14 +10,14 @@ class RoomsController < ApplicationController
                  .or(Room.where(user_id: current_user.id))
                  .where.not(messages: { created_at: nil })
                  .order('messages.created_at DESC')
-                 .page(params[:page]).per(10)
+                 .page(params[:page]).per(Settings.pagination.per.room)
   end
 
   def new
     # params[:format]を使用してPetテーブルから特定のペットを検索
     @pet = Pet.find(params[:format])
 
-    #user_id と owner_id が同一であった場合に弾く
+    # user_id と owner_id が同一であった場合に弾く
     if current_user.id == @pet.user_id
       flash[:error] = '自分自身にメッセージはできません'
       redirect_back(fallback_location: root_path) # 保存失敗時も前のページにリダイレクト。
@@ -26,17 +26,17 @@ class RoomsController < ApplicationController
 
     # 以下の条件にマッチするRoomが存在するか確認し、なければ新しいRoomを作成
     begin
-    @room = @pet.rooms.find_or_create_by!(user_id: current_user.id, owner_id: @pet.user_id)
-    redirect_to room_path(@room)
-    rescue => e
+      @room = @pet.rooms.find_or_create_by!(user_id: current_user.id, owner_id: @pet.user_id)
+      redirect_to room_path(@room)
+    rescue StandardError => e
       flash[:error] = '問合せできませんでした。'
       redirect_back(fallback_location: root_path)
     end
   end
-  
+
   def show
     @message = Message.new
-    @all_message_exchanges = @room.messages.page(params[:page]).per(5)
+    @all_message_exchanges = @room.messages.page(params[:page]).per(Settings.pagination.per.message)
 
     @recipient = @room.recipient(current_user)
 
@@ -56,7 +56,7 @@ class RoomsController < ApplicationController
 
   def authorize_access
     return if [@room.user_id, @room.owner_id].include?(current_user.id)
-    
-    redirect_to root_path, alert: "このルームにアクセスする権限がありません。"
+
+    redirect_to root_path, alert: 'このルームにアクセスする権限がありません。'
   end
 end

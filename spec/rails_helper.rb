@@ -35,7 +35,7 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-#Rspecログ表示の際にコメントアウト
+# Rspecログ表示の際にコメントアウト
 # Rails.logger = Logger.new(STDOUT)
 # ActiveRecord::Base.logger = Logger.new(STDOUT)
 
@@ -50,6 +50,11 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseRewinder.clean_all
+    # テスト環境用の正しい設定ファイルを読み込む
+    Settings.reload_from_files(
+      Rails.root.join('config', 'settings.yml').to_s,
+      Rails.root.join('config', 'settings', "#{Rails.env}.yml").to_s
+    )
   end
 
   config.after do

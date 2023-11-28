@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.feature 'admins/pets/index', type: :feature do
   let(:admin) { create(:admin) }
   let!(:user) { create(:user, &:confirm) }
-  let!(:pet) { create(:pet, user:) }
-  let!(:pets) { create_list(:pet, 21, user:) }
+  let!(:pets) { create_list(:pet, 2, user:) }
 
   before do
     sign_in admin
@@ -17,23 +16,19 @@ RSpec.feature 'admins/pets/index', type: :feature do
 
   scenario '里親募集画面の表示内容の確認' do
     within 'tbody' do
-      expect(page).to have_selector("img[src$='#{pet.pet_images.first.photo.url}']")
-      expect(page).to have_content(pet.petname)
-      expect(page).to have_content(pet.recruitment_status)
-      expect(page).to have_content(pet.user.profile.name)
-      expect(page).to have_content(pet.created_at.strftime('%Y-%m-%d %H:%M:%S'))
+      expect(page).to have_selector("img[src$='#{pets.second.pet_images.first.photo.url}']")
+      expect(page).to have_content(pets.first.petname)
+      expect(page).to have_content(pets.first.recruitment_status)
+      expect(page).to have_content(pets.first.user.profile.name)
+      expect(page).to have_content(pets.first.created_at.strftime('%Y-%m-%d %H:%M:%S'))
     end
 
-    expect(page).to have_link('詳細', href: admins_pet_path(pet.id))
-    expect(page).to have_link('削除', href: admins_pet_path(pet.id))
+    expect(page).to have_link('詳細', href: admins_pet_path(pets.first.id))
+    expect(page).to have_link('削除', href: admins_pet_path(pets.first.id))
   end
 
   scenario 'ページネーションが表示される' do
     expect(page).to have_selector('.pagination')
-
-    # ページネーションのページ数の検証
-
-    # TODO: ページネーション表示部分にクラスを設定してクラスの中のテキストで評価する表に変更
     pagination_text = page.find('.pagination').text
     expect(pagination_text).to include('1', '2', 'Next', 'Last')
   end
