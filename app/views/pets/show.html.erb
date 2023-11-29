@@ -4,18 +4,18 @@
     <div class="col-lg-6 align-self-center">
       <div class="row ">
         <% @pet_images.each do |image| %>
-          <%= image_tag image.photo.to_s, class: "col-6 p-0" %>
+          <%= image_tag image.photo.to_s, class: "col-6 p-0 pet-image" %>
         <% end %>
       </div>
     </div>
     <div class="col-lg-6">
       <!-- ペット詳細情報表示 -->
-      <div>
+      <div class="">
         <% if user_signed_in? && @pet.user_id == current_user.id %>
-          <%= link_to 'ペット情報を編集する', edit_pet_path(@pet), class: 'btn btn-lg return-pet-edit-btn btn-block ' %>
+          <%= link_to 'ペット情報を編集する', edit_pet_path(@pet), class: 'btn btn-lg return-pet-edit-btn  d-block w-100 mx-auto' %>
         <% end %>
         <div class="table-responsive-sm">
-          <table class="table bg-white table-bordered">
+          <table class="table bg-white table-bordered w-100">
             <tr>
               <td class="col-xs-3 col-ms-6 col-md-2 col-lg-2 bg-light">名前</td>
               <td class="col-xs-3 col-ms-6 col-md-4 col-lg-4"><%= @pet.petname %></td>
