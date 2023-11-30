@@ -1,7 +1,7 @@
 body {
   background-color: #FFFBEE;
   padding-top: 50px;
-  padding-bottom: 60px; 
+  padding-bottom: 60px;
 }
 
 .main-content {
@@ -290,4 +290,24 @@ body {
   background-color: red;
   border-radius: 15px; /* 丸みを帯びた角 */
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); /* 軽い影で立体感を出す */
+}
+
+//ペット画像
+.pet-image {
+  border:  1px solid rgba(255, 0, 0, 0.7) #5A8C53;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.4);
+  border-radius: 10px;
+  width: calc(50% - 10px); /* ボーダーとマージンを考慮した幅 */
+}
+
+.pet-image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え（必要に応じて） */
+}
+
+.pet-image-container .col-6 {
+  flex: 0 0 auto; /* フレックスアイテムの基本サイズを自動に設定 */
+  max-width: 50%; /* 最大幅を50%に設定 */
 }
