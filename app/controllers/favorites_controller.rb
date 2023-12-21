@@ -15,7 +15,7 @@ class FavoritesController < ApplicationController
     @pet.favorites.find_by!(user: current_user).destroy
 
     respond_to do |format|
-      format.html { rredirect_to request.referer }
+      format.html { redirect_to request.referer }
       format.turbo_stream
     end
   end
