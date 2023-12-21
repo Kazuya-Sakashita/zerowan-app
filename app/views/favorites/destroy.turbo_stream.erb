@@ -1,0 +1,3 @@
+# app/views/favorites/destroy.turbo_stream.erb
+
+<%= turbo_stream.replace "favorite_button_#{ @pet.id }", partial: 'pets/favorite_button', locals: { pet: @pet, current_user: current_user } %>

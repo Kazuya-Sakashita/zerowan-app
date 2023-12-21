@@ -61,6 +61,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry-byebug'
+  gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 5.0', '>= 5.0.2'
   gem 'rubocop'
   gem 'rubocop-ast'
@@ -68,7 +69,6 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
-  gem 'rails-controller-testing'
 end
 
 group :development do
@@ -90,18 +90,18 @@ group :test do
   gem 'webdrivers'
 end
 
+gem 'bootstrap5-kaminari-views'
+gem 'carrierwave'
+gem 'config'
 gem 'devise'
 gem 'devise-i18n'
 gem 'dotenv-rails'
-gem 'rails-controller-testing'
-gem 'carrierwave'
-gem 'mini_magick'
 gem 'enum_help'
+gem 'hiredis'
+gem 'importmap-rails'
+gem 'kaminari'
+gem 'mini_magick'
+gem 'rails-controller-testing'
 gem 'rails-i18n'
 gem 'ransack'
-gem 'kaminari'
-gem 'bootstrap5-kaminari-views'
-gem 'importmap-rails'
 gem 'redis'
-gem 'hiredis'
-gem 'config'

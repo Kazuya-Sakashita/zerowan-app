@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   before_action :set_user_if_signed_in
+
   def index
     @pickups = Pet.joins(:pickup).order('pickup.created_at DESC')
 
