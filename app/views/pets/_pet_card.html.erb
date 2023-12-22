@@ -5,6 +5,10 @@
                 <% if pet.new? %>
                     <span class="new-mark">New</span>
                 <% end %>
+
+                <!-- ステータス表示 -->
+                <span class="status-mark <%= "status-#{pet.recruitment_status}" %>"><%= pet.recruitment_status_i18n %></span>
+
             <% end %>
             <div class="card-body">
               <h5 class="card-title petname"><%= pet.petname %></h5>
