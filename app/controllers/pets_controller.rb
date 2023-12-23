@@ -1,6 +1,8 @@
 class PetsController < ApplicationController
   before_action :authenticate_user!, except: %i[show index]
   before_action :set_user
+  before_action :set_pet, only: %i[show edit update update_status]
+
   def index; end
 
   def new
@@ -28,21 +30,17 @@ class PetsController < ApplicationController
   end
 
   def show
-    @pet = Pet.find(params[:id])
     @pet_images = @pet.pet_images
     @pet_areas = @pet.pet_areas
   end
 
   def edit
-    @pet = Pet.find(params[:id])
     @pet_images = PetForm.new
     @pet_areas =  AreaForm.new
     @pet_set_areas = @pet.pet_areas.pluck(:area_id)
   end
 
   def update
-    @pet = Pet.find(params[:id])
-
     ActiveRecord::Base.transaction do
       @pet.update!(pet_params)
       if pet_images.present?
@@ -64,6 +62,18 @@ class PetsController < ApplicationController
     redirect_to edit_pet_path
   end
 
+  def update_status
+    if @pet.update(recruitment_status: params[:pet][:recruitment_status])
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @pet, notice: 'ステータスが更新されました。' }
+      end
+    else
+      # エラーがあった場合の処理
+      redirect_to @pet, alert: 'ステータスの更新に失敗しました。'
+    end
+  end
+
   private
 
   def pet_params
@@ -81,5 +91,9 @@ class PetsController < ApplicationController
 
   def set_user
     @user = current_user
+  end
+
+  def set_pet
+    @pet = Pet.find(params[:id])
   end
 end
