@@ -36,6 +36,7 @@ class RoomsController < ApplicationController
 
   def show
     @message = Message.new
+    @pet = Pet.find(@room.pet_id)
     @all_message_exchanges = @room.messages.page(params[:page]).per(Settings.pagination.per.message)
 
     @recipient = @room.recipient(current_user)
@@ -47,7 +48,7 @@ class RoomsController < ApplicationController
   private
 
   def set_room
-    @room =  Room.find(params[:id])
+    @room = Room.find(params[:id])
   end
 
   def set_user

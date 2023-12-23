@@ -33,6 +33,10 @@ Rails.application.routes.draw do
   resources :pets, except: [:index] do
     resource :favorites, only: [:create, :destroy]
     resource :rooms, only: [:create, :show]
+
+    member do
+      patch :update_status
+    end
   end
   # post 'pets/confirm', to: 'pets#confirm'
 

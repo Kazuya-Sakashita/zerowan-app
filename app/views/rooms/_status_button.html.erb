@@ -1,0 +1,12 @@
+<turbo-frame id="status_button_<%= pet.id %>">
+  <% if pet.own?(current_user) %>
+    <div class="form-container">
+      <% Pet.recruitment_statuses.keys.each do |status| %>
+        <%= form_with model: @pet, url: update_status_pet_path(@pet), method: :patch, data: { turbo_frame: "status_button_#{pet.id}" } do |form| %>
+          <%= form.hidden_field :recruitment_status, value: status %>
+          <%= form.submit I18n.t("enums.pet.recruitment_status.#{status}"), class: "status-button #{status} #{'active' if @pet.recruitment_status == status}" %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</turbo-frame>

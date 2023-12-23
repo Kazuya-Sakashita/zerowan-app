@@ -350,3 +350,35 @@ body {
   z-index: 10; /* 他の要素より前面に表示 */
   border-radius: 5px; /* 角を丸く */
 }
+
+/* フォームを横並びにするためのスタイル */
+.form-container {
+  display: flex;
+}
+
+/* 各フォームのスタイル */
+.status-form {
+  margin-right: 10px; /* ボタン間の余白 */
+}
+
+/* アクティブなステータスボタン（現在のステータス）のスタイル */
+.status-button.recruiting.active {
+  background-color: rgba(0, 123, 255, 0.7); /* 青色の背景を半透明に */
+  color: white;
+}
+
+.status-button.negotiating.active {
+  background-color: rgba(110, 159, 13, 0.818); /* 青色の背景を半透明に */
+  color: white;
+}
+
+.status-button.family_decided.active {
+  background-color: rgba(76, 90, 89, 0.531); /* 青色の背景を半透明に */
+  color: white;
+}
+
+/* 通常のステータスボタンのスタイル */
+.status-button {
+  background-color: #6c757d; /* グレー系の色 */
+  color: white;
+}
