@@ -43,4 +43,34 @@ RSpec.feature 'rooms/index', type: :feature do
       expect(page).to have_content 'オーナーからの返信'
     end
   end
+
+  describe 'ステータス表示' do
+    before do
+      sign_in owned_user
+      allow(Settings.pagination.per).to receive(:message).and_return(5)
+      visit room_path(joined_rooms.first)
+    end
+
+    scenario '募集中の表示（アクティブ）がされていること' do
+      expect(page).to have_selector('input.active[value="募集中"]')
+    end
+
+    scenario '交渉中選択で交渉中が表示（アクティブ）がされていること', js: true do
+      click_button '交渉中'
+      expect(page).to have_selector('input.active[value="交渉中"]')
+    end
+
+    scenario '家族決定選択で家族決定が表示（アクティブ）がされていること', js: true do
+      click_button '家族決定'
+      expect(page).to have_selector('input.active[value="家族決定"]')
+    end
+
+    scenario '募集中選択で募集中が表示（アクティブ）がされていること', js: true do
+      click_button '交渉中'
+      expect(page).to have_selector('input.active[value="交渉中"]')
+
+      click_button '募集中'
+      expect(page).to have_selector('input.active[value="募集中"]')
+    end
+  end
 end

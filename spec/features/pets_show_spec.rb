@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature '里親募集', type: :feature do
-
   let!(:own) do
     create(:user, email: 'test123456789@test.com', password: 'password', password_confirmation: 'password', &:confirm)
   end
@@ -28,7 +27,7 @@ RSpec.feature '里親募集', type: :feature do
 
   context 'ペット詳細情報画面表示' do
     scenario 'ペット一覧から遷移ができること' do
-      expect(current_path).to eq pet_path(pet)
+      expect(page).to have_current_path pet_path(pet), ignore_query: true
     end
 
     scenario 'ペットの詳細が表示されていること' do
@@ -72,9 +71,10 @@ RSpec.feature '里親募集', type: :feature do
     end
   end
 
-  describe '機能' do
+  describe 'お気に入り機能' do
     before do
-      customer = create(:user, email: 'test121212@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+      customer = create(:user, email: 'test121212@test.com', password: 'password', password_confirmation: 'password',
+                        &:confirm)
       sign_in customer
       visit pet_path(pet)
     end
@@ -95,7 +95,4 @@ RSpec.feature '里親募集', type: :feature do
       expect(page).to have_link 'ペット飼い主にメッセージを送る'
     end
   end
-
 end
-
-
