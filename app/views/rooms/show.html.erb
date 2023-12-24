@@ -15,6 +15,7 @@
               <h5 class="card-title petname"><%= @room.pet.petname %></h5>
               <p><%= @room.pet.classification_i18n %>/<%= @room.pet.age %>才/<%= @room.pet.gender_i18n %></p>
               <p class="card-text"><%= @room.pet.introduction %></p>
+              <%= render partial: 'rooms/status_button', locals: { pet: @pet, current_user: current_user } %>
             </div>
           </div>
         </div>

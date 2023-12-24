@@ -8,6 +8,16 @@ require 'factory_bot'
 require 'rspec/rails'
 require 'devise'
 require 'capybara/rspec'
+require 'selenium-webdriver'
+
+Capybara.register_driver :selenium_chrome_in_docker do |app|
+  Capybara::Selenium::Driver.new(app,
+                                 browser: :remote,
+                                 url: 'http://selenium_chrome:4444/wd/hub',
+                                 desired_capabilities: :chrome)
+end
+
+Capybara.javascript_driver = :selenium_chrome_in_docker
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

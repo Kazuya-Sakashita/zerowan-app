@@ -23,7 +23,7 @@ class Pet < ApplicationRecord
   enum classification: { Chihuahua: 0, Dachshund: 1, others: 2 }, _prefix: true
   enum vaccination: { unknown: 0, vaccinated: 1, unvaccinated: 2 }, _prefix: true
   enum castration: { unknown: 0, neutered: 1, unneutered: 2 }, _prefix: true
-  enum recruitment_status: { recruiting: 0, during_negotiations: 1, end_of_recruitment: 2 }
+  enum recruitment_status: { recruiting: 0, negotiating: 1, family_decided: 2 }
 
   def own?(viewer)
     user == viewer

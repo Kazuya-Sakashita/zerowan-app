@@ -1,0 +1,1 @@
+  <%= turbo_stream.replace "status_button_#{ @pet.id }", partial: 'rooms/status_button', locals: { pet: @pet, current_user: current_user } %>
