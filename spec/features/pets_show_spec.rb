@@ -95,4 +95,50 @@ RSpec.feature '里親募集', type: :feature do
       expect(page).to have_link 'ペット飼い主にメッセージを送る'
     end
   end
+
+  describe 'ステータス表示' do
+    let!(:user) { create(:user, &:confirm) }
+
+    context '投稿者のオーナーがログインしている場合' do
+      before do
+        sign_in own
+        visit pet_path(pet.id)
+      end
+
+      scenario '募集中の表示（アクティブ）がされていること' do
+        expect(page).to have_selector('input.active[value="募集中"]')
+      end
+
+      scenario '交渉中選択で交渉中が表示（アクティブ）がされていること', js: true do
+        click_button '交渉中'
+        expect(page).to have_selector('input.active[value="交渉中"]')
+      end
+
+      scenario '家族決定選択で家族決定が表示（アクティブ）がされていること', js: true do
+        click_button '家族決定'
+        expect(page).to have_selector('input.active[value="家族決定"]')
+      end
+
+      scenario '募集中選択で募集中が表示（アクティブ）がされていること', js: true do
+        click_button '交渉中'
+        expect(page).to have_selector('input.active[value="交渉中"]')
+
+        click_button '募集中'
+        expect(page).to have_selector('input.active[value="募集中"]')
+      end
+    end
+
+    context 'ユーザーがログインしている場合' do
+      before do
+        sign_in user
+        visit pet_path(pet.id)
+      end
+
+      scenario 'ステータスの表示がないこと' do
+        expect(page).to have_no_selector('input[value="募集中"]')
+        expect(page).to have_no_selector('input[value="家族決定"]')
+        expect(page).to have_no_selector('input[value="交渉中"]')
+      end
+    end
+  end
 end
