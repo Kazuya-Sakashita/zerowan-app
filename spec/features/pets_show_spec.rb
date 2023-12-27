@@ -43,7 +43,8 @@ RSpec.feature '里親募集', type: :feature do
 
   context '編集ページへと遷移するボタン表示' do
     let!(:other_own) do
-      create(:user, email: 'test20221104@test.com', password: 'password', password_confirmation: 'password', &:confirm)
+      create(:user, email: 'test20221104@test.com', password: 'password', password_confirmation: 'password',
+             &:confirm)
     end
 
     let!(:other_pet) do
@@ -60,14 +61,16 @@ RSpec.feature '里親募集', type: :feature do
              user: other_own)
     end
 
-    scenario '自身の投稿の場合、表示していること' do
-      expect(page).to have_link 'ペット情報を編集する'
-    end
+    describe 'ステータス表示' do
+      scenario '自身の投稿の場合、表示していること' do
+        expect(page).to have_link 'ペット情報を編集する'
+      end
 
-    scenario '他者投稿の表示していないこと' do
-      visit pet_path(other_pet)
-      expect(page).not_to have_link 'ペット情報を編集する'
-      expect(page).to have_content 'test20221104'
+      scenario '他者投稿の表示していないこと' do
+        visit pet_path(other_pet)
+        expect(page).not_to have_link 'ペット情報を編集する'
+        expect(page).to have_content 'test20221104'
+      end
     end
   end
 
@@ -138,6 +141,48 @@ RSpec.feature '里親募集', type: :feature do
         expect(page).to have_no_selector('input[value="募集中"]')
         expect(page).to have_no_selector('input[value="家族決定"]')
         expect(page).to have_no_selector('input[value="交渉中"]')
+      end
+    end
+  end
+
+  describe 'メッセージ送信ボタンの表示' do
+    let(:owner) { create(:user, &:confirm) }
+    let(:user) { create(:user, &:confirm) }
+    let!(:pet) { create(:pet, user: owner) }
+
+    context 'ログインがオーナーの場合' do
+      before do
+        sign_in owner
+        visit pet_path(pet.id)
+      end
+
+      scenario 'ペット飼い主にメッセージを送るボタンが表示されていないこと' do
+        expect(page).not_to have_content('ペット飼い主にメッセージを送る')
+        expect(page).not_to have_content('*メッセージ機能を利用するには会員登録が必要です')
+      end
+    end
+
+    context 'ログインがユーザーの場合' do
+      before do
+        sign_in user
+        visit pet_path(pet.id)
+      end
+
+      scenario 'ペット飼い主にメッセージを送るボタンが表示されていること' do
+        expect(page).to have_content('ペット飼い主にメッセージを送る')
+        expect(page).not_to have_content('*メッセージ機能を利用するには会員登録が必要です')
+      end
+    end
+
+    context 'ログインしていない場合' do
+      before do
+        sign_out user
+        visit pet_path(pet.id)
+      end
+
+      scenario 'メッセージ機能を利用するには会員登録が必要ですが表示されていること' do
+        expect(page).not_to have_content('ペット飼い主にメッセージを送る')
+        expect(page).to have_content('*メッセージ機能を利用するには会員登録が必要です')
       end
     end
   end
