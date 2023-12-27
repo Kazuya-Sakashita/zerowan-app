@@ -1,8 +1,9 @@
 <% if user_signed_in? && @pet.own?(current_user).blank? %>
   <div class='text-center mt-1'>
-    <% unless @pet.user_id == current_user.id %>
-      <%= link_to 'ペット飼い主にメッセージを送る', new_room_path(@pet), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
-  <% end %>
+    <%= link_to 'ペット飼い主にメッセージを送る', new_room_path(@pet), data: { turbo_method: :get }, class: "btn btn to_owner_send_mail" %>
+  </div>
+<% elsif !user_signed_in? %>
+  <div class='text-center mt-1'>
     <p><span class='send-mail-info-text'>*メッセージ機能を利用するには会員登録が必要です</span></p>
   </div>
 <% end %>
