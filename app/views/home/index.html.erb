@@ -59,7 +59,7 @@
                 <%= render 'pets/pet_card', pet: pet %>
               <% end %>
             <% else %>
-              ピックアップはありません。
+              <h3 class="mt-3 text-center text-gray">ピックアップはありません。。</h3>
             <% end %>
 
           </div>
@@ -80,8 +80,12 @@
     <div class='mt-5'>
       <div id="all-pets-area">
         <div class="row">
-          <% @pets.each do |pet| %>
-            <%= render 'pets/pet_card', pet: pet %>
+          <% if @pets.present? %>
+            <% @pets.each do |pet| %>
+              <%= render 'pets/pet_card', pet: pet %>
+            <% end %>
+          <% else %>
+            <h3 class="mt-3 text-center text-gray">検索結果がありません。</h3>
           <% end %>
         </div>
       </div>
