@@ -1,82 +1,83 @@
 <div class="container">
   <!-- 投稿pet一覧 -->
-  <div class="">
-    <%= search_form_for @q, url: search_home_index_path do |f| %>
-      <div class="container-fluid ">
+  <%= search_form_for @q, url: search_home_index_path do |f| %>
+    <div class="container-fluid ">
+      <div class="row">
+        <div class="col-xs-12 col-md-2">
+          <%= f.label :category %>
+          <%= f.select :category_eq,
+                       Pet.categories_i18n.invert.map { |key, value| [key, Pet.categories[value]] },
+                       { include_blank: '全て' },
+                       { class: 'form-select form-select-lg' } %>
+        </div>
+        <div class="col-xs-12 col-md-2">
+          <%= f.label :gender %>
+          <%= f.select :gender_eq,
+                       Pet.genders_i18n.invert.map { |key, value| [key, Pet.genders[value]] },
+                       { include_blank: '全て' },
+                       { class: 'form-select form-select-lg' } %>
+        </div>
+
+        <div class="col-xs-12 col-md-2">
+          <%= f.label :age %>
+          <%= f.number_field :age_lteq, { in: 1..30, class: 'form-control' } %>才まで
+        </div>
+
+        <div class="col-xs-12 col-md-2">
+          <%= f.label :classification %>
+          <%= f.select :classification_eq,
+                       Pet.classifications_i18n.invert.map { |key, value| [key, Pet.classifications[value]] },
+                       { include_blank: '全て' },
+                       { class: 'form-select form-select-lg' } %>
+        </div>
+
+      </div>
+
+      <div class="form-label">
+        <div class="field">
+          <%= f.label :pet_areas_area_id_in, "譲渡可能地域" %><br/>
+          <%= f.collection_check_boxes(:pet_areas_area_id_in, Area.all, :id, :place_name, include_hidden: false) do |area| %>
+            <%= area.label(class: "btn form-check-label") { area.check_box(class: "form-check-input") + area.text } %>
+          <% end %>
+        </div>
+      </div>
+
+
+    </div>
+    <br>
+    <%= f.submit '検索する', class: 'btn btn-lg comfirm-btn btn-block' %>
+
+    <div class="mt-5">
+      <h2>Pickup</h2>
+      <hr>
+
+      <div id="pickup-area">
         <div class="row">
-          <div class="col-xs-12 col-md-2">
-            <%= f.label :category %>
-            <%= f.select :category_eq,
-                         Pet.categories_i18n.invert.map { |key, value| [key, Pet.categories[value]] },
-                         { include_blank: '全て' },
-                         { class: 'form-select form-select-lg' } %>
-          </div>
-          <div class="col-xs-12 col-md-2">
-            <%= f.label :gender %>
-            <%= f.select :gender_eq,
-                         Pet.genders_i18n.invert.map { |key, value| [key, Pet.genders[value]] },
-                         { include_blank: '全て' },
-                         { class: 'form-select form-select-lg' } %>
-          </div>
-
-          <div class="col-xs-12 col-md-2">
-            <%= f.label :age %>
-            <%= f.number_field :age_lteq, { in: 1..30, class: 'form-control' } %>才まで
-          </div>
-
-          <div class="col-xs-12 col-md-2">
-            <%= f.label :classification %>
-            <%= f.select :classification_eq,
-                         Pet.classifications_i18n.invert.map { |key, value| [key, Pet.classifications[value]] },
-                         { include_blank: '全て' },
-                         { class: 'form-select form-select-lg' } %>
-          </div>
-
-        </div>
-
-        <div class="form-label">
-          <div class="field">
-            <%= f.label :pet_areas_area_id_in, "譲渡可能地域" %><br/>
-            <%= f.collection_check_boxes(:pet_areas_area_id_in, Area.all, :id, :place_name, include_hidden: false) do |area| %>
-              <%= area.label(class: "btn form-check-label") { area.check_box(class: "form-check-input") + area.text } %>
+          <% if @pickups.present? %>
+            <% @pickups.each do |pet| %>
+              <%= render 'pets/pet_card', pet: pet %>
             <% end %>
-          </div>
-        </div>
+          <% else %>
+            <h3 class="mt-3 text-center text-gray">ピックアップはありません。。</h3>
+          <% end %>
 
-
-      </div>
-      <br>
-      <%= f.submit '検索する', class: 'btn btn-lg comfirm-btn btn-block' %>
-
-      <div class="mt-5">
-        <h2>Pickup</h2>
-        <hr>
-
-        <div id="pickup-area">
-          <div class="row">
-            <% if @pickups.present? %>
-              <% @pickups.each do |pet| %>
-                <%= render 'pets/pet_card', pet: pet %>
-              <% end %>
-            <% else %>
-              <h3 class="mt-3 text-center text-gray">ピックアップはありません。。</h3>
-            <% end %>
-
-          </div>
         </div>
       </div>
-      <div class="row mt-md-4">
-        <div class="col-md-9">
-          <h2>掲載中の里親募集</h2>
-        </div>
-        <div class="col-md-3">
-          <div>
-            <%= f.select(:sorts, { '新着順': 'id desc', '登録順': 'id asc' }, { selected: params[:q][:sorts] }, { class: 'form-select form-select-lg' }) %>
-          </div>
+    </div>
+    <div class="row mt-md-4">
+      <div class="col-md-9">
+        <h2>掲載中の里親募集</h2>
+      </div>
+      <div class="col-md-3">
+        <div>
+          <%= f.select(:sorts, { '新着順': 'id desc', '登録順': 'id asc' }, { selected: params[:q][:sorts] }, { class: 'form-select form-select-lg' }) %>
         </div>
       </div>
-    <% end %>
-    <hr>
+    </div>
+  <% end %>
+  <hr>
+
+  <%= turbo_frame_tag 'pets' do %>
     <div class='mt-5'>
       <div id="all-pets-area">
         <div class="row">
@@ -90,7 +91,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- 投稿pet一覧 end-->
-  <%= paginate @pets, theme: 'bootstrap-5' %>
+    <!-- 投稿pet一覧 end-->
+    <%= paginate @pets, theme: 'bootstrap-5' %>
+  <% end %>
 </div>
