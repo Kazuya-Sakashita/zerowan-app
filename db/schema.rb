@@ -52,8 +52,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_062139) do
   end
 
   create_table "pet_areas", force: :cascade do |t|
-    t.bigint "pet_id"
-    t.bigint "area_id"
+    t.bigint "pet_id", null: false
+    t.bigint "area_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["area_id"], name: "index_pet_areas_on_area_id"
