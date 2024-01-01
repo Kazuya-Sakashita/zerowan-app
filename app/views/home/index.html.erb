@@ -1,6 +1,6 @@
 <div class="container">
   <!-- 投稿pet一覧 -->
-  <%= search_form_for @q, url: search_home_index_path do |f| %>
+  <%= search_form_for @q, url: search_home_index_path, html: { data: { turbo_frame: "pets" } } do |f| %>
     <div class="container-fluid ">
       <div class="row">
         <div class="col-xs-12 col-md-2">
