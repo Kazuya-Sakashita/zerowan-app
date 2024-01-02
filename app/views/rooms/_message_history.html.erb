@@ -1,0 +1,27 @@
+<% if @all_message_exchanges.present? %>
+  <% @all_message_exchanges.each do |message| %>
+    <div class="message-form mt-2 border border-2">
+      <div class="card-body object-fit-fill">
+        <div class="card mb-4 p-3">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+              <% if message.user.profile.avatar? %>
+                <%= image_tag message.user.profile.avatar.thumb.url, class: 'nav-avatar-img' %>
+              <% else %>
+                <%= image_tag 'default.png', class: 'nav-avatar-img' %>
+              <% end %>
+              <%= link_to message.user.profile.name, member_path(id: message.user.id) %>
+              <% if current_user == message.user %>
+                <!-- 編集リンクを表示 -->
+                <%= link_to '編集', edit_message_path(message) %>
+                <%= link_to '削除', message_path(message), data: { turbo_method: :delete, turbo_confirm: 'メールを削除します。よろしいですか？' } %>
+              <% end %>
+            </div>
+            <p><%= time_ago_in_words(message.updated_at) %>前</p>
+          </div>
+          <p><%= message.body %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
