@@ -49,10 +49,10 @@
           <% end %>
         <% end %>
         <% unless displayed_rooms %>
-          <h4 class="px-lg-4">表示するメッセージがありません。</h4>
+          <h4 class="px-lg-4 text-gray">表示するメッセージがありません。</h4>
         <% end %>
       <% else %>
-        <h4 class="px-lg-4">表示するルームがありません。</h4>
+        <h4 class="px-lg-4 text-gray">表示するルームがありません。</h4>
       <% end %>
 
       <%= paginate @rooms, theme: 'bootstrap-5' %>
